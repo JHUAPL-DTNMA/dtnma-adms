@@ -38,29 +38,11 @@ module ietf-amm {
   reference
     "draft-ietf-dtn-adm-yang";
 
-  revision 2024-07-03 {
+  revision 2025-01-14 {
     description
       "Updated for latest ADM document.";
     reference
       "draft-ietf-dtn-adm-yang";
-  }
-  revision 2023-06-08 {
-    description
-      "Updated for latest AMM contents.";
-    reference
-      "draft-birrane-dtn-adm";
-  }
-  revision 2016-04-01 {
-    description
-      "Updated to fix typos.";
-    reference
-      "draft-bsipos-dtn-amp-yang";
-  }
-  revision 2016-03-14 {
-    description
-      "Initial draft release.";
-    reference
-      "draft-bsipos-dtn-amp-yang";
   }
 
   /*
