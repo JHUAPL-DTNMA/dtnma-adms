@@ -48,7 +48,6 @@ module iana-display-hints {
     reference
       "draft-ietf-dtn-adm-yang";
   }
-
   amm:enum 0;
 
   // Integer number hints

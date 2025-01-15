@@ -44,7 +44,6 @@ module ietf-dtnma-agent-acl {
     reference
       "draft-ietf-dtn-adm-yang";
   }
-
   amm:enum 2;
   amm:typedef tag {
     amm:enum 0;
