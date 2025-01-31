@@ -74,7 +74,7 @@ module example-adm {
   }
   amm:const showall {
     amm:enum 8;
-    amm:type "//ietf-amm/TYPEDEF/RPTT";
+    amm:type "//ietf/amm/TYPEDEF/RPTT";
     amm:init-value "/AC/(./CONST/const1)";
   }
   amm:ctrl get {
@@ -130,7 +130,7 @@ module example-adm {
   }
   amm:oper hash_lit {
     amm:operand val {
-      amm:type "//ietf-amm/TYPEDEF/LITERAL";
+      amm:type "//ietf/amm/TYPEDEF/LITERAL";
       description
         "The object to dereference and hash.";
     }
