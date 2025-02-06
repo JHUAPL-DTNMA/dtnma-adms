@@ -423,7 +423,8 @@ module ietf-dtnma-agent {
          limitations so each destination might see different report
          contents.";
       amm:union {
-        amm:type "//ietf/dtnma-/TYPEDEF/rpt-tgt";
+        // FIXME: decide on whether this is a URI or a more complex ident hierarchy
+        amm:type "/ARITYPE/textstr";
         amm:type "/ARITYPE/null";
       }
     }
