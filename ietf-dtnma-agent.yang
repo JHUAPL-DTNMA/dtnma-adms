@@ -35,17 +35,11 @@ module ietf-dtnma-agent {
   reference
     "draft-ietf-dtn-adm-yang";
 
-  revision 2024-07-03 {
+  revision 2025-01-14 {
     description
       "Updated for latest ADM document.";
     reference
       "draft-ietf-dtn-adm-yang";
-  }
-  revision 2023-06-08 {
-    description
-      "Updated for latest AMM contents.";
-    reference
-      "draft-birrane-dtn-adm";
   }
 
   feature rules {
