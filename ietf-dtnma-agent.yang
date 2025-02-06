@@ -404,13 +404,28 @@ module ietf-dtnma-agent {
   amm:ctrl report-on {
     amm:enum 6;
     description
-      "Generate a report on an object without needing to define an object.
+      "Agent-wide control to generate a report from a report template (RPTT).
        The parameter is a single RPTT list that would be produced by an object.
        If used for more than one-shot diagnostics, defining a RPTT
-       (e.g. in a VAR) is more efficient because the RPTT item would not
-       be present in the report.";
-    amm:parameter rptt {
+       (e.g. in a CONST within an ODM) is more efficient because the RPTT
+       value would not need be present in the EXECSET or RPTSET.";
+    amm:parameter template {
+      description
+        "The reporting template, either as a RPTT value directly or as
+         a reference to a value-producing object (possibly parameterized)
+         which itself produces an RPTT value.";
       amm:type "//ietf/amm/TYPEDEF/rpt-tgt";
+    }
+    amm:parameter destinations {
+      description
+        "One or more destination for the resulting report.
+         It is possible that each destination has different access
+         limitations so each destination might see different report
+         contents.";
+      amm:union {
+        amm:type "//ietf/dtnma-/TYPEDEF/rpt-tgt";
+        amm:type "/ARITYPE/null";
+      }
     }
   }
 
@@ -438,13 +453,6 @@ module ietf-dtnma-agent {
       description
         "The exact value to store in the VAR.";
       amm:type "//ietf/amm/TYPEDEF/ANY";
-    }
-  }
-  amm:typedef hellotyp {
-    amm:enum 0;
-    amm:union {
-      amm:type "/ARITYPE/BYTE";
-      amm:type "/ARITYPE/UINT";
     }
   }
 
@@ -564,8 +572,10 @@ module ietf-dtnma-agent {
 
   // Objects related to SBR handling
   amm:edd sbr-list {
-    if-feature "rules";
     amm:enum 12;
+    if-feature "rules";
+    description
+      "A table of SBR within the agent.";
     amm:tblt {
       amm:key "obj";
       amm:column obj {
@@ -591,8 +601,10 @@ module ietf-dtnma-agent {
     }
   }
   amm:edd tbr-list {
-    if-feature "rules";
     amm:enum 13;
+    if-feature "rules";
+    description
+      "A table of TBR within the agent.";
     amm:tblt {
       amm:key "obj";
       amm:column obj {
@@ -680,7 +692,7 @@ module ietf-dtnma-agent {
   // Boolean operators
   amm:oper bool-not {
     amm:enum 10;
-    uses bool-binary-operands;
+    uses bool-unary-operands;
     uses bool-unary-result;
   }
   amm:oper bool-and {
