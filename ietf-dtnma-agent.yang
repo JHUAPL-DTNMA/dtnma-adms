@@ -583,8 +583,8 @@ module ietf-dtnma-agent {
 
   // Objects related to SBR handling
   amm:edd sbr-list {
-    amm:enum 12;
     if-feature "rules";
+    amm:enum 12;
     description
       "A table of SBR within the agent.";
     amm:tblt {
@@ -612,8 +612,8 @@ module ietf-dtnma-agent {
     }
   }
   amm:edd tbr-list {
-    amm:enum 13;
     if-feature "rules";
+    amm:enum 13;
     description
       "A table of TBR within the agent.";
     amm:tblt {
