@@ -199,15 +199,25 @@ module ietf-dtnma-agent {
     description
       "A table to indicate the ADM capability of the sending agent.";
     amm:tblt {
-      amm:key "adm-name";
-      amm:column adm-name {
+      amm:key "org-name adm-name";
+      amm:column org-name {
         description
-          "The module name of the ADM";
+          "The organization name containing the ADM";
         amm:type "/ARITYPE/TEXTSTR";
       }
-      amm:column enum {
+      amm:column org-enum {
         description
-          "The module enumeration of the ADM";
+          "The organization enumeration containing the ADM";
+        amm:type "/ARITYPE/VAST";
+      }
+      amm:column model-name {
+        description
+          "The model name of the ADM";
+        amm:type "/ARITYPE/TEXTSTR";
+      }
+      amm:column model-enum {
+        description
+          "The model enumeration of the ADM";
         amm:type "/ARITYPE/VAST";
       }
       amm:column revision {
