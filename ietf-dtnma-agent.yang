@@ -256,6 +256,10 @@ module ietf-dtnma-agent {
     amm:enum 5;
     amm:type "//ietf/amm/TYPEDEF/counter64";
   }
+  amm:edd num-msg-tx-failed {
+    amm:enum 15;
+    amm:type "//ietf/amm/TYPEDEF/counter64";
+  }
 
   // Execution counters and states
   amm:edd num-exec-started {
