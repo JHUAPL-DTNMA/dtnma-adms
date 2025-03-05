@@ -27,7 +27,7 @@ module example-adm {
     reference
       "draft-bsipos-dtn-amp-yang";
   }
-  amm:enum 65536;
+  amm:enum 10;
 
   feature example {
     description
