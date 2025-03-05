@@ -8,7 +8,10 @@ module example-adm {
   }
 
   organization
-    "Example Org.";
+    "Example Org." {
+    amm:enum 65535;
+  }
+
   contact
     "WG Web: <http://tools.ietf.org/wg/dtn/>
      WG List: <mailto:dtn@ietf.org>
