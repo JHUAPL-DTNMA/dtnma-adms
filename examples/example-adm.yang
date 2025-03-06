@@ -1,6 +1,6 @@
 module example-adm {
   yang-version 1.1;
-  namespace "ari://example-adm/";
+  namespace "ari://example/adm/";
   prefix example-adm;
 
   import ietf-amm {
@@ -8,7 +8,10 @@ module example-adm {
   }
 
   organization
-    "Example Org.";
+    "Example Org." {
+    amm:enum 65535;
+  }
+
   contact
     "WG Web: <http://tools.ietf.org/wg/dtn/>
      WG List: <mailto:dtn@ietf.org>
@@ -24,7 +27,7 @@ module example-adm {
     reference
       "draft-bsipos-dtn-amp-yang";
   }
-  amm:enum 65536;
+  amm:enum 10;
 
   feature example {
     description
