@@ -591,6 +591,7 @@ module ietf-dtnma-agent {
     amm:enum 12;
     description
       "A table of SBR within the agent.";
+    uses obj-list-params;
     amm:tblt {
       amm:key "obj";
       amm:column obj {
@@ -600,9 +601,6 @@ module ietf-dtnma-agent {
         description
           "The execution when this rule triggers.";
         amm:type "//ietf/amm/TYPEDEF/MAC";
-      }
-      amm:column start-time {
-        amm:type "//ietf/amm/TYPEDEF/TIME";
       }
       amm:column condition {
         amm:type "//ietf/amm/TYPEDEF/EXPR";
@@ -620,6 +618,7 @@ module ietf-dtnma-agent {
     amm:enum 13;
     description
       "A table of TBR within the agent.";
+    uses obj-list-params;
     amm:tblt {
       amm:key "obj";
       amm:column obj {
