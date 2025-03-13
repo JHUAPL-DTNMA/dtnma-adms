@@ -522,10 +522,10 @@ module ietf-dtnma-agent {
       amm:type "//ietf/amm/TYPEDEF/EXPR";
     }
   }
-  amm:ctrl discard-const {
+  amm:ctrl obsolete-const {
     amm:enum 12;
     description
-      "Discard a specific CONST if it is present.";
+      "Mark a specific CONST as obsolete if it is present.";
     amm:parameter obj {
       description
         "A reference to a CONST within an ODM only.";
