@@ -611,6 +611,9 @@ module ietf-dtnma-agent {
       amm:column max-count {
         amm:type "/ARITYPE/UVAST";
       }
+      amm:column enabled {
+        amm:type "/ARITYPE/BOOL";
+      }
     }
   }
   amm:edd tbr-list {
@@ -637,6 +640,9 @@ module ietf-dtnma-agent {
       }
       amm:column max-count {
         amm:type "/ARITYPE/UVAST";
+      }
+      amm:column enabled {
+        amm:type "/ARITYPE/BOOL";
       }
     }
   }
