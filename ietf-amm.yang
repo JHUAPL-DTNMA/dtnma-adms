@@ -166,6 +166,62 @@ module ietf-amm {
        The argument to this statement is the object name.";
   }
 
+  extension sbr {
+    argument name;
+    description
+      "Definition of a SBR within an ADM.
+       The argument to this statement is the object name.";
+  }
+
+  extension action {
+    argument name;
+    description
+      "The argument is the action for a rule object.";
+  }
+
+  extension condition {
+    argument name;
+    description
+      "The argument is the condition for a SBR object.";
+  }
+
+  extension min-interval {
+    argument name;
+    description
+      "The argument is the condition for a SBR object.";
+  }
+
+  extension max-count {
+    argument name;
+    description
+      "The argument is the maximum execution count for a rule object.";
+  }
+
+  extension init-enabled {
+    argument name;
+    description
+      "The argument is the initial enabled state for a rule object.";
+  }
+
+  extension tbr {
+    argument name;
+    description
+      "Definition of a TBR within an ADM.
+       The argument to this statement is the object name.";
+  }
+
+  extension start {
+    argument name;
+    description
+      "The argument is the start time for a TBR object.";
+  }
+
+  extension period {
+    argument name;
+    description
+      "The argument is the period for a TBR object.";
+  }
+
   /*
    * This section contains extensions for defining semantic type instances.
    */
