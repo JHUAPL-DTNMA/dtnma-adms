@@ -190,19 +190,19 @@ module ietf-amm {
   extension min-interval {
     argument relative-time;
     description
-      "The argument to this statement defines a minimum amount of time between condition evaluations for an SBR object.";
+      "The argument to this statement is a time-based ARI specifying the minimum amount of time between condition evaluations for an SBR object.";
   }
 
   extension max-count {
     argument count;
     description
-      "The argument to this statement is the maximum execution count for a rule object.";
+      "The argument to this statement is the integer maximum execution count for a rule object.";
   }
 
   extension init-enabled {
     argument state;
     description
-      "The argument to this statement is the initial enabled state for a rule object.";
+      "The argument to this statement is the boolean initial enabled state for a rule object.";
   }
 
   extension tbr {
@@ -215,13 +215,13 @@ module ietf-amm {
   extension start {
     argument time;
     description
-      "The argument to this statement is the start time for a TBR object.";
+      "The argument to this statement is the start time ARI for a TBR object.";
   }
 
   extension period {
     argument relative-time;
     description
-      "The argument to this statement is the period for a TBR object.";
+      "The argument to this statement is an ARI defining the period for a TBR object.";
   }
 
   /*
