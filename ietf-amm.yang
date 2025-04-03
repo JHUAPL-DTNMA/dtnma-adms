@@ -174,33 +174,35 @@ module ietf-amm {
   }
 
   extension action {
-    argument name;
+    argument exec-tgt; 
     description
-      "The argument is the action for a rule object.";
+      "Definition of the action executed by a rule object.
+       The argument to this statement is the exec-tgt to execute.";
   }
 
   extension condition {
-    argument name;
+    argument expr;
     description
-      "The argument is the condition for a SBR object.";
+      "Condition evaluated by an SBR object to determine whether to execute its action.
+       The argument to this statement is the expr to evaluate.";
   }
 
   extension min-interval {
-    argument name;
+    argument relative-time;
     description
-      "The argument is the condition for a SBR object.";
+      "The argument to this statement defines a minimum amount of time between condition evaluations for an SBR object.";
   }
 
   extension max-count {
-    argument name;
+    argument count;
     description
-      "The argument is the maximum execution count for a rule object.";
+      "The argument to this statement is the maximum execution count for a rule object.";
   }
 
   extension init-enabled {
-    argument name;
+    argument state;
     description
-      "The argument is the initial enabled state for a rule object.";
+      "The argument to this statement is the initial enabled state for a rule object.";
   }
 
   extension tbr {
@@ -211,15 +213,15 @@ module ietf-amm {
   }
 
   extension start {
-    argument name;
+    argument time;
     description
-      "The argument is the start time for a TBR object.";
+      "The argument to this statement is the start time for a TBR object.";
   }
 
   extension period {
-    argument name;
+    argument relative-time;
     description
-      "The argument is the period for a TBR object.";
+      "The argument to this statement is the period for a TBR object.";
   }
 
   /*
