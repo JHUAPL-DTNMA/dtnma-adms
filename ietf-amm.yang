@@ -174,7 +174,7 @@ module ietf-amm {
   }
 
   extension action {
-    argument exec-tgt; 
+    argument exec-tgt;
     description
       "Definition of the action executed by a rule object.
        The argument to this statement is the exec-tgt to execute.";
