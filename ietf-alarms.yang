@@ -1,0 +1,247 @@
+module ietf-alarms {
+  yang-version 1.1;
+  namespace "ari://ietf/alarms/";
+  prefix alarms;
+
+  import ietf-amm {
+    prefix amm;
+  }
+
+  organization
+    "IETF Delay Tolerant Networking (DTN) Working Group" {
+    amm:enum 1;
+  }
+  contact
+    "WG Web: <http://tools.ietf.org/wg/dtn/>
+     WG List: <mailto:dtn@ietf.org>
+
+     Editor: Brian Sipos
+             <mailto:brian.sipos+ietf@gmail.com>";
+  description
+    "This module implements the DTN Management Architecture (DTNMA)
+     Agent core functionality.
+
+     Copyright (c) 2024 IETF Trust and the persons identified as
+     authors of the code.  All rights reserved.
+
+     Redistribution and use in source and binary forms, with or
+     without modification, is permitted pursuant to, and subject to
+     the license terms contained in, the Revised BSD License set
+     forth in Section 4.c of the IETF Trust's Legal Provisions
+     Relating to IETF Documents
+     (https://trustee.ietf.org/license-info).
+
+     This version of this YANG module is part of RFC XXXX
+     (https://www.rfc-editor.org/info/rfcXXXX); see the RFC itself
+     for full legal notices.";
+  reference
+    "TBD";
+
+  revision 2025-04-11 {
+    description
+      "Updated for latest document.";
+    reference
+      "TBD";
+  }
+
+  feature history {
+    description
+      "Conforming to this feature enables a history of alarm states.";
+  }
+
+  amm:enum 4; // TBD
+
+  // Base identities and types for alarm states
+  amm:ident resource {
+    description
+      "The abstract base IDENT for all resources able to have alarm states.
+       Derived objects form the full inventory of resources which
+       can be present in the 'alarm-list' of this model.
+       
+       Derived objects MAY contain parameters in order to further
+       specify and narrow-down the logical or physical instance
+       experiencing an alarm state.";
+    amm:abstract true;
+  }
+  amm:ident category {
+    description
+      "The abstract base IDENT for all alarm categories.
+       Derived objects define more specific categories for faults.
+       The term 'type' was specifically avoided for this name to
+       avoid conflating with AMM value or object types.
+       
+       Derived objects SHALL specify details of the meaning of each
+       sub-category of alarm state to enough level of detail for
+       users to distinguish between all non-abstract categories.";
+    amm:abstract true;
+  }
+  amm:typedef severity {
+    description
+      "Levels of perceived seveirty for alarms are limited to specific values.
+       There is not a strict logical ordering of these values because in
+       some cases an indeterminate severity can be worse than a critical
+       failure of a resource.
+       This set of values is algined with ITU-T X.733-1992, Section 8.1.2.3";
+    reference "ITU-T X.733-1992";
+    type "/aritype/uint" {
+      amm:int-labels {
+        enum cleared {
+          description
+            "There is currently no specific alarm condition on a resource";
+          value 0;
+        }
+        enum indeterminate {
+          description
+            "The severity level cannot be determined.";
+          value 1;
+        }
+        enum warning {
+          value 2;
+        }
+        enum minor {
+          value 3;
+        }
+        enum major {
+          value 4;
+        }
+        enum critical {
+          value 5;
+        }
+      }
+    }
+  }
+  amm:typedef manager-state {
+    description
+      "The manager-controlled state of an 'alarm-list' entry.
+       This is separate from and independent of the severity state
+       of an entry, which is entirely controlled by the resource.";
+    type "/aritype/uint" {
+      amm:int-labels {
+        enum none {
+          value 0;
+          description
+            "The alarm is not being taken care of.";
+        }
+        enum acknowledged {
+          value 1;
+          description
+            "The alarm is being taken care of.";
+        }
+        enum closed {
+          value 2;
+          description
+            "Corrective action taken successfully.";
+        }
+      }
+    }
+  }
+
+  amm:edd alarm-list {
+    description
+      "A table to indicate the current and historical alarm states.";
+    amm:tblt {
+      amm:key "resource category";
+      amm:column resource {
+        description
+          "The resource with an alarm condition";
+        amm:type "/aritype/ident" {
+          amm:base "./ident/resource";
+        }
+      }
+      amm:column category {
+        description
+          "The specific category of alarm being indicated on the resource";
+        amm:type "/aritype/ident" {
+          amm:base "./ident/category";
+        }
+      }
+      amm:column severity {
+        description
+          "The latest severity of alarm state.";
+        amm:type "./typedef/severity";
+      }
+      amm:column time-created {
+        description
+          "The time at which this entry was added to the list.";
+        amm:type "//ietf/amm/typedef/timestamp";
+      }
+      amm:column time-updated {
+        description
+          "The time at which this entry was last updated.";
+        amm:type "//ietf/amm/typedef/timestamp";
+      }
+      amm:column history {
+        description
+          "A sub-table of severity change history for this entry.
+           If the agent does not support the 'history' feature then
+           this value will always be reported as undefined.";
+        if-feature "history"; //FIXME this is currently not part of the profile
+        amm:tblt {
+          min-elements 1;
+          amm:key "time";
+          amm:column time {
+            description
+              "The time at which the status was updated.";
+            amm:type "//ietf/amm/typedef/timestamp";
+          }
+          amm:column severity {
+            description
+              "The severity at this update.";
+            amm:type "./typedef/severity";
+          }
+        }
+      }
+
+      amm:column manager-state {
+        description
+          "The state set on this entry by a manager.
+           When first created the entry's state will be 'none'.";
+        amm:type "./typedef/manager-state";
+      }
+      amm:column manager-identity {
+        description
+          "The identity of the manager which last modified 'manager-state'.
+           When first created this identity will be invalid.";
+        amm:type "./typedef/TBD";
+      }
+      amm:column manager-time {
+        description
+          "The time at which the 'manager-state' was last modified.";
+        amm:union {
+          amm:type "//ietf/amm/typedef/timestamp";
+          amm:type "/aritype/null";
+        }
+      }
+    }
+  }
+
+  amm:edd resource-inventory {
+    description
+      "A table to list all alarm resources defined on the Agent.";
+    amm:tblt {
+      amm:key "resource";
+      amm:column resource {
+        description
+          "The non-abstract resource object.";
+        amm:type "/aritype/ident" {
+          amm:base "./ident/resource";
+        }
+      }
+    }
+  }
+  amm:edd category-inventory {
+    description
+      "A table to list all alarm categories defined on the Agent.";
+    amm:tblt {
+      amm:key "category";
+      amm:column category {
+        description
+          "The non-abstract category object.";
+        amm:type "/aritype/ident" {
+          amm:base "./ident/category";
+        }
+      }
+    }
+  }
+
+}
