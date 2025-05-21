@@ -1,0 +1,113 @@
+module ietf-inet-types {
+  yang-version 1.1;
+  namespace "ari://ietf/inet-types/";
+  prefix inet-types;
+
+  import ietf-amm {
+    prefix amm;
+  }
+  import ietf-network-base {
+    prefix network-base;
+  }
+
+  organization
+    "IETF Delay Tolerant Networking (DTN) Working Group" {
+    amm:enum 1;
+  }
+  contact
+    "WG Web: <http://tools.ietf.org/wg/dtn/>
+     WG List: <mailto:dtn@ietf.org>
+
+     Editor: Brian Sipos
+             <mailto:brian.sipos+ietf@gmail.com>";
+  description
+    "This module implements the DTN Management Architecture (DTNMA)
+     Agent core functionality.
+
+     Copyright (c) 2024 IETF Trust and the persons identified as
+     authors of the code.  All rights reserved.
+
+     Redistribution and use in source and binary forms, with or
+     without modification, is permitted pursuant to, and subject to
+     the license terms contained in, the Revised BSD License set
+     forth in Section 4.c of the IETF Trust's Legal Provisions
+     Relating to IETF Documents
+     (https://trustee.ietf.org/license-info).
+
+     This version of this YANG module is part of RFC XXXX
+     (https://www.rfc-editor.org/info/rfcXXXX); see the RFC itself
+     for full legal notices.";
+  reference
+    "draft-ietf-dtn-adm-yang";
+
+  revision 2025-01-31 {
+    description
+      "Updated for latest ADM document.";
+    reference
+      "draft-ietf-dtn-adm-yang";
+  }
+
+  // Display hints
+  amm:ident display-bstr-eid {
+    amm:enum 1;
+    description
+      "Interpret byte string values as CBOR-encoded BPv7 Endpiont IDs.";
+    reference
+      "RFC 9171: Bundle Protocol Version 7
+       RFC TBA: Update to the ipn URI scheme";
+    amm:base "//ietf/amm/IDENT/base-bstr";
+  }
+
+  // Data types
+  amm:typedef eid-text {
+    amm:enum 0;
+    description
+      "The BP EID as a URI text form.
+       Only valid BPv7 schemes should be present in this type.";
+    reference
+      "RFC 9171: Bundle Protocol Version 7";
+    amm:type "//ietf/network-base/typedef/uri";
+  }
+  amm:typedef eid-cbor {
+    description
+      "The BP EID as a CBOR binary form.
+       This includes the EID array head.";
+    reference
+      "RFC 9171: Bundle Protocol Version 7";
+    amm:type "/aritype/cbor" {
+      amm:display-hint "./ident/display-bstr-eid";
+    }
+  }
+
+  // Network endpoints for BP
+  amm:ident bp-endpoint {
+    amm:enum 0;
+    description
+      "This object defines parameters for BPv7 transport endpoints.
+       The 'eid' uses the binary form for compactness,
+       which includes a display-hint to help end users.";
+    reference
+      "RFC 9171: Bundle Protocol Version 7";
+    amm:base "//ietf/network-base/ident/abstract-endpoint";
+    amm:parameter eid {
+      description
+        "The EID of the endpoint.";
+      amm:type "./TYPEDEF/eid-cbor";
+    }
+  }
+  amm:ident bp-eid-pattern {
+    description
+      "This object defines parameters for pattern matching
+       bp-endpoint values.
+       The 'pattern' uses the binary form for compactness,
+       which includes a display-hint to help end users.";
+    reference
+      "RFC TBA: Bundle Protocol Endpoint ID Patterns";
+    amm:base "//ietf/network-base/ident/abstract-endpoint-pattern";
+    amm:parameter pattern {
+      description
+        "The EID of the endpoint.";
+      amm:type "./TYPEDEF/eid-cbor";
+    }
+  }
+}

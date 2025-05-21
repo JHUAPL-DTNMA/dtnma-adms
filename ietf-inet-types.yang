@@ -1,0 +1,195 @@
+module ietf-inet-types {
+  yang-version 1.1;
+  namespace "ari://ietf/inet-types/";
+  prefix inet-types;
+
+  import ietf-amm {
+    prefix amm;
+  }
+  import ietf-network-base {
+    prefix network-base;
+  }
+
+  organization
+    "IETF Delay Tolerant Networking (DTN) Working Group" {
+    amm:enum 1;
+  }
+  contact
+    "WG Web: <http://tools.ietf.org/wg/dtn/>
+     WG List: <mailto:dtn@ietf.org>
+
+     Editor: Brian Sipos
+             <mailto:brian.sipos+ietf@gmail.com>";
+  description
+    "This module implements the DTN Management Architecture (DTNMA)
+     Agent core functionality.
+
+     Copyright (c) 2024 IETF Trust and the persons identified as
+     authors of the code.  All rights reserved.
+
+     Redistribution and use in source and binary forms, with or
+     without modification, is permitted pursuant to, and subject to
+     the license terms contained in, the Revised BSD License set
+     forth in Section 4.c of the IETF Trust's Legal Provisions
+     Relating to IETF Documents
+     (https://trustee.ietf.org/license-info).
+
+     This version of this YANG module is part of RFC XXXX
+     (https://www.rfc-editor.org/info/rfcXXXX); see the RFC itself
+     for full legal notices.";
+  reference
+    "draft-ietf-dtn-adm-yang";
+
+  revision 2025-01-31 {
+    description
+      "Updated for latest ADM document.";
+    reference
+      "draft-ietf-dtn-adm-yang";
+  }
+  amm:enum 25;
+
+  // Display hints
+  amm:ident display-bstr-ipaddress {
+    amm:enum 2;
+    description
+      "Interpret byte string values as either IPv4 address (4-octet length)
+       or IPv6 address (16-octet length) and display as human-friendly text
+       according to RFC 4001 conventions.";
+    reference
+      "RFC 4001: Textual Conventions for Internet Network Addresses";
+    amm:base "//ietf/amm/IDENT/base-bstr";
+  }
+
+  // Data types
+  amm:typedef ipv4-address {
+    amm:enum 0;
+    description
+      "The ipv4-address type represents an IPv4 address in binary form.
+       This form always uses exactly 4 bytes to encode address values.";
+    reference
+      "RFC 791: Internet Protocol";
+    amm:type "/aritype/bytestr" {
+      length "4";
+      amm:display-hint "./ident/display-bstr-ipaddress";
+    }
+  }
+  amm:typedef ipv6-address {
+    amm:enum 1;
+    description
+      "The ipv6-address type represents an IPv6 address in binary form.
+       This form always uses exactly 16 bytes to encode address values.";
+    reference
+      "RFC 4291: IP Version 6 Addressing Architecture";
+    amm:type "/aritype/bytestr" {
+      length "16";
+      amm:display-hint "./ident/display-bstr-ipaddress";
+    }
+  }
+  amm:typedef ip-address {
+    amm:enum 2;
+    description
+      "This type represents either an IPv4 or IPv6 address, which is
+       distinguished by each having a specific valid length.";
+    amm:union {
+      amm:type "./typedef/ipv4-address";
+      amm:type "./typedef/ipv6-address";
+    }
+  }
+  amm:typedef zone {
+    amm:enum 4;
+    description
+      "The zone index is used to disambiguate identical address
+       values.  For link-local addresses, the zone index will
+       typically be the interface index number or the name of an
+       interface.  If the zone index is not present, the default
+       zone of the device will be used.
+
+       The canonical format for the zone index is the numerical
+       form.";
+    reference
+      "RFC 4007: IPv6 Scoped Address Architecture
+       RFC 4001: Textual Conventions for Internet Network Addresses";
+    amm:union {
+      amm:type "/aritype/uint";
+      amm:type "/aritype/textstr";
+    }
+  }
+  amm:typedef port-number {
+    amm:enum 3;
+    description
+      "The port-number type represents a 16-bit port number of an
+       Internet transport-layer protocol such as UDP, TCP, DCCP, or
+       SCTP.  Port numbers are assigned by IANA.  A current list of
+       all assignments is available from <http://www.iana.org/>.
+
+       Note that the port number value zero is reserved by IANA.  In
+       situations where the value zero does not make sense, it can
+       be excluded by subtyping the port-number type.
+       In the value set and its semantics, this type is equivalent
+       to the InetPortNumber textual convention of the SMIv2 and
+       the inet:port-number of NETMOD.";
+    reference
+      "RFC  768: User Datagram Protocol
+       RFC  793: Transmission Control Protocol
+       RFC 4960: Stream Control Transmission Protocol
+       RFC 4340: Datagram Congestion Control Protocol (DCCP)
+       RFC 4001: Textual Conventions for Internet Network Addresses";
+    amm:type "/aritype/uint" {
+      length "0..65535";
+    }
+  }
+
+  // Endpoint types for IP
+  amm:ident ip-endpoint {
+    amm:enum 0;
+    description
+      "This object defines parameters for an IP endpoint
+       independent of any possible transport above the network
+       layer.";
+    amm:base "//ietf/network-base/ident/abstract-endpoint";
+    amm:parameter address {
+      description
+        "The endpoint network address.";
+      amm:type "./typedef/ip-address";
+    }
+    amm:parameter zone {
+      description
+        "The optional zone used to interpret the address.";
+      amm:default "null";
+      amm:union {
+        amm:type "./typedef/zone";
+        amm:type "/aritype/null";
+      }
+    }
+  }
+  amm:ident ip-transport {
+    amm:enum 1;
+    description
+      "This object defines parameters for any IP-based transport
+       protocol which uses a 16-bit port number, as seen from outside
+       of the IP node.
+       This is different from parameters necessary to bind a
+       transport from within that IP node, which might include
+       additional information.";
+    amm:base "//ietf/network-base/ident/abstract-endpoint";
+    amm:parameter address {
+      description
+        "The endpoint network address.";
+      amm:type "./typedef/ip-address";
+    }
+    amm:parameter port {
+      description
+        "The transport layer port number.";
+      amm:type "./typedef/port-number";
+    }
+    amm:parameter zone {
+      description
+        "The optional zone used to interpret the address.";
+      amm:default "null";
+      amm:union {
+        amm:type "./typedef/zone";
+        amm:type "/aritype/null";
+      }
+    }
+  }
+}

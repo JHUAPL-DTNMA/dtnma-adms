@@ -107,6 +107,11 @@ module ietf-amm {
        An 'base' substatement must be present.";
   }
 
+  extension abstract {
+    argument is-abstract;
+    description
+      "The boolean abstract marking of an IDENT object.";
+  }
   extension base {
     argument name;
     description
