@@ -642,6 +642,74 @@ module ietf-dtnma-agent {
     }
   }
 
+  // CTRLs related to rules
+  amm:ctrl add-sbr {
+    if-feature "rules";
+    amm:enum 11;
+    description
+      "Add SBR to the agent.";
+    amm:parameter action {
+      description
+        "The execution when this rule triggers.";
+      amm:type "//ietf/amm/TYPEDEF/MAC";
+    }
+    amm:parameter start-time {
+      amm:type "//ietf/amm/TYPEDEF/TIME";
+    }
+    amm:parameter condition {
+      amm:type "//ietf/amm/TYPEDEF/EXPR";
+    }
+    amm:parameter min-interval {
+      amm:type "/ARITYPE/TD";
+    }
+    amm:parameter max-count {
+      amm:type "/ARITYPE/UVAST";
+    }
+    amm:result obj{
+      amm:type "/ARITYPE/SBR";
+    }
+  }
+  amm:ctrl add-tbr {
+    if-feature "rules";
+    amm:enum 12;
+    description
+      "Add TBR to the agent.";
+    amm:parameter action {
+      description
+        "The execution when this rule triggers.";
+      amm:type "//ietf/amm/TYPEDEF/MAC";
+    }
+    amm:parameter start-time {
+      amm:type "//ietf/amm/TYPEDEF/TIME";
+    }
+    amm:parameter period {
+      amm:type "/ARITYPE/TD";
+    }
+    amm:parameter max-count {
+      amm:type "/ARITYPE/UVAST";
+    }
+    amm:result obj {
+      amm:type "/ARITYPE/TBR";
+    }
+  }
+  amm:ctrl delete-rule {
+    if-feature "rules";
+    amm:enum 12;
+    description
+      "Delete rule from the agent.";
+    amm:parameter rule {
+      description
+        "The rule to delete.";
+      amm:union {
+        amm:type "/ARITYPE/SBR";
+        amm:type "/ARITYPE/TBR";
+      }
+    }
+    amm:result success {
+      amm:type "/ARITYPE/BOOL";
+    }
+  }
+
   // Numeric operators
   amm:oper negate {
     amm:enum 0;
