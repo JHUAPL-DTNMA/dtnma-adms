@@ -117,6 +117,16 @@ module ietf-network-base {
       amm:base "./IDENT/abstract-endpoint";
     }
   }
+  amm:typedef endpoint-or-uri {
+    amm:enum 3;
+    description
+      "A value which is either a specific parameterized endpoint
+       IDENT reference or a text URI value identifying an endpoint.";
+    amm:union {
+      amm:type "./typedef/endpoint";
+      amm:type "./typedef/uri";
+    }
+  }
   amm:ident abstract-endpoint-pattern {
     amm:enum 1;
     description

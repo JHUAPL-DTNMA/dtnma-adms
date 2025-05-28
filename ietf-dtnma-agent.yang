@@ -12,6 +12,9 @@ module ietf-dtnma-agent {
   import ietf-amm-types {
     prefix amm-types;
   }
+  import ietf-network-base {
+    prefix network-base;
+  }
 
   organization
     "IETF Delay Tolerant Networking (DTN) Working Group" {
@@ -443,8 +446,7 @@ module ietf-dtnma-agent {
          limitations so each destination might see different report
          contents.";
       amm:union {
-        // FIXME: decide on whether this is a URI or a more complex ident hierarchy
-        amm:type "/aritype/textstr";
+        amm:type "//ietf/network-base/typedef/endpoint-or-uri";
         amm:type "/aritype/null";
       }
     }
