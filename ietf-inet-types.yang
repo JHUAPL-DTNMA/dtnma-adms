@@ -46,7 +46,7 @@ module ietf-inet-types {
   reference
     "draft-ietf-dtn-adm-yang";
 
-  revision 2025-01-31 {
+  revision 2025-05-28 {
     description
       "Updated for latest ADM document.";
     reference

@@ -47,7 +47,7 @@ module iana-display-hints {
   reference
     "https://www.iana.org/assignments/DTNMA-TBA";
 
-  revision 2025-01-31 {
+  revision 2025-05-28 {
     description
       "Updated for latest ADM document.";
     reference
