@@ -266,7 +266,7 @@ module ietf-dtnma-agent-acl {
     }
     amm:parameter members {
       amm:ulist {
-          amm:type "//ietf/network-base/TYPEDEF/endpoint-pattern";
+        amm:type "//ietf/network-base/TYPEDEF/endpoint-pattern";
       }
     }
     amm:result error-code {
