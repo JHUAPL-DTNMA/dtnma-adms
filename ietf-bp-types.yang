@@ -1,7 +1,7 @@
-module ietf-inet-types {
+module ietf-bp-types {
   yang-version 1.1;
-  namespace "ari://ietf/inet-types/";
-  prefix inet-types;
+  namespace "ari://ietf/bp-types/";
+  prefix bp-types;
 
   import ietf-amm {
     prefix amm;
@@ -23,6 +23,12 @@ module ietf-inet-types {
   description
     "This module implements the DTN Management Architecture (DTNMA)
      Agent core functionality.
+
+     The key words 'MUST', 'MUST NOT', 'REQUIRED', 'SHALL', 'SHALL
+     NOT', 'SHOULD', 'SHOULD NOT', 'RECOMMENDED', 'NOT RECOMMENDED',
+     'MAY', and 'OPTIONAL' in this document are to be interpreted as
+     described in BCP 14 (RFC 2119) (RFC 8174) when, and only when,
+     they appear in all capitals, as shown here.
 
      Copyright (c) 2024 IETF Trust and the persons identified as
      authors of the code.  All rights reserved.
@@ -46,6 +52,7 @@ module ietf-inet-types {
     reference
       "draft-ietf-dtn-adm-yang";
   }
+  amm:enum 5;
 
   // Display hints
   amm:ident display-bstr-eid {
@@ -63,15 +70,17 @@ module ietf-inet-types {
     amm:enum 0;
     description
       "The BP EID as a URI text form.
-       Only valid BPv7 schemes should be present in this type.";
+       Only valid BPv7 schemes SHALL be present in values of
+       this type.";
     reference
       "RFC 9171: Bundle Protocol Version 7";
     amm:type "//ietf/network-base/typedef/uri";
   }
   amm:typedef eid-cbor {
+    amm:enum 1;
     description
       "The BP EID as a CBOR binary form.
-       This includes the EID array head.";
+       This for includes the EID array head.";
     reference
       "RFC 9171: Bundle Protocol Version 7";
     amm:type "/aritype/cbor" {
@@ -96,6 +105,7 @@ module ietf-inet-types {
     }
   }
   amm:ident bp-eid-pattern {
+    amm:enum 2;
     description
       "This object defines parameters for pattern matching
        bp-endpoint values.
@@ -107,7 +117,7 @@ module ietf-inet-types {
     amm:parameter pattern {
       description
         "The EID of the endpoint.";
-      amm:type "./TYPEDEF/eid-cbor";
+      amm:type "./TYPEDEF/eid-pattern-cbor";
     }
   }
 }

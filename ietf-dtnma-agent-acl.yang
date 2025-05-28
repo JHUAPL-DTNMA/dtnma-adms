@@ -9,6 +9,9 @@ module ietf-dtnma-agent-acl {
   import ietf-dtnma-agent {
     prefix da;
   }
+  import ietf-network-base {
+    prefix network-base;
+  }
 
   organization
     "IETF Delay Tolerant Networking (DTN) Working Group" {
@@ -199,12 +202,6 @@ module ietf-dtnma-agent-acl {
   //
   // Group management
   //
-  amm:typedef transport-endpoint-pattern {
-    amm:enum 5;
-    amm:type "/ARITYPE/IDENT" {
-      amm:base "//ietf/dtnma-agent/IDENT/transport-endpoint-pattern";
-    }
-  }
   amm:edd current-group-id {
     amm:enum 3;
     description
@@ -233,7 +230,7 @@ module ietf-dtnma-agent-acl {
         description
           "The list of members of the group, identified by matching transport endpoint.";
         amm:ulist {
-          amm:type "./TYPEDEF/transport-endpoint-pattern";
+          amm:type "//ietf/network-base/TYPEDEF/endpoint-pattern";
         }
       }
     }
@@ -269,7 +266,7 @@ module ietf-dtnma-agent-acl {
     }
     amm:parameter members {
       amm:ulist {
-        amm:type "./TYPEDEF/transport-endpoint-pattern";
+          amm:type "//ietf/network-base/TYPEDEF/endpoint-pattern";
       }
     }
     amm:result error-code {

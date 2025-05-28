@@ -23,6 +23,12 @@ module ietf-network-base {
      and all derived objects are layer- and/or protocol-specific with
      appropriate parameters.
 
+     The key words 'MUST', 'MUST NOT', 'REQUIRED', 'SHALL', 'SHALL
+     NOT', 'SHOULD', 'SHOULD NOT', 'RECOMMENDED', 'NOT RECOMMENDED',
+     'MAY', and 'OPTIONAL' in this document are to be interpreted as
+     described in BCP 14 (RFC 2119) (RFC 8174) when, and only when,
+     they appear in all capitals, as shown here.
+
      Copyright (c) 2025 IETF Trust and the persons identified as
      authors of the code.  All rights reserved.
 
@@ -45,8 +51,52 @@ module ietf-network-base {
     reference
       "draft-ietf-dtn-adm-yang";
   }
+  amm:enum 26;
 
-  // Base IDENTs
+  // General purpose network data types
+  amm:typedef uri {
+    amm:enum 0;
+    description
+      "A specialization of the textstr type to only contain a single
+       Uniform Resource Identifier (URI) as defined by STD 66.
+
+       Objects using the uri type MUST be in US-ASCII encoding,
+       and MUST be normalized as described by RFC 3986 Sections
+       6.2.1, 6.2.2.1, and 6.2.2.2.  All unnecessary
+       percent-encoding is removed, and all case-insensitive
+       characters are set to lowercase except for hexadecimal
+       digits, which are normalized to uppercase as described in
+       Section 6.2.2.1.
+
+       The purpose of this normalization is to help provide
+       unique URIs.  Note that this normalization is not
+       sufficient to provide uniqueness.  Two URIs that are
+       textually distinct after this normalization may still be
+       equivalent.
+
+       Objects using the uri type may restrict the schemes that
+       they permit.  For example, 'data:' and 'urn:' schemes
+       might not be appropriate.
+
+       A zero-length URI is not a valid URI.  This can be used to
+       express 'URI absent' where required.
+
+       In the value set and its semantics, this type is equivalent
+       to the Uri SMIv2 textual convention defined in RFC 5017.";
+    reference
+      "RFC 3986: Uniform Resource Identifier (URI): Generic Syntax
+       RFC 3305: Report from the Joint W3C/IETF URI Planning Interest
+                 Group: Uniform Resource Identifiers (URIs), URLs,
+                 and Uniform Resource Names (URNs): Clarifications
+                 and Recommendations
+       RFC 5017: MIB Textual Conventions for Uniform Resource
+                 Identifiers (URIs)";
+    amm:type "/aritype/textstr" {
+      pattern '[a-z][a-z0-9+-.]*:.*';
+    }
+  }
+
+  // Abstract base IDENTs and types
   amm:ident abstract-endpoint {
     amm:enum 0;
     description
@@ -57,5 +107,34 @@ module ietf-network-base {
        node might require additional parameters outside of what is
        present in this object hierarchy.";
     amm:abstract true;
+  }
+  amm:typedef endpoint {
+    amm:enum 1;
+    description
+      "A value which references a non-abstract derived object
+       for specific types of network or transport endpoints.";
+    amm:type "/aritype/ident" {
+      amm:base "./IDENT/abstract-endpoint";
+    }
+  }
+  amm:ident abstract-endpoint-pattern {
+    amm:enum 1;
+    description
+      "This object defines an abstract base for general purpose
+       network/transport endpoint pattern matching.
+       Each derived type is expected to match only a single derived
+       IDENT based on the 'abstract-endpoint' object.
+       Each pattern SHALL specify in its descriptions which types
+       of endpoints can possibly match the pattern.";
+    amm:abstract true;
+  }
+  amm:typedef endpoint-pattern {
+    amm:enum 2;
+    description
+      "A value which references a non-abstract derived pattern object
+       for specific types of network or transport endpoints.";
+    amm:type "/aritype/ident" {
+      amm:base "./IDENT/abstract-endpoint-pattern";
+    }
   }
 }
