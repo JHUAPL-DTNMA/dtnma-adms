@@ -75,8 +75,8 @@ module ietf-inet-types {
     reference
       "RFC 791: Internet Protocol";
     amm:type "/aritype/bytestr" {
-      length "4";
       amm:display-hint "./ident/display-bstr-ipaddress";
+      length "4";
     }
   }
   amm:typedef ipv6-address {
@@ -87,8 +87,8 @@ module ietf-inet-types {
     reference
       "RFC 4291: IP Version 6 Addressing Architecture";
     amm:type "/aritype/bytestr" {
-      length "16";
       amm:display-hint "./ident/display-bstr-ipaddress";
+      length "16";
     }
   }
   amm:typedef ip-address {
@@ -190,12 +190,9 @@ module ietf-inet-types {
        RFC 5890: Internationalized Domain Names in Applications
                  (IDNA): Definitions and Document Framework";
     amm:type "/aritype/textstr" {
-      /*
-       pattern
-         '((([a-zA-Z0-9_]([a-zA-Z0-9\-_]){0,61})?[a-zA-Z0-9]\.)*'
-       + '([a-zA-Z0-9_]([a-zA-Z0-9\-_]){0,61})?[a-zA-Z0-9]\.?)'
-       + '|\.';
-       */
+      pattern '((([a-zA-Z0-9_]([a-zA-Z0-9\-_]){0,61})?[a-zA-Z0-9]\.)*'
+            + '([a-zA-Z0-9_]([a-zA-Z0-9\-_]){0,61})?[a-zA-Z0-9]\.?)'
+            + '|\.';
       length "1..253";
     }
   }
