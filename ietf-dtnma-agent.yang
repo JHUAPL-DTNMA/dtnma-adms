@@ -530,10 +530,10 @@ module ietf-dtnma-agent {
       amm:type "//ietf/amm-types/typedef/EXPR";
     }
   }
-  amm:ctrl discard-const {
+  amm:ctrl obsolete-const {
     amm:enum 12;
     description
-      "Discard a specific CONST if it is present.";
+      "Mark a specific CONST as obsolete if it is present.";
     amm:parameter obj {
       description
         "A reference to a CONST within an ODM only.";
@@ -599,6 +599,7 @@ module ietf-dtnma-agent {
     amm:enum 12;
     description
       "A table of SBR within the agent.";
+    uses obj-list-params;
     amm:tblt {
       amm:key "obj";
       amm:column obj {
@@ -609,9 +610,6 @@ module ietf-dtnma-agent {
           "The execution when this rule triggers.";
         amm:type "//ietf/amm-types/typedef/MAC";
       }
-      amm:column start-time {
-        amm:type "//ietf/amm-types/typedef/TIME";
-      }
       amm:column condition {
         amm:type "//ietf/amm-types/typedef/EXPR";
       }
@@ -621,6 +619,9 @@ module ietf-dtnma-agent {
       amm:column max-count {
         amm:type "/aritype/UVAST";
       }
+      amm:column enabled {
+        amm:type "/ARITYPE/BOOL";
+      }
     }
   }
   amm:edd tbr-list {
@@ -628,6 +629,7 @@ module ietf-dtnma-agent {
     amm:enum 13;
     description
       "A table of TBR within the agent.";
+    uses obj-list-params;
     amm:tblt {
       amm:key "obj";
       amm:column obj {
@@ -646,6 +648,9 @@ module ietf-dtnma-agent {
       }
       amm:column max-count {
         amm:type "/aritype/UVAST";
+      }
+      amm:column enabled {
+        amm:type "/ARITYPE/BOOL";
       }
     }
   }
