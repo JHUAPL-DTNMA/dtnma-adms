@@ -61,6 +61,27 @@ module ietf-dtnma-agent {
     }
   }
 
+  grouping object-id {
+    description
+      "Common parameters for providing object id";
+    amm:parameter namespace {
+      description
+        "Namespace";
+      amm:default "//ietf/dtnma-agent/";
+      amm:type "/ARITYPE/TEXTSTR";
+    }
+    amm:parameter obj-name {
+      description
+        "Text obj ID";
+      amm:type "/ARITYPE/TEXTSTR";
+    }
+    amm:parameter obj-enum {
+      description
+        "Int enum obj ID";
+      amm:type "/ARITYPE/UINT";
+    }
+  }
+
   grouping any-binary-operands {
     description
       "Any-value bianry operands";
@@ -505,11 +526,7 @@ module ietf-dtnma-agent {
     amm:enum 11;
     description
       "Ensure a specific CONST is present.";
-    amm:parameter obj {
-      description
-        "A reference to a CONST within an ODM only.";
-      amm:type "/ARITYPE/CONST";
-    }
+    uses object-id;
     amm:parameter type {
       description
         "The type for the CONST object.";
@@ -553,11 +570,7 @@ module ietf-dtnma-agent {
     amm:enum 9;
     description
       "Ensure a specific VAR is present.";
-    amm:parameter obj {
-      description
-        "A reference to a VAR within an ODM only.";
-      amm:type "/ARITYPE/VAR";
-    }
+    uses object-id;
     amm:parameter type {
       description
         "The type for the VAR object.";
@@ -613,6 +626,12 @@ module ietf-dtnma-agent {
       amm:column max-count {
         amm:type "/ARITYPE/UVAST";
       }
+      amm:column init-enabled {
+        amm:type "/ARITYPE/BOOL";
+      }
+      amm:column enabled {
+        amm:type "/ARITYPE/BOOL";
+      }
     }
   }
   amm:edd tbr-list {
@@ -639,15 +658,22 @@ module ietf-dtnma-agent {
       amm:column max-count {
         amm:type "/ARITYPE/UVAST";
       }
+      amm:column init-enabled {
+        amm:type "/ARITYPE/BOOL";
+      }
+      amm:column enabled {
+        amm:type "/ARITYPE/BOOL";
+      }
     }
   }
 
   // CTRLs related to rules
-  amm:ctrl add-sbr {
+  amm:ctrl ensure-sbr {
     if-feature "rules";
     amm:enum 11;
     description
-      "Add SBR to the agent.";
+      "Ensure SBR with the object-id exists with the given parameters.";
+    uses object-id;
     amm:parameter action {
       description
         "The execution when this rule triggers.";
@@ -665,15 +691,19 @@ module ietf-dtnma-agent {
     amm:parameter max-count {
       amm:type "/ARITYPE/UVAST";
     }
-    amm:result obj{
-      amm:type "/ARITYPE/SBR";
+    amm:parameter init-enabled {
+      amm:type "/ARITYPE/BOOL";
+    }
+    amm:result res {
+      amm:type "/ARITYPE/UINT";
     }
   }
-  amm:ctrl add-tbr {
+  amm:ctrl ensure-tbr {
     if-feature "rules";
     amm:enum 12;
     description
-      "Add TBR to the agent.";
+      "Ensure TBR with the object-id exists with the given parameters.";
+    uses object-id;
     amm:parameter action {
       description
         "The execution when this rule triggers.";
@@ -688,16 +718,59 @@ module ietf-dtnma-agent {
     amm:parameter max-count {
       amm:type "/ARITYPE/UVAST";
     }
-    amm:result obj {
-      amm:type "/ARITYPE/TBR";
+    amm:parameter max-count {
+      amm:type "/ARITYPE/UVAST";
+    }
+    amm:parameter init-enabled {
+      amm:type "/ARITYPE/BOOL";
+    }
+    amm:result res {
+      amm:type "/ARITYPE/UINT";
+    }
+  }
+  amm:ctrl ensure-enabled {
+    if-feature "rules";
+    amm:enum 12;
+    description
+      "Ensure rule is enabled or disabled.";
+    amm:parameter obj-id {
+      description
+        "The rule to ensure enabled setting for.";
+      amm:union {
+        amm:type "/ARITYPE/SBR";
+        amm:type "/ARITYPE/TBR";
+      }
+    }
+    amm:parameter enabled {
+      amm:type "/ARITYPE/BOOL";
+    }
+    amm:result res {
+      amm:type "/ARITYPE/uint";
+    }
+  }
+  amm:ctrl reset-enabled {
+    if-feature "rules";
+    amm:enum 12;
+    description
+      "Reset rule enabled to initial setting.";
+    amm:parameter obj-id {
+      description
+        "The rule to reset enabled seetting for.";
+      amm:union {
+        amm:type "/ARITYPE/SBR";
+        amm:type "/ARITYPE/TBR";
+      }
+    }
+    amm:result res {
+      amm:type "/ARITYPE/UINT";
     }
   }
   amm:ctrl delete-rule {
     if-feature "rules";
-    amm:enum 12;
+    amm:enum 13;
     description
       "Delete rule from the agent.";
-    amm:parameter rule {
+    amm:parameter obj-id {
       description
         "The rule to delete.";
       amm:union {
