@@ -765,11 +765,11 @@ module ietf-dtnma-agent {
       amm:type "/ARITYPE/UINT";
     }
   }
-  amm:ctrl delete-rule {
+  amm:ctrl obsolete-rule {
     if-feature "rules";
     amm:enum 17;
     description
-      "Delete rule from the agent.";
+      "Makes rule obsolete.";
     amm:parameter obj-id {
       description
         "The rule to delete.";
