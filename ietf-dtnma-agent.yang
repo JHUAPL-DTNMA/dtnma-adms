@@ -670,7 +670,7 @@ module ietf-dtnma-agent {
   // CTRLs related to rules
   amm:ctrl ensure-sbr {
     if-feature "rules";
-    amm:enum 11;
+    amm:enum 13;
     description
       "Ensure SBR with the object-id exists with the given parameters.";
     uses object-id;
@@ -700,7 +700,7 @@ module ietf-dtnma-agent {
   }
   amm:ctrl ensure-tbr {
     if-feature "rules";
-    amm:enum 12;
+    amm:enum 14;
     description
       "Ensure TBR with the object-id exists with the given parameters.";
     uses object-id;
@@ -730,7 +730,7 @@ module ietf-dtnma-agent {
   }
   amm:ctrl ensure-enabled {
     if-feature "rules";
-    amm:enum 12;
+    amm:enum 15;
     description
       "Ensure rule is enabled or disabled.";
     amm:parameter obj-id {
@@ -750,7 +750,7 @@ module ietf-dtnma-agent {
   }
   amm:ctrl reset-enabled {
     if-feature "rules";
-    amm:enum 12;
+    amm:enum 16;
     description
       "Reset rule enabled to initial setting.";
     amm:parameter obj-id {
@@ -767,7 +767,7 @@ module ietf-dtnma-agent {
   }
   amm:ctrl delete-rule {
     if-feature "rules";
-    amm:enum 13;
+    amm:enum 17;
     description
       "Delete rule from the agent.";
     amm:parameter obj-id {
