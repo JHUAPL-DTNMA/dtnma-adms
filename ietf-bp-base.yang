@@ -1,7 +1,7 @@
-module ietf-bp-types {
+module ietf-bp-base {
   yang-version 1.1;
-  namespace "ari://ietf/bp-types/";
-  prefix bp-types;
+  namespace "ari://ietf/bp-base/";
+  prefix bp-base;
 
   import ietf-amm {
     prefix amm;

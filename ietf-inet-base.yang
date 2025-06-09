@@ -1,7 +1,7 @@
-module ietf-inet-types {
+module ietf-inet-base {
   yang-version 1.1;
-  namespace "ari://ietf/inet-types/";
-  prefix inet-types;
+  namespace "ari://ietf/inet-base/";
+  prefix inet-base;
 
   import ietf-amm {
     prefix amm;

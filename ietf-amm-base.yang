@@ -1,6 +1,6 @@
-module ietf-amm-types {
+module ietf-amm-base {
   yang-version 1.1;
-  namespace "ari://ietf/amm-types/";
+  namespace "ari://ietf/amm-base/";
   prefix amm-type;
 
   import ietf-amm {

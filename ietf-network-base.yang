@@ -92,6 +92,7 @@ module ietf-network-base {
        RFC 5017: MIB Textual Conventions for Uniform Resource
                  Identifiers (URIs)";
     amm:type "/aritype/textstr" {
+      // This pattern is on the normalized scheme
       pattern '[a-z][a-z0-9+-.]*:.*';
     }
   }
