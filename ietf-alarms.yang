@@ -6,6 +6,9 @@ module ietf-alarms {
   import ietf-amm {
     prefix amm;
   }
+  import ietf-amm-base {
+    prefix amm-base;
+  }
   import ietf-network-base {
     prefix network-base;
   }
@@ -70,24 +73,6 @@ module ietf-alarms {
   }
 
   amm:enum 4;
-
-  // TBD move into base ADM
-  amm:ident bstr-ari-pattern {
-    amm:enum 2;
-    description
-      "Represent a binary form of ARI Pattern as human-friendly
-       text form, converting identifiers if possible based on ADM
-       and ODM contents.";
-    amm:base "//iana/display-hints/ident/base-bstr";
-  }
-  amm:typedef ari-pattern {
-    amm:enum 2;
-    description
-      "The value type for an ARI pattern in binary form.";
-    amm:type "/aritype/cbor" {
-      amm:display-hint "./ident/bstr-ari-pattern";
-    }
-  }
 
   // Base identities and types for alarm states
   amm:ident resource {
@@ -207,6 +192,15 @@ module ietf-alarms {
           description
             "Corrective action taken successfully.";
         }
+        enum shelved {
+          value 3;
+          description
+            "The alarm is shelved and moved out of the
+             'alarm-list' table.
+             If a manager sets this state manually, it SHALL
+             be equivalent to adding the specific resource and
+             category of that entry to the 'shelf-list'";
+        }
       }
     }
   }
@@ -241,12 +235,12 @@ module ietf-alarms {
       amm:column time-created {
         description
           "The time at which this entry was added to the list.";
-        amm:type "//ietf/amm-types/typedef/timestamp";
+        amm:type "//ietf/amm-base/typedef/timestamp";
       }
       amm:column time-updated {
         description
           "The time at which this entry was last updated.";
-        amm:type "//ietf/amm-types/typedef/timestamp";
+        amm:type "//ietf/amm-base/typedef/timestamp";
       }
       amm:column history {
         if-feature "history";
@@ -263,7 +257,7 @@ module ietf-alarms {
           amm:column time {
             description
               "The time at which the status was updated.";
-            amm:type "//ietf/amm-types/typedef/timestamp";
+            amm:type "//ietf/amm-base/typedef/timestamp";
           }
           amm:column severity {
             description
@@ -288,12 +282,26 @@ module ietf-alarms {
         description
           "The time at which the 'manager-state' was last modified.";
         amm:union {
-          amm:type "//ietf/amm-types/typedef/timestamp";
+          amm:type "//ietf/amm-base/typedef/timestamp";
           amm:type "/aritype/null";
         }
       }
     }
   }
+  amm:ctrl purge-alarms {
+    description
+      "";
+    amm:parameter
+    amm:result affected {
+      description
+        "The count of 'alarm-list' entries affected by the
+         execution.";
+    }
+  }
+  amm:ctrl compress-alarms {
+  }
+
+  // Introspection of available objects for alarms
   amm:edd resource-inventory {
     amm:enum 1;
     description
@@ -338,13 +346,13 @@ module ietf-alarms {
         description
           "A pattern to match specific resource objects.
            This MAY include only integer identifiers for compactness.";
-        amm:type "//ietf/amm/typedef/ari-pattern";
+        amm:type "//ietf/amm-base/typedef/ari-pattern";
       }
       amm:column categories {
         description
           "A pattern to match specific category objects.
            This MAY include only integer identifiers for compactness.";
-        amm:type "//ietf/amm/typedef/ari-pattern";
+        amm:type "//ietf/amm-base/typedef/ari-pattern";
       }
     }
   }

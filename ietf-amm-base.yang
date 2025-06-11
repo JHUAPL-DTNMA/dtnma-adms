@@ -298,4 +298,26 @@ module ietf-amm-base {
       amm:type "./TYPEDEF/rptt-item";
     }
   }
+
+  // Representation of ARI patterns as values
+  amm:ident bstr-ari-pattern {
+    amm:enum 0;
+    description
+      "Represent a binary form of ARI Pattern as human-friendly
+       text form, converting identifiers if possible based on ADM
+       and ODM contents.";
+    reference
+      "draft-ietf-dtn-adm-yang";
+    amm:base "//iana/display-hints/ident/base-bstr";
+  }
+  amm:typedef ari-pattern {
+    amm:enum 25;
+    description
+      "The value type for an ARI pattern in binary form.";
+    reference
+      "draft-ietf-dtn-adm-yang";
+    amm:type "/aritype/cbor" {
+      amm:display-hint "./ident/bstr-ari-pattern";
+    }
+  }
 }

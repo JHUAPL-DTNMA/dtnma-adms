@@ -796,35 +796,38 @@ module ietf-dtnma-agent {
   }
 
   // Table filtering
-  amm:typedef column-id {
-    amm:enum 1;
+  amm:typedef tbl-row-filter {
     description
-      "Name or index of an individual column in a table.";
-    amm:union {
-      amm:type "/aritype/UVAST";
-      amm:type "/aritype/TEXTSTR";
-    }
+      "An expression used to filter-in rows of a table.
+       This value is an expression with LABEL values treated as
+       column identifiers and substituted with the associated
+       cell value for each table row.
+       The result of evaluating the expression is converted to
+       boolean type and any rows which evalute as truthy
+       are filtered-in.
+       An expression with a single literal 'true' value can be
+       used to match all rows.";
+    amm:type "//ietf/amm-base/typedef/EXPR";
   }
   amm:oper tbl-filter {
     amm:enum 20;
     description
-      "Filter a table first by rows and then by columns.";
-    amm:parameter row-match {
+      "Filter a table first by rows (using an expression) and then
+       by columns (using identifiers).";
+    amm:parameter rows {
       description
-        "A filter to match rows with specific cell contents.
-         Each key is a column to compare and each value is an expression
-         with LABEL values substituted by column names.";
-      amm:ulist {
-        amm:type "//ietf/amm-base/typedef/EXPR";
-      }
+        "A filter to match rows with specific cell contents.";
+      amm:type "./typedef/tbl-row-filter";
     }
     amm:parameter columns {
       description
-        "A filter to match rows with specific cell contents.
-         Each key is a column to compare and each value is an expression
-         with LABEL values substituted by column names.";
+        "An ordered list of column identifiers (text or integer labels)
+         used to filter-in which columns to include in the result
+         table value.
+         An empty list SHALL be treated as including all columns from
+         the input table in their original order.";
       amm:ulist {
-        amm:type "./typedef/column-id";
+        amm:type "/aritype/label";
       }
     }
     amm:operand in {
