@@ -289,16 +289,39 @@ module ietf-alarms {
     }
   }
   amm:ctrl purge-alarms {
+    amm:enum 2;
     description
-      "";
-    amm:parameter
+      "Remove specific entries of the 'alarm-list' table";
+    amm:parameter filter {
+      description
+        "A filter to match rows with specific cell contents.";
+      amm:type "./typedef/tbl-row-filter";
+    }
     amm:result affected {
       description
         "The count of 'alarm-list' entries affected by the
          execution.";
+      amm:type "/aritype/uvast";
     }
   }
   amm:ctrl compress-alarms {
+    amm:enum 3;
+    description
+      "Compress the timeline expressed in the 'history' column of
+       the 'alarm-list' table.
+       The result on affected entries will be a history which
+       is compressed to only a single, current row.";
+    amm:parameter filter {
+      description
+        "A filter to match rows with specific cell contents.";
+      amm:type "./typedef/tbl-row-filter";
+    }
+    amm:result affected {
+      description
+        "The count of 'alarm-list' entries affected by the
+         execution.";
+      amm:type "/aritype/uvast";
+    }
   }
 
   // Introspection of available objects for alarms
