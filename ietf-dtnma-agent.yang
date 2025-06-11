@@ -30,6 +30,12 @@ module ietf-dtnma-agent {
     "This module implements the DTN Management Architecture (DTNMA)
      Agent core functionality.
 
+     The key words 'MUST', 'MUST NOT', 'REQUIRED', 'SHALL', 'SHALL
+     NOT', 'SHOULD', 'SHOULD NOT', 'RECOMMENDED', 'NOT RECOMMENDED',
+     'MAY', and 'OPTIONAL' in this document are to be interpreted as
+     described in BCP 14 (RFC 2119) (RFC 8174) when, and only when,
+     they appear in all capitals, as shown here.
+
      Copyright (c) 2024 IETF Trust and the persons identified as
      authors of the code.  All rights reserved.
 
@@ -797,6 +803,7 @@ module ietf-dtnma-agent {
 
   // Table filtering
   amm:typedef tbl-row-filter {
+    amm:enum 0;
     description
       "An expression used to filter-in rows of a table.
        This value is an expression with LABEL values treated as
