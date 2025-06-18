@@ -198,7 +198,7 @@ module ietf-dtnma-agent {
         "The organization name containing the ODM";
       amm:type "/aritype/TEXTSTR";
     }
-    amm:column org-id {
+    amm:parameter org-id {
       description
         "The organization enumeration ID containing the ODM";
       amm:type "/aritype/INT";
@@ -208,7 +208,7 @@ module ietf-dtnma-agent {
         "The model name containing the ODM";
       amm:type "/aritype/TEXTSTR";
     }
-    amm:column model-id {
+    amm:parameter model-id {
       description
         "The model enumeration ID containing the ODM";
       amm:type "/aritype/INT";
