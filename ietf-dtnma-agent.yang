@@ -190,6 +190,31 @@ module ietf-dtnma-agent {
     }
   }
 
+  grouping odm-id {
+    description
+      "Common parameters for identifiying an ODM";
+    amm:parameter org-name {
+      description
+        "The organization name containing the ODM";
+      amm:type "/aritype/TEXTSTR";
+    }
+    amm:column org-id {
+      description
+        "The organization enumeration ID containing the ODM";
+      amm:type "/aritype/INT";
+    }
+    amm:parameter model-name {
+      description
+        "The model name containing the ODM";
+      amm:type "/aritype/TEXTSTR";
+    }
+    amm:column model-id {
+      description
+        "The model enumeration ID containing the ODM";
+      amm:type "/aritype/INT";
+    }
+  }
+
   amm:enum 1;
   amm:edd sw-vendor {
     amm:enum 0;
@@ -457,7 +482,6 @@ module ietf-dtnma-agent {
     amm:enum 16;
     description
       "A table of ODM within the agent.";
-    uses obj-list-params;
     amm:tblt {
       amm:key "org-name odm-name";
       amm:column org-name {
@@ -487,39 +511,12 @@ module ietf-dtnma-agent {
       }
     }
   }
-
-  grouping odm-id {
-      description 
-        "Common parameters for identifiying an ODM";
-      amm:parameter org-name {
-        description
-          "The organization name containing the ODM";
-        amm:type "/aritype/TEXTSTR";
-      }
-      amm:column org-id {
-        description
-          "The organization enumeration ID containing the ODM";
-        amm:type "/aritype/INT";
-      }
-      amm:parameter model-name {
-        description
-          "The model name containing the ODM";
-        amm:type "/aritype/TEXTSTR";
-      }
-      amm:column model-id {
-        description
-          "The model enumeration ID containing the ODM";
-        amm:type "/aritype/INT";
-      }
-  }
-
   amm:ctrl ensure-odm {
     amm:enum 13;
     description
       "Ensure a specific ODM is present.";
     uses odm-id;
   }
-
   amm:ctrl obsolete-odm {
     amm:enum 14;
     description
