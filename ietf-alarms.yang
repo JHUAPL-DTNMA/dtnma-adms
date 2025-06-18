@@ -104,7 +104,7 @@ module ietf-alarms {
   amm:typedef severity {
     amm:enum 0;
     description
-      "Levels of perceived seveirty for alarms are limited to
+      "Levels of perceived severity for alarms are limited to
        specific values.
        There is not a strict logical ordering of these values
        because in some cases an indeterminate severity can be
