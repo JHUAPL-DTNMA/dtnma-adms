@@ -109,7 +109,7 @@ module ietf-alarms {
        There is not a strict logical ordering of these values
        because in some cases an indeterminate severity can be
        worse than a critical failure of a resource.
-       This set of values is algined with ITU-T X.733-1992,
+       This set of values is aligned with ITU-T X.733-1992,
        Section 8.1.2.3";
     reference
       "ITU-T X.733-1992: Systems Management: Alarm Reporting Function";
