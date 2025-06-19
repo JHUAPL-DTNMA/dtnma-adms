@@ -774,7 +774,7 @@ module ietf-dtnma-agent {
       "Makes rule obsolete in an ODM.";
     amm:parameter obj-id {
       description
-        "The rule to delete.";
+        "A reference to a rule within an ODM only.";
       amm:union {
         amm:type "/ARITYPE/SBR";
         amm:type "/ARITYPE/TBR";
