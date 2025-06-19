@@ -63,18 +63,19 @@ module ietf-dtnma-agent {
 
   grouping object-id {
     description
-      "Common parameters for providing object id";
+      "Common parameters for providing object reference to ensure an object exists in an ODM.";
     amm:parameter namespace {
       description
-        "Namespace";
-      amm:default "//ietf/dtnma-agent/";
-      amm:type "/ARITYPE/TEXTSTR";
+        "ODM namespace";
+      amm:type "/ARITYPE/TEXTSTR"{
+        pattern '^![A-Za-z_][0-9A-Za-z_\-\.]*';
+      }
     }
     amm:parameter obj-name {
       description
         "Text obj ID";
       amm:type "/ARITYPE/TEXTSTR"{
-        pattern "^[A-Za-z_][0-9A-Za-z_\-\.]*";
+        pattern '^[A-Za-z_][0-9A-Za-z_\-\.]*';
       }
     }
     amm:parameter obj-enum {
