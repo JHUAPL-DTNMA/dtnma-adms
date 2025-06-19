@@ -73,12 +73,14 @@ module ietf-dtnma-agent {
     amm:parameter obj-name {
       description
         "Text obj ID";
-      amm:type "/ARITYPE/TEXTSTR";
+      amm:type "/ARITYPE/TEXTSTR"{
+        pattern "^[A-Za-z_][0-9A-Za-z_\-\.]*";
+      }
     }
     amm:parameter obj-enum {
       description
         "Int enum obj ID";
-      amm:type "/ARITYPE/UINT";
+      amm:type "/ARITYPE/INT";
     }
   }
 
@@ -525,7 +527,7 @@ module ietf-dtnma-agent {
   amm:ctrl ensure-const {
     amm:enum 11;
     description
-      "Ensure a specific CONST is present.";
+      "Ensure a specific CONST is present in an ODM.";
     uses object-id;
     amm:parameter type {
       description
@@ -569,7 +571,7 @@ module ietf-dtnma-agent {
   amm:ctrl ensure-var {
     amm:enum 9;
     description
-      "Ensure a specific VAR is present.";
+      "Ensure a specific VAR is present in an ODM.";
     uses object-id;
     amm:parameter type {
       description
@@ -671,7 +673,7 @@ module ietf-dtnma-agent {
     if-feature "rules";
     amm:enum 13;
     description
-      "Ensure SBR with the object-id exists with the given parameters.";
+      "Ensure SBR with the object-id exists with the given parameters in an ODM.";
     uses object-id;
     amm:parameter action {
       description
@@ -701,7 +703,7 @@ module ietf-dtnma-agent {
     if-feature "rules";
     amm:enum 14;
     description
-      "Ensure TBR with the object-id exists with the given parameters.";
+      "Ensure TBR with the object-id exists with the given parameters in an ODM.";
     uses object-id;
     amm:parameter action {
       description
@@ -768,7 +770,7 @@ module ietf-dtnma-agent {
     if-feature "rules";
     amm:enum 17;
     description
-      "Makes rule obsolete.";
+      "Makes rule obsolete in an ODM.";
     amm:parameter obj-id {
       description
         "The rule to delete.";
