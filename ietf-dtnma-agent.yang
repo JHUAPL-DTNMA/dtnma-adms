@@ -491,17 +491,18 @@ module ietf-dtnma-agent {
     description
       "Ensure a specific ODM is present.";
     amm:parameter odm-ns {
-      description "Namespace of the ODM";
+      description
+        "Namespace of the ODM";
       amm:type "/aritype/namespace";
     }
   }
-
   amm:ctrl obsolete-odm {
     amm:enum 14;
     description
       "Mark a specific ODM as obsolete if it is present.";
     amm:parameter odm-ns {
-      description "Namespace of the ODM";
+      description
+        "Namespace of the ODM";
       amm:type "/aritype/namespace";
     }
   }
