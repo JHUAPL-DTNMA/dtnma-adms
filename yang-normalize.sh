@@ -26,7 +26,7 @@ fi
 
 SELFDIR=$(readlink -f $(dirname "${BASH_SOURCE[0]}"))
 # line length to allow RFC doc indentation
-LINTOPTS="--ietf --lint-ensure-hyphenated-names --max-line-length=66"
+LINTOPTS="--ietf --lint-ensure-hyphenated-names --max-line-length=66 --adm-check-refs"
 OUTOPTS="-t adm-add-enum -f yang --yang-canonical"
 NORMALIZE="ace_adm --path=${SELFDIR} ${LINTOPTS} ${OUTOPTS}"
 

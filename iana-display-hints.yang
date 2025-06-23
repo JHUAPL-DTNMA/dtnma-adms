@@ -56,14 +56,6 @@ module iana-display-hints {
   amm:enum 0;
 
   // Integer number hints
-  amm:ident base-integer {
-    amm:enum 1;
-    description
-      "Intermediate base IDENT of display hints for integer values.
-       Hints derived from this object SHALL only apply to built-in types
-       BYTE, INT, UINT, VAST, and UVAST.";
-    amm:base "//ietf/amm/IDENT/display-hint";
-  }
   amm:ident display-int-dec {
     amm:enum 2;
     description
@@ -84,14 +76,6 @@ module iana-display-hints {
   }
 
   // Floating-point number hints
-  amm:ident base-float {
-    amm:enum 5;
-    description
-      "Intermediate base IDENT of display hints for floating point values.
-       Hints derived from this object SHALL only apply to built-in types
-       REAL32 and REAL64.";
-    amm:base "//ietf/amm/IDENT/display-hint";
-  }
   amm:ident display-float-dec {
     amm:enum 6;
     description
@@ -112,14 +96,6 @@ module iana-display-hints {
   }
 
   // Byte-string hints
-  amm:ident base-bstr {
-    amm:enum 9;
-    description
-      "Intermediate base IDENT of display hints for byte string values.
-       Hints derived from this object SHALL only apply to built-in type
-       BYTESTR.";
-    amm:base "//ietf/amm/IDENT/display-hint";
-  }
   amm:ident display-bstr-text {
     amm:enum 10;
     description
@@ -145,25 +121,8 @@ module iana-display-hints {
       "draft-ietf-dtn-ari";
     amm:base "//ietf/amm/IDENT/base-bstr";
   }
-  amm:ident display-bstr-uuid {
-    amm:enum 17;
-    description
-      "Interpret byte string values as UUID and display as human-friendly text
-       according to RFC 4122 conventions.";
-    reference
-      "RFC 4122: A Universally Unique IDentifier (UUID) URN Namespace";
-    amm:base "//ietf/amm/IDENT/base-bstr";
-  }
 
   // TIME type (TP or TD built-ins) hints
-  amm:ident base-time {
-    amm:enum 13;
-    description
-      "Intermediate base IDENT of display hints for time values.
-       Hints derived from this object SHALL only apply to built-in types
-       TP and TD.";
-    amm:base "//ietf/amm/IDENT/display-hint";
-  }
   amm:ident display-time-text {
     amm:enum 14;
     description

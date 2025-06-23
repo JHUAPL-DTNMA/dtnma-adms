@@ -6,9 +6,6 @@ module ietf-amm-base {
   import ietf-amm {
     prefix amm;
   }
-  import ietf-amm-semtype {
-    prefix amm-semtype;
-  }
 
   organization
     "IETF Delay Tolerant Networking (DTN) Working Group" {
@@ -53,6 +50,52 @@ module ietf-amm-base {
       "draft-ietf-dtn-adm-yang";
   }
   amm:enum 25;
+
+  // abstract display hint hierarchy
+  amm:ident display-hint {
+    amm:enum 0;
+    description
+      "The base IDENT for objects usable as arguments for the
+       'amm:display-hint' extension.
+       This object itself provides no display hint purpose.";
+    amm:abstract true;
+  }
+  amm:ident display-hint-integer {
+    amm:enum 1;
+    description
+      "Intermediate base IDENT of display hints for integer values.
+       Hints derived from this object SHALL only apply to built-in types
+       BYTE, INT, UINT, VAST, and UVAST.";
+    amm:abstract true;
+    amm:base "./IDENT/display-hint";
+  }
+  amm:ident display-hint-float {
+    amm:enum 2;
+    description
+      "Intermediate base IDENT of display hints for floating point values.
+       Hints derived from this object SHALL only apply to built-in types
+       REAL32 and REAL64.";
+    amm:abstract true;
+    amm:base "./IDENT/display-hint";
+  }
+  amm:ident display-hint-bstr {
+    amm:enum 3;
+    description
+      "Intermediate base IDENT of display hints for byte string values.
+       Hints derived from this object SHALL only apply to built-in type
+       BYTESTR.";
+    amm:abstract true;
+    amm:base "./IDENT/display-hint";
+  }
+  amm:ident display-hint-time {
+    amm:enum 4;
+    description
+      "Intermediate base IDENT of display hints for time values.
+       Hints derived from this object SHALL only apply to built-in types
+       TP and TD.";
+    amm:abstract true;
+    amm:base "./IDENT/display-hint";
+  }
 
   // Named type unions
   amm:typedef type-ref {
@@ -296,6 +339,28 @@ module ietf-amm-base {
       "The contents of a report template, encoded as the sequence of items.";
     amm:ulist {
       amm:type "./TYPEDEF/rptt-item";
+    }
+  }
+
+  // Representation of ARI patterns as values
+  amm:ident bstr-ari-pattern {
+    amm:enum 5;
+    description
+      "Represent a binary form of ARI Pattern as human-friendly
+       text form, converting identifiers if possible based on ADM
+       and ODM contents.";
+    reference
+      "draft-ietf-dtn-adm-yang";
+    amm:base "./ident/display-hint-bstr";
+  }
+  amm:typedef ari-pattern {
+    amm:enum 25;
+    description
+      "The value type for an ARI pattern in binary form.";
+    reference
+      "draft-ietf-dtn-adm-yang";
+    amm:type "/aritype/cbor" {
+      amm:display-hint "./ident/bstr-ari-pattern";
     }
   }
 }

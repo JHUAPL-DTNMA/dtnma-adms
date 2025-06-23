@@ -6,6 +6,9 @@ module ietf-inet-base {
   import ietf-amm {
     prefix amm;
   }
+  import ietf-amm-base {
+    prefix amm-base;
+  }
   import ietf-network-base {
     prefix network-base;
   }
@@ -63,7 +66,7 @@ module ietf-inet-base {
        according to RFC 4001 conventions.";
     reference
       "RFC 4001: Textual Conventions for Internet Network Addresses";
-    amm:base "//ietf/amm/IDENT/base-bstr";
+    amm:base "//ietf/amm-base/IDENT/display-hint-bstr";
   }
 
   // Data types

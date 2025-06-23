@@ -52,13 +52,6 @@ module ietf-amm-semtype {
   amm:enum 24;
 
   // Base IDENT objects
-  amm:ident display-hint {
-    amm:enum 0;
-    description
-      "The base IDENT for objects usable as arguments for the
-       'amm:display-hint' extension.
-       This object itself provides no display hint purpose.";
-  }
   amm:ident semtype {
     amm:enum 1;
     description
@@ -75,7 +68,7 @@ module ietf-amm-semtype {
     amm:parameter name {
       description
         "A built-in ARITYPE or reference to TYPEDEF object being used.";
-      amm:type "./TYPEDEF/type-ref";
+      amm:type "//ietf/amm-base/TYPEDEF/type-ref";
     }
     // FIXME include constraints and annotations also?
   }

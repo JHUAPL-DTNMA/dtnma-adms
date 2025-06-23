@@ -6,6 +6,9 @@ module ietf-bp-base {
   import ietf-amm {
     prefix amm;
   }
+  import ietf-amm-base {
+    prefix amm-base;
+  }
   import ietf-network-base {
     prefix network-base;
   }
@@ -54,37 +57,62 @@ module ietf-bp-base {
   }
   amm:enum 5;
 
-  // Display hints
+  // Direct encoded Endpoint IDs
   amm:ident display-bstr-eid {
     amm:enum 1;
     description
-      "Interpret byte string values as CBOR-encoded BPv7 Endpiont IDs.";
+      "Interpret byte string values as a CBOR-encoded
+       BPv7 Endpiont ID value.";
     reference
       "RFC 9171: Bundle Protocol Version 7
-       RFC TBA: Update to the ipn URI scheme";
-    amm:base "//ietf/amm/IDENT/base-bstr";
+       RFC 9758: Updates to the ipn URI scheme";
+    amm:base "//ietf/amm-base/IDENT/display-hint-bstr";
   }
-
-  // Data types
   amm:typedef eid-text {
     amm:enum 0;
     description
-      "The BP EID as a URI text form.
+      "The BP EID in a URI text form.
        Only valid BPv7 schemes SHALL be present in values of
        this type.";
     reference
-      "RFC 9171: Bundle Protocol Version 7";
+      "RFC 9171: Bundle Protocol Version 7
+       RFC 9758: Updates to the ipn URI scheme";
     amm:type "//ietf/network-base/typedef/uri";
   }
   amm:typedef eid-cbor {
     amm:enum 1;
     description
-      "The BP EID as a CBOR binary form.
-       This for includes the EID array head.";
+      "The BP EID in a CBOR binary form.
+       This form includes the enclosing array head.";
     reference
-      "RFC 9171: Bundle Protocol Version 7";
+      "RFC 9171: Bundle Protocol Version 7
+       RFC 9758: Updates to the ipn URI scheme
+       draft-ietf-dtn-eid-pattern: Bundle Protocol Endpoint ID Patterns";
     amm:type "/aritype/cbor" {
       amm:display-hint "./ident/display-bstr-eid";
+    }
+  }
+
+  // Encoded Endpoint ID Patterns
+  amm:ident display-bstr-eid-pattern {
+    amm:enum 3;
+    description
+      "Interpret byte string values as a CBOR-encoded
+       BPv7 Endpiont ID Pattern.";
+    reference
+      "RFC 9171: Bundle Protocol Version 7
+       RFC 9758: Updates to the ipn URI scheme";
+    amm:base "//ietf/amm-base/IDENT/display-hint-bstr";
+  }
+  amm:typedef eid-pattern-cbor {
+    amm:enum 2;
+    description
+      "The BP EID Pattern in a CBOR binary form.
+       This form includes the enclosing array head.";
+    reference
+      "draft-ietf-dtn-eid-pattern: Bundle Protocol Endpoint ID Patterns";
+    amm:type "/aritype/cbor" {
+      amm:display-hint "./ident/display-bstr-eid-pattern";
     }
   }
 
