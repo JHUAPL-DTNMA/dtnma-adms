@@ -6,6 +6,15 @@ module ietf-dtnma-agent {
   import ietf-amm {
     prefix amm;
   }
+  import ietf-amm-semtype {
+    prefix amm-semtype;
+  }
+  import ietf-amm-base {
+    prefix amm-base;
+  }
+  import ietf-network-base {
+    prefix network-base;
+  }
 
   organization
     "IETF Delay Tolerant Networking (DTN) Working Group" {
@@ -37,7 +46,7 @@ module ietf-dtnma-agent {
   reference
     "draft-ietf-dtn-adm-yang";
 
-  revision 2025-01-31 {
+  revision 2025-05-28 {
     description
       "Updated for latest ADM document.";
     reference
@@ -57,7 +66,7 @@ module ietf-dtnma-agent {
       description
         "If true, listings will include objects from ADMs";
       amm:default "false";
-      amm:type "/ARITYPE/BOOL";
+      amm:type "/aritype/BOOL";
     }
   }
 
@@ -91,12 +100,12 @@ module ietf-dtnma-agent {
     amm:operand left {
       description
         "The left-side operand.";
-      amm:type "//ietf/amm/TYPEDEF/ANY";
+      amm:type "//ietf/amm-base/typedef/ANY";
     }
     amm:operand right {
       description
         "The left-side operand.";
-      amm:type "//ietf/amm/TYPEDEF/ANY";
+      amm:type "//ietf/amm-base/typedef/ANY";
     }
   }
 
@@ -106,7 +115,7 @@ module ietf-dtnma-agent {
     amm:operand val {
       description
         "The single value.";
-      amm:type "//ietf/amm/TYPEDEF/NUMERIC";
+      amm:type "//ietf/amm-base/typedef/NUMERIC";
     }
   }
 
@@ -116,12 +125,12 @@ module ietf-dtnma-agent {
     amm:operand left {
       description
         "The left-side operand.";
-      amm:type "//ietf/amm/TYPEDEF/NUMERIC";
+      amm:type "//ietf/amm-base/typedef/NUMERIC";
     }
     amm:operand right {
       description
         "The left-side operand.";
-      amm:type "//ietf/amm/TYPEDEF/NUMERIC";
+      amm:type "//ietf/amm-base/typedef/NUMERIC";
     }
   }
 
@@ -131,7 +140,7 @@ module ietf-dtnma-agent {
     amm:result result {
       description
         "The single value.";
-      amm:type "//ietf/amm/TYPEDEF/NUMERIC";
+      amm:type "//ietf/amm-base/typedef/NUMERIC";
     }
   }
 
@@ -141,7 +150,7 @@ module ietf-dtnma-agent {
     amm:operand val {
       description
         "The single value.";
-      amm:type "//ietf/amm/TYPEDEF/INTEGER";
+      amm:type "//ietf/amm-base/typedef/INTEGER";
     }
   }
 
@@ -151,12 +160,12 @@ module ietf-dtnma-agent {
     amm:operand left {
       description
         "The left-side operand.";
-      amm:type "//ietf/amm/TYPEDEF/INTEGER";
+      amm:type "//ietf/amm-base/typedef/INTEGER";
     }
     amm:operand right {
       description
         "The left-side operand.";
-      amm:type "//ietf/amm/TYPEDEF/INTEGER";
+      amm:type "//ietf/amm-base/typedef/INTEGER";
     }
   }
 
@@ -166,7 +175,7 @@ module ietf-dtnma-agent {
     amm:result result {
       description
         "The single value.";
-      amm:type "//ietf/amm/TYPEDEF/INTEGER";
+      amm:type "//ietf/amm-base/typedef/INTEGER";
     }
   }
 
@@ -176,7 +185,7 @@ module ietf-dtnma-agent {
     amm:operand val {
       description
         "The single value.";
-      amm:type "/ARITYPE/BOOL";
+      amm:type "/aritype/BOOL";
     }
   }
 
@@ -186,12 +195,12 @@ module ietf-dtnma-agent {
     amm:operand left {
       description
         "The left-side operand.";
-      amm:type "/ARITYPE/BOOL";
+      amm:type "/aritype/BOOL";
     }
     amm:operand right {
       description
         "The left-side operand.";
-      amm:type "/ARITYPE/BOOL";
+      amm:type "/aritype/BOOL";
     }
   }
 
@@ -201,7 +210,7 @@ module ietf-dtnma-agent {
     amm:result result {
       description
         "The single value.";
-      amm:type "/ARITYPE/BOOL";
+      amm:type "/aritype/BOOL";
     }
   }
 
@@ -210,13 +219,13 @@ module ietf-dtnma-agent {
     amm:enum 0;
     description
       "The vendor for this Agent implementation.";
-    amm:type "/ARITYPE/TEXTSTR";
+    amm:type "/aritype/TEXTSTR";
   }
   amm:edd sw-version {
     amm:enum 1;
     description
       "The version for this Agent implementation.";
-    amm:type "/ARITYPE/TEXTSTR";
+    amm:type "/aritype/TEXTSTR";
   }
   amm:edd capability {
     amm:enum 2;
@@ -227,33 +236,33 @@ module ietf-dtnma-agent {
       amm:column org-name {
         description
           "The organization name containing the ADM";
-        amm:type "/ARITYPE/TEXTSTR";
+        amm:type "/aritype/TEXTSTR";
       }
       amm:column org-enum {
         description
           "The organization enumeration containing the ADM";
-        amm:type "/ARITYPE/VAST";
+        amm:type "/aritype/VAST";
       }
       amm:column model-name {
         description
           "The model name of the ADM";
-        amm:type "/ARITYPE/TEXTSTR";
+        amm:type "/aritype/TEXTSTR";
       }
       amm:column model-enum {
         description
           "The model enumeration of the ADM";
-        amm:type "/ARITYPE/VAST";
+        amm:type "/aritype/VAST";
       }
       amm:column revision {
         description
           "The specific revision the agent supports.";
-        amm:type "/ARITYPE/TEXTSTR";
+        amm:type "/aritype/TEXTSTR";
       }
       amm:column features {
         description
           "The features of the ADM which the agent supports.";
         amm:ulist {
-          amm:type "/ARITYPE/TEXTSTR";
+          amm:type "/aritype/TEXTSTR";
         }
       }
     }
@@ -264,52 +273,52 @@ module ietf-dtnma-agent {
       "A report template to indicate the presence of an agent
        on a network.";
     amm:init-value "/AC/(./EDD/sw-vendor,./EDD/sw-version,./EDD/capability)";
-    amm:type "//ietf/amm/TYPEDEF/RPTT";
+    amm:type "//ietf/amm-base/typedef/RPTT";
   }
 
   // Messaging counters
   amm:edd num-msg-rx {
     amm:enum 3;
-    amm:type "//ietf/amm/TYPEDEF/counter64";
+    amm:type "//ietf/amm-base/typedef/counter64";
   }
   amm:edd num-msg-rx-failed {
     amm:enum 4;
-    amm:type "//ietf/amm/TYPEDEF/counter64";
+    amm:type "//ietf/amm-base/typedef/counter64";
   }
   amm:edd num-msg-tx {
     amm:enum 5;
-    amm:type "//ietf/amm/TYPEDEF/counter64";
+    amm:type "//ietf/amm-base/typedef/counter64";
   }
   amm:edd num-msg-tx-failed {
     amm:enum 15;
-    amm:type "//ietf/amm/TYPEDEF/counter64";
+    amm:type "//ietf/amm-base/typedef/counter64";
   }
 
   // Execution counters and states
   amm:edd num-exec-started {
     amm:enum 6;
-    amm:type "//ietf/amm/TYPEDEF/counter64";
+    amm:type "//ietf/amm-base/typedef/counter64";
   }
   amm:edd num-exec-succeeded {
     amm:enum 7;
-    amm:type "//ietf/amm/TYPEDEF/counter64";
+    amm:type "//ietf/amm-base/typedef/counter64";
   }
   amm:edd num-exec-failed {
     amm:enum 8;
-    amm:type "//ietf/amm/TYPEDEF/counter64";
+    amm:type "//ietf/amm-base/typedef/counter64";
   }
   amm:edd exec-running {
     amm:enum 9;
     amm:tblt {
       amm:key "pid";
       amm:column pid {
-        amm:type "/ARITYPE/UVAST";
+        amm:type "/aritype/UVAST";
       }
       amm:column target {
-        amm:type "//ietf/amm/TYPEDEF/ANY";
+        amm:type "//ietf/amm-base/typedef/ANY";
       }
       amm:column state {
-        amm:type "/ARITYPE/BYTE" {
+        amm:type "/aritype/BYTE" {
           amm:int-labels {
             enum waiting {
               value 0;
@@ -336,15 +345,15 @@ module ietf-dtnma-agent {
     amm:parameter condition {
       description
         "The condition to evaluate.";
-      amm:type "//ietf/amm/TYPEDEF/eval-tgt";
+      amm:type "//ietf/amm-base/typedef/eval-tgt";
     }
     amm:parameter on-truthy {
       description
         "The object to execute when the condition is truthy.";
       amm:default "null";
       amm:union {
-        amm:type "//ietf/amm/TYPEDEF/exec-tgt";
-        amm:type "/ARITYPE/NULL";
+        amm:type "//ietf/amm-base/typedef/exec-tgt";
+        amm:type "/aritype/NULL";
       }
     }
     amm:parameter on-falsy {
@@ -352,14 +361,14 @@ module ietf-dtnma-agent {
         "An optional execution when the condition is falsey.";
       amm:default "null";
       amm:union {
-        amm:type "//ietf/amm/TYPEDEF/exec-tgt";
-        amm:type "/ARITYPE/NULL";
+        amm:type "//ietf/amm-base/typedef/exec-tgt";
+        amm:type "/aritype/NULL";
       }
     }
     amm:result branch {
       description
         "Indication of which branch was executed.";
-      amm:type "/ARITYPE/BOOL";
+      amm:type "/aritype/BOOL";
     }
   }
   amm:ctrl catch {
@@ -370,21 +379,21 @@ module ietf-dtnma-agent {
     amm:parameter try {
       description
         "The object to execute.";
-      amm:type "//ietf/amm/TYPEDEF/exec-tgt";
+      amm:type "//ietf/amm-base/typedef/exec-tgt";
     }
     amm:parameter on-failure {
       description
         "An optional execution after failure.";
       amm:default "null";
       amm:union {
-        amm:type "//ietf/amm/TYPEDEF/exec-tgt";
-        amm:type "/ARITYPE/NULL";
+        amm:type "//ietf/amm-base/typedef/exec-tgt";
+        amm:type "/aritype/NULL";
       }
     }
     amm:result try-success {
       description
         "True if the try target succeeded without exception.";
-      amm:type "/ARITYPE/BOOL";
+      amm:type "/aritype/BOOL";
     }
   }
   amm:ctrl wait-for {
@@ -394,7 +403,7 @@ module ietf-dtnma-agent {
        This is intended to be used within a macro to separate controls
        in time.";
     amm:parameter duration {
-      amm:type "/ARITYPE/TD";
+      amm:type "/aritype/TD";
     }
   }
   amm:ctrl wait-until {
@@ -406,7 +415,7 @@ module ietf-dtnma-agent {
        in time or as a first macro item to delay execution after the time
        of reception.";
     amm:parameter time {
-      amm:type "/ARITYPE/TP";
+      amm:type "/aritype/TP";
     }
   }
   amm:ctrl wait-cond {
@@ -418,7 +427,7 @@ module ietf-dtnma-agent {
        in time or as a first macro item to delay execution until the
        condition is met.";
     amm:parameter condition {
-      amm:type "//ietf/amm/TYPEDEF/eval-tgt";
+      amm:type "//ietf/amm-base/typedef/eval-tgt";
     }
   }
 
@@ -431,12 +440,12 @@ module ietf-dtnma-agent {
     amm:parameter ref {
       description
         "An object to produce a value from.";
-      amm:type "//ietf/amm/TYPEDEF/VALUE-OBJ";
+      amm:type "//ietf/amm-base/typedef/VALUE-OBJ";
     }
     amm:result val {
       description
         "The produced value.";
-      amm:type "//ietf/amm/TYPEDEF/ANY";
+      amm:type "//ietf/amm-base/typedef/ANY";
     }
   }
   amm:ctrl report-on {
@@ -452,7 +461,7 @@ module ietf-dtnma-agent {
         "The reporting template, either as a RPTT value directly or as
          a reference to a value-producing object (possibly parameterized)
          which itself produces an RPTT value.";
-      amm:type "//ietf/amm/TYPEDEF/rpt-tgt";
+      amm:type "//ietf/amm-base/typedef/rpt-tgt";
     }
     amm:parameter destinations {
       description
@@ -461,9 +470,8 @@ module ietf-dtnma-agent {
          limitations so each destination might see different report
          contents.";
       amm:union {
-        // FIXME: decide on whether this is a URI or a more complex ident hierarchy
-        amm:type "/ARITYPE/textstr";
-        amm:type "/ARITYPE/null";
+        amm:type "//ietf/network-base/typedef/endpoint-or-uri";
+        amm:type "/aritype/null";
       }
     }
   }
@@ -476,7 +484,7 @@ module ietf-dtnma-agent {
     amm:parameter target {
       description
         "The VAR object to affect.";
-      amm:type "/ARITYPE/VAR";
+      amm:type "/aritype/VAR";
     }
   }
   amm:ctrl var-store {
@@ -486,12 +494,12 @@ module ietf-dtnma-agent {
     amm:parameter target {
       description
         "The VAR object to affect.";
-      amm:type "/ARITYPE/VAR";
+      amm:type "/aritype/VAR";
     }
     amm:parameter value {
       description
         "The exact value to store in the VAR.";
-      amm:type "//ietf/amm/TYPEDEF/ANY";
+      amm:type "//ietf/amm-base/typedef/ANY";
     }
   }
 
@@ -504,7 +512,7 @@ module ietf-dtnma-agent {
     amm:tblt {
       amm:key "obj";
       amm:column obj {
-        amm:type "/ARITYPE/TYPEDEF";
+        amm:type "/aritype/typedef";
       }
     }
   }
@@ -518,28 +526,37 @@ module ietf-dtnma-agent {
     amm:tblt {
       amm:key "obj";
       amm:column obj {
-        amm:type "/ARITYPE/CONST";
+        amm:type "/aritype/CONST";
       }
       amm:column type {
-        amm:type "//ietf/amm/TYPEDEF/semtype";
+        amm:type "//ietf/amm-semtype/typedef/semtype";
       }
     }
   }
   amm:ctrl ensure-const {
     amm:enum 11;
     description
+<<<<<<< agent-rule-ctrls
       "Ensure a specific CONST is present in an ODM.";
     uses object-id;
+=======
+      "Ensure a specific CONST is present.";
+    amm:parameter obj {
+      description
+        "A reference to a CONST within an ODM only.";
+      amm:type "/aritype/CONST";
+    }
+>>>>>>> apl-fy24
     amm:parameter type {
       description
         "The type for the CONST object.";
-      amm:type "//ietf/amm/TYPEDEF/semtype";
+      amm:type "//ietf/amm-semtype/typedef/semtype";
     }
     amm:parameter init {
       description
         "A required initializer expression.
          This expression is evaluated once at the time of object creation.";
-      amm:type "//ietf/amm/TYPEDEF/EXPR";
+      amm:type "//ietf/amm-base/typedef/EXPR";
     }
   }
   amm:ctrl obsolete-const {
@@ -549,7 +566,7 @@ module ietf-dtnma-agent {
     amm:parameter obj {
       description
         "A reference to a CONST within an ODM only.";
-      amm:type "/ARITYPE/CONST";
+      amm:type "/aritype/CONST";
     }
   }
 
@@ -562,22 +579,31 @@ module ietf-dtnma-agent {
     amm:tblt {
       amm:key "obj";
       amm:column obj {
-        amm:type "/ARITYPE/VAR";
+        amm:type "/aritype/VAR";
       }
       amm:column type {
-        amm:type "//ietf/amm/TYPEDEF/semtype";
+        amm:type "//ietf/amm-semtype/typedef/semtype";
       }
     }
   }
   amm:ctrl ensure-var {
     amm:enum 9;
     description
+<<<<<<< agent-rule-ctrls
       "Ensure a specific VAR is present in an ODM.";
     uses object-id;
+=======
+      "Ensure a specific VAR is present.";
+    amm:parameter obj {
+      description
+        "A reference to a VAR within an ODM only.";
+      amm:type "/aritype/VAR";
+    }
+>>>>>>> apl-fy24
     amm:parameter type {
       description
         "The type for the VAR object.";
-      amm:type "//ietf/amm/TYPEDEF/semtype";
+      amm:type "//ietf/amm-semtype/typedef/semtype";
     }
     amm:parameter init {
       description
@@ -585,8 +611,8 @@ module ietf-dtnma-agent {
          This expression is evaluated once at the time of object creation.";
       amm:default "null";
       amm:union {
-        amm:type "/ARITYPE/NULL";
-        amm:type "//ietf/amm/TYPEDEF/EXPR";
+        amm:type "/aritype/NULL";
+        amm:type "//ietf/amm-base/typedef/EXPR";
       }
     }
   }
@@ -597,7 +623,7 @@ module ietf-dtnma-agent {
     amm:parameter obj {
       description
         "A reference to a VAR within an ODM only.";
-      amm:type "/ARITYPE/VAR";
+      amm:type "/aritype/VAR";
     }
   }
 
@@ -611,21 +637,21 @@ module ietf-dtnma-agent {
     amm:tblt {
       amm:key "obj";
       amm:column obj {
-        amm:type "/ARITYPE/SBR";
+        amm:type "/aritype/SBR";
       }
       amm:column action {
         description
           "The execution when this rule triggers.";
-        amm:type "//ietf/amm/TYPEDEF/MAC";
+        amm:type "//ietf/amm-base/typedef/MAC";
       }
       amm:column condition {
-        amm:type "//ietf/amm/TYPEDEF/EXPR";
+        amm:type "//ietf/amm-base/typedef/EXPR";
       }
       amm:column min-interval {
-        amm:type "/ARITYPE/TD";
+        amm:type "/aritype/TD";
       }
       amm:column max-count {
-        amm:type "/ARITYPE/UVAST";
+        amm:type "/aritype/UVAST";
       }
       amm:column init-enabled {
         amm:type "/ARITYPE/BOOL";
@@ -644,21 +670,21 @@ module ietf-dtnma-agent {
     amm:tblt {
       amm:key "obj";
       amm:column obj {
-        amm:type "/ARITYPE/TBR";
+        amm:type "/aritype/TBR";
       }
       amm:column action {
         description
           "The execution when this rule triggers.";
-        amm:type "//ietf/amm/TYPEDEF/MAC";
+        amm:type "//ietf/amm-base/typedef/MAC";
       }
       amm:column start-time {
-        amm:type "//ietf/amm/TYPEDEF/TIME";
+        amm:type "//ietf/amm-base/typedef/TIME";
       }
       amm:column period {
-        amm:type "/ARITYPE/TD";
+        amm:type "/aritype/TD";
       }
       amm:column max-count {
-        amm:type "/ARITYPE/UVAST";
+        amm:type "/aritype/UVAST";
       }
       amm:column init-enabled {
         amm:type "/ARITYPE/BOOL";
@@ -931,8 +957,8 @@ module ietf-dtnma-agent {
     description
       "Name or index of an individual column in a table.";
     amm:union {
-      amm:type "/ARITYPE/UVAST";
-      amm:type "/ARITYPE/TEXTSTR";
+      amm:type "/aritype/UVAST";
+      amm:type "/aritype/TEXTSTR";
     }
   }
   amm:oper tbl-filter {
@@ -945,7 +971,7 @@ module ietf-dtnma-agent {
          Each key is a column to compare and each value is an expression
          with LABEL values substituted by column names.";
       amm:ulist {
-        amm:type "//ietf/amm/TYPEDEF/EXPR";
+        amm:type "//ietf/amm-base/typedef/EXPR";
       }
     }
     amm:parameter columns {
@@ -954,18 +980,18 @@ module ietf-dtnma-agent {
          Each key is a column to compare and each value is an expression
          with LABEL values substituted by column names.";
       amm:ulist {
-        amm:type "./TYPEDEF/column-id";
+        amm:type "./typedef/column-id";
       }
     }
     amm:operand in {
       description
         "Table to filter.";
-      amm:type "/ARITYPE/TBL";
+      amm:type "/aritype/TBL";
     }
     amm:result out {
       description
         "The filtered table.";
-      amm:type "/ARITYPE/TBL";
+      amm:type "/aritype/TBL";
     }
   }
 }

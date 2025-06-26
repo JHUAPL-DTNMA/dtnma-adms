@@ -47,7 +47,7 @@ module iana-display-hints {
   reference
     "https://www.iana.org/assignments/DTNMA-TBA";
 
-  revision 2025-01-31 {
+  revision 2025-05-28 {
     description
       "Updated for latest ADM document.";
     reference
@@ -143,16 +143,6 @@ module iana-display-hints {
       "Display byte string values as base64url-encoded.";
     reference
       "draft-ietf-dtn-ari";
-    amm:base "//ietf/amm/IDENT/base-bstr";
-  }
-  amm:ident display-bstr-ipaddress {
-    amm:enum 16;
-    description
-      "Interpret byte string values as either IPv4 address (4-octet length)
-       or IPv6 address (16-octet length) and display as human-friendly text
-       according to RFC 4001 conventions.";
-    reference
-      "RFC 4001: Textual Conventions for Internet Network Addresses";
     amm:base "//ietf/amm/IDENT/base-bstr";
   }
   amm:ident display-bstr-uuid {
