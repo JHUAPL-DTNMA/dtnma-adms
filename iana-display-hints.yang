@@ -6,9 +6,12 @@ module iana-display-hints {
   import ietf-amm {
     prefix amm;
   }
+  import ietf-amm-base {
+    prefix amm-base;
+  }
 
   organization
-    "IANA" {
+    "Internet Assigned Numbers Authority (IANA)" {
     amm:enum 2;
   }
   contact
@@ -23,7 +26,7 @@ module iana-display-hints {
   description
     "This module defines intermediate and leaf IDENT objects usable as
      display-hint annotations derived from the base
-     <ari://ietf/amm/IDENT/display-hint> object.
+     <ari://ietf/amm-base/ident/display-hint> object.
 
      The key words 'MUST', 'MUST NOT', 'REQUIRED', 'SHALL', 'SHALL
      NOT', 'SHOULD', 'SHOULD NOT', 'RECOMMENDED', 'NOT RECOMMENDED',
@@ -60,19 +63,19 @@ module iana-display-hints {
     amm:enum 2;
     description
       "Display integers as decimal (base 10).";
-    amm:base "//ietf/amm/IDENT/base-integer";
+    amm:base "//ietf/amm-base/ident/display-hint-integer";
   }
   amm:ident display-int-bin {
     amm:enum 3;
     description
       "Display integers as binary (base 2).";
-    amm:base "//ietf/amm/IDENT/base-integer";
+    amm:base "//ietf/amm-base/ident/display-hint-integer";
   }
   amm:ident display-int-hex {
     amm:enum 4;
     description
       "Display integers as hexadecimal (base 16).";
-    amm:base "//ietf/amm/IDENT/base-integer";
+    amm:base "//ietf/amm-base/ident/display-hint-integer";
   }
 
   // Floating-point number hints
@@ -80,19 +83,19 @@ module iana-display-hints {
     amm:enum 6;
     description
       "Display floating point values as decimal fraction.";
-    amm:base "//ietf/amm/IDENT/base-float";
+    amm:base "//ietf/amm-base/ident/display-hint-float";
   }
   amm:ident display-float-exp {
     amm:enum 7;
     description
       "Display floating point values as decimal exponential form.";
-    amm:base "//ietf/amm/IDENT/base-float";
+    amm:base "//ietf/amm-base/ident/display-hint-float";
   }
   amm:ident display-float-hex {
     amm:enum 8;
     description
       "Display floating point values as hexadecimal exponential form.";
-    amm:base "//ietf/amm/IDENT/base-float";
+    amm:base "//ietf/amm-base/ident/display-hint-float";
   }
 
   // Byte-string hints
@@ -103,7 +106,7 @@ module iana-display-hints {
        The base16 encoding is used otherwise.";
     reference
       "draft-ietf-dtn-ari";
-    amm:base "//ietf/amm/IDENT/base-bstr";
+    amm:base "//ietf/amm-base/ident/display-hint-bstr";
   }
   amm:ident display-bstr-base16 {
     amm:enum 11;
@@ -111,7 +114,7 @@ module iana-display-hints {
       "Display byte string values as base16-encoded.";
     reference
       "draft-ietf-dtn-ari";
-    amm:base "//ietf/amm/IDENT/base-bstr";
+    amm:base "//ietf/amm-base/ident/display-hint-bstr";
   }
   amm:ident display-bstr-base64 {
     amm:enum 12;
@@ -119,7 +122,7 @@ module iana-display-hints {
       "Display byte string values as base64url-encoded.";
     reference
       "draft-ietf-dtn-ari";
-    amm:base "//ietf/amm/IDENT/base-bstr";
+    amm:base "//ietf/amm-base/ident/display-hint-bstr";
   }
 
   // TIME type (TP or TD built-ins) hints
@@ -129,7 +132,7 @@ module iana-display-hints {
       "Display TP and TD values as text in accordance with RFC 3339.";
     reference
       "draft-ietf-dtn-ari";
-    amm:base "//ietf/amm/IDENT/base-time";
+    amm:base "//ietf/amm-base/ident/display-hint-time";
   }
   amm:ident display-time-dec {
     amm:enum 15;
@@ -137,6 +140,6 @@ module iana-display-hints {
       "Display TP and TD values as decimal fraction.";
     reference
       "draft-ietf-dtn-ari";
-    amm:base "//ietf/amm/IDENT/base-time";
+    amm:base "//ietf/amm-base/ident/display-hint-time";
   }
 }
