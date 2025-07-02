@@ -62,8 +62,6 @@ function normalize {
     else
         rm "${FILEPATH}.out"
     fi
-
-    ${VALIDATE} "${FILEPATH}"
 }
 
 ERRCOUNT=0

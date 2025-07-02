@@ -378,7 +378,7 @@ module ietf-amm-base {
     amm:base "./ident/display-hint-bstr";
   }
   amm:typedef ari-pattern {
-    amm:enum 25;
+    amm:enum 27;
     description
       "The value type for an ARI pattern in binary form.";
     reference

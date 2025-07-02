@@ -699,13 +699,13 @@ module ietf-dtnma-agent {
     amm:parameter action {
       description
         "The execution when this rule triggers.";
-      amm:type "//ietf/amm/TYPEDEF/MAC";
+      amm:type "//ietf/amm-base/typedef/MAC";
     }
     amm:parameter start-time {
-      amm:type "//ietf/amm/TYPEDEF/TIME";
+      amm:type "//ietf/amm-base/typedef/TIME";
     }
     amm:parameter condition {
-      amm:type "//ietf/amm/TYPEDEF/EXPR";
+      amm:type "//ietf/amm-base/typedef/EXPR";
     }
     amm:parameter min-interval {
       amm:type "/ARITYPE/TD";
@@ -730,10 +730,10 @@ module ietf-dtnma-agent {
     amm:parameter action {
       description
         "The execution when this rule triggers.";
-      amm:type "//ietf/amm/TYPEDEF/MAC";
+      amm:type "//ietf/amm-base/typedef/MAC";
     }
     amm:parameter start-time {
-      amm:type "//ietf/amm/TYPEDEF/TIME";
+      amm:type "//ietf/amm-base/typedef/TIME";
     }
     amm:parameter period {
       amm:type "/ARITYPE/TD";
