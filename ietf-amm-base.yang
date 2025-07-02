@@ -201,12 +201,36 @@ module ietf-amm-base {
   amm:typedef nonce {
     amm:enum 10;
     description
-      "This type union is used to correlate Agent-Manager messages.";
+      "This type union is used to correlate Agent-Manager messages.
+       The union is defined in Section 4.2.5 of draft-ietf-dtn-amm.";
+    reference
+      "draft-ietf-dtn-amm";
     amm:union {
       amm:type "/ARITYPE/bytestr";
       amm:type "/ARITYPE/uvast";
       amm:type "/ARITYPE/null";
     }
+  }
+  amm:typedef id-text {
+    amm:enum 25;
+    description
+      "This type is used to define and match object text names.
+       The type is defined in Section 4.2.5 of draft-ietf-dtn-amm.";
+    reference
+      "draft-ietf-dtn-amm";
+    amm:type "/ARITYPE/textstr" {
+      pattern '[A-Za-z_][0-9A-Za-z_\-\.]*';
+    }
+  }
+  amm:typedef id-int {
+    amm:enum 26;
+    description
+      "This type is used to define and match object integer
+       enumerations.
+       The type is defined in Section 4.2.5 of draft-ietf-dtn-amm.";
+    reference
+      "draft-ietf-dtn-amm";
+    amm:type "/ARITYPE/int";
   }
 
   // operational semantic types

@@ -25,6 +25,7 @@ if [ "$#" -eq "0" ]; then
 fi
 
 SELFDIR=$(readlink -f $(dirname "${BASH_SOURCE[0]}"))
+# Handle errors in validate script
 OUTOPTS="-t adm-add-enum -f yang --yang-canonical --ignore-errors"
 NORMALIZE="ace_adm --path=${SELFDIR} ${OUTOPTS}"
 
@@ -61,6 +62,8 @@ function normalize {
     else
         rm "${FILEPATH}.out"
     fi
+
+    ${VALIDATE} "${FILEPATH}"
 }
 
 ERRCOUNT=0
