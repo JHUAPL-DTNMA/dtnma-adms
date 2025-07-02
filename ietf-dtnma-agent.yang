@@ -497,22 +497,22 @@ module ietf-dtnma-agent {
       amm:column org-name {
         description
           "The organization name containing the ODM";
-        amm:type "/aritype/TEXTSTR";
+        amm:type "//ietf/amm-base/typedef/id-text";
       }
       amm:column org-enum {
         description
           "The organization enumeration containing the ODM";
-        amm:type "/aritype/INT";
+        amm:type "//ietf/amm-base/typedef/id-int";
       }
       amm:column model-name {
         description
           "The model name of the ODM";
-        amm:type "/aritype/TEXTSTR";
+        amm:type "//ietf/amm-base/typedef/id-text";
       }
       amm:column model-enum {
         description
           "The model enumeration of the ODM";
-        amm:type "/aritype/INT";
+        amm:type "//ietf/amm-base/typedef/id-int";
       }
       amm:column revision {
         description
@@ -522,32 +522,32 @@ module ietf-dtnma-agent {
     }
   }
   amm:ctrl ensure-odm {
-    amm:enum 13;
+    amm:enum 18;
     description
       "Ensure a specific ODM is present.";
     amm:parameter org-name {
       description
         "The organization name containing the ODM";
-      amm:type "/aritype/TEXTSTR";
+      amm:type "//ietf/amm-base/typedef/id-text";
     }
     amm:parameter org-id {
       description
         "The organization enumeration ID containing the ODM";
-      amm:type "/aritype/INT";
+      amm:type "//ietf/amm-base/typedef/id-int";
     }
     amm:parameter model-name {
       description
         "The model name containing the ODM";
-      amm:type "/aritype/TEXTSTR";
+      amm:type "//ietf/amm-base/typedef/id-text";
     }
     amm:parameter model-id {
       description
         "The model enumeration ID containing the ODM";
-      amm:type "/aritype/INT";
+      amm:type "//ietf/amm-base/typedef/id-int";
     }
   }
   amm:ctrl obsolete-odm {
-    amm:enum 14;
+    amm:enum 19;
     description
       "Mark a specific ODM as obsolete if it is present.";
     amm:parameter odm-ns {
