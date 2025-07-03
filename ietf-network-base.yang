@@ -21,10 +21,10 @@ module ietf-network-base {
      Editor: Brian Sipos
              <mailto:brian.sipos+ietf@gmail.com>";
   description
-    "This module defines base IDENT objects for network-related entities
-     such as protocol endpoints. The base objects are general purpose,
-     and all derived objects are layer- and/or protocol-specific with
-     appropriate parameters.
+    "This module defines base IDENT objects for network-related
+     entities such as protocol endpoints. The base objects are
+     general purpose, and all derived objects are layer- and/or
+     protocol-specific with appropriate parameters.
 
      The key words 'MUST', 'MUST NOT', 'REQUIRED', 'SHALL', 'SHALL
      NOT', 'SHOULD', 'SHOULD NOT', 'RECOMMENDED', 'NOT RECOMMENDED',

@@ -64,26 +64,28 @@ module ietf-amm-base {
     amm:enum 1;
     description
       "Intermediate base IDENT of display hints for integer values.
-       Hints derived from this object SHALL only apply to built-in types
-       BYTE, INT, UINT, VAST, and UVAST.";
+       Hints derived from this object SHALL only apply to built-in
+       types BYTE, INT, UINT, VAST, and UVAST.";
     amm:abstract true;
     amm:base "./IDENT/display-hint";
   }
   amm:ident display-hint-float {
     amm:enum 2;
     description
-      "Intermediate base IDENT of display hints for floating point values.
-       Hints derived from this object SHALL only apply to built-in types
-       REAL32 and REAL64.";
+      "Intermediate base IDENT of display hints for floating point
+       values.
+       Hints derived from this object SHALL only apply to built-in
+       types REAL32 and REAL64.";
     amm:abstract true;
     amm:base "./IDENT/display-hint";
   }
   amm:ident display-hint-bstr {
     amm:enum 3;
     description
-      "Intermediate base IDENT of display hints for byte string values.
-       Hints derived from this object SHALL only apply to built-in type
-       BYTESTR.";
+      "Intermediate base IDENT of display hints for byte string
+       values.
+       Hints derived from this object SHALL only apply to built-in
+       type BYTESTR.";
     amm:abstract true;
     amm:base "./IDENT/display-hint";
   }
@@ -91,8 +93,8 @@ module ietf-amm-base {
     amm:enum 4;
     description
       "Intermediate base IDENT of display hints for time values.
-       Hints derived from this object SHALL only apply to built-in types
-       TP and TD.";
+       Hints derived from this object SHALL only apply to built-in
+       types TP and TD.";
     amm:abstract true;
     amm:base "./IDENT/display-hint";
   }
@@ -237,31 +239,57 @@ module ietf-amm-base {
   amm:typedef counter32 {
     amm:enum 11;
     description
-      "A 32-bit counter with an arbitrary initial value that only increments.
-       When the value reaches the upper range it wraps around to zero.
-       At least two samples of this value need to be compared over time.";
+      "A 32-bit counter with an arbitrary initial value which can
+       only increment and never decrement.
+       When the value reaches the upper limit of the type it wraps
+       around to zero.
+       At least two samples of this value need to be compared over
+       time to be meaningful.
+       This type is consistent with the SMIv2 and YANG data types
+       of the same name.";
+    reference
+      "RFC 2578: Structure of Management Information Version 2
+       RFC 6021: Common YANG Data Types";
     amm:type "/ARITYPE/uint";
   }
   amm:typedef counter64 {
     amm:enum 12;
     description
-      "A 64-bit counter with an arbitrary initial value that only increments.
-       When the value reaches the upper range it wraps around to zero.
-       At least two samples of this value need to be compared over time.";
+      "A 64-bit counter with an arbitrary initial value which can
+       only increment and never decrement.
+       When the value reaches the upper limit of the type it wraps
+       around to zero.
+       At least two samples of this value need to be compared over
+       time to be meaningful.
+       This type is consistent with the SMIv2 and YANG data types
+       of the same name.";
+    reference
+      "RFC 2578: Structure of Management Information Version 2
+       RFC 6021: Common YANG Data Types";
     amm:type "/ARITYPE/uvast";
   }
   amm:typedef gauge32 {
     amm:enum 13;
     description
       "A 32-bit value sampling some quantized measurement.
-       The value can increase or decrease arbitrarily over time.";
+       The value can increase or decrease arbitrarily over time.
+       This type is consistent with the SMIv2 and YANG data types
+       of the same name.";
+    reference
+      "RFC 2578: Structure of Management Information Version 2
+       RFC 6021: Common YANG Data Types";
     amm:type "/ARITYPE/int";
   }
   amm:typedef gauge64 {
     amm:enum 14;
     description
       "A 64-bit value sampling some quantized measurement.
-       The value can increase or decrease arbitrarily over time.";
+       The value can increase or decrease arbitrarily over time.
+       This type is consistent with the SMIv2 and YANG data types
+       of the same name.";
+    reference
+      "RFC 2578: Structure of Management Information Version 2
+       RFC 6021: Common YANG Data Types";
     amm:type "/ARITYPE/vast";
   }
   amm:typedef timestamp {
@@ -270,7 +298,12 @@ module ietf-amm-base {
       "A time point representing the system clock at which a specific
        occurrence happened.
        The specific occurrence must be defined in the description
-       of any node defined using this type.";
+       of any node defined using this type.
+       This type is consistent with the SMIv2 and YANG data types
+       of the same name.";
+    reference
+      "RFC 2579: Textual Conventions for SMIv2
+       RFC 6021: Common YANG Data Types";
     amm:type "/ARITYPE/tp";
   }
 
@@ -280,8 +313,10 @@ module ietf-amm-base {
     description
       "A value which can be the target of an evaluation.";
     amm:union {
-      amm:type "./TYPEDEF/simple"; // special case of literal value result
-      amm:type "./TYPEDEF/value-obj"; // produces an eval-tgt
+      // special case of literal value result
+      amm:type "./TYPEDEF/simple";
+      // produces an eval-tgt
+      amm:type "./TYPEDEF/value-obj";
       amm:type "./TYPEDEF/expr";
     }
   }
@@ -291,9 +326,12 @@ module ietf-amm-base {
       "Each item of an EXPR list.";
     amm:union {
       amm:type "./TYPEDEF/simple";
-      amm:type "./TYPEDEF/value-obj"; // produces an eval-tgt
-      amm:type "./TYPEDEF/type-ref"; // treated as unary operator
-      amm:type "/ARITYPE/label"; // substitutable label
+      // produces an eval-tgt
+      amm:type "./TYPEDEF/value-obj";
+      // treated as unary operator
+      amm:type "./TYPEDEF/type-ref";
+      // substitutable label of an external context value
+      amm:type "/ARITYPE/label";
       amm:type "/ARITYPE/oper";
     }
   }
@@ -353,14 +391,17 @@ module ietf-amm-base {
        Each item references a value-producing object or contains an
        expression to be evaluated.";
     amm:union {
+      // produces the report item
       amm:type "./TYPEDEF/value-obj";
+      // evaluates to the report item
       amm:type "./TYPEDEF/expr";
     }
   }
   amm:typedef rptt {
     amm:enum 24;
     description
-      "The contents of a report template, encoded as the sequence of items.";
+      "The contents of a report template, encoded as the sequence
+       of template items.";
     amm:ulist {
       amm:type "./TYPEDEF/rptt-item";
     }

@@ -63,11 +63,13 @@ module ietf-amm-semtype {
   amm:ident type-use {
     amm:enum 2;
     description
-      "A named type use and possibly augment.";
+      "A named type use with possibe annotations and/or
+       constraints.";
     amm:base "./IDENT/semtype";
     amm:parameter name {
       description
-        "A built-in ARITYPE or reference to TYPEDEF object being used.";
+        "A built-in ARITYPE or reference to TYPEDEF object being
+         used.";
       amm:type "//ietf/amm-base/TYPEDEF/type-ref";
     }
     // FIXME include constraints and annotations also?
@@ -108,7 +110,8 @@ module ietf-amm-semtype {
     amm:base "./IDENT/semtype";
     amm:parameter item-types {
       description
-        "The list of semantic type for each item in sequence within the list.
+        "The list of semantic type for each item in sequence within
+         the list.
          The list itself is encoded as an AC in this parameter.";
       amm:ulist {
         amm:type "./TYPEDEF/semtype";
@@ -164,7 +167,8 @@ module ietf-amm-semtype {
     }
     amm:parameter key {
       description
-        "The primary key column names in this table, as comma-separated labels.";
+        "The primary key column names tuples in this table, 
+         space-separated labels.";
       amm:default "null";
       amm:union {
         amm:type "/ARITYPE/textstr";
@@ -173,7 +177,8 @@ module ietf-amm-semtype {
     }
     amm:parameter unique {
       description
-        "The set of unique column names in this table, as comma-separated labels.
+        "The set of unique column name tuples in this table, as
+         space-separated labels.
          The set itself is encoded as an AC in this parameter.";
       amm:default "/AC/()";
       amm:ulist {
@@ -215,7 +220,8 @@ module ietf-amm-semtype {
   amm:ident seq {
     amm:enum 9;
     description
-      "A sequence of similarly-typed items as a sub-sequence of an AC.
+      "A sequence of similarly-typed items as a sub-sequence of an
+       AC value.
        This is only usable in specific contexts, such as within a
        ./IDENT/dlist parameter.";
     amm:base "./IDENT/semtype";

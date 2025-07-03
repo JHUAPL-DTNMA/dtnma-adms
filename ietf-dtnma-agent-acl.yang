@@ -126,8 +126,8 @@ module ietf-dtnma-agent-acl {
   amm:var default-access {
     amm:enum 1;
     description
-      "The default permission for any object if no specific access are
-       present in the ./EDD/access-list table.";
+      "The default permission for any object if no specific access
+       are present in the ./EDD/access-list table.";
     amm:type "./TYPEDEF/tag";
   }
 
@@ -143,17 +143,20 @@ module ietf-dtnma-agent-acl {
       }
       amm:column group {
         description
-          "A cross-reference to the group getting access, or null to match all groups.";
+          "A cross-reference to the group getting access, or null to
+           match all groups.";
         amm:type "./TYPEDEF/optional-entry-id";
       }
       amm:column object-pattern {
         description
-          "A pattern for objects being accessed, which may match all objects.";
+          "A pattern for objects being accessed, which may match
+           all objects.";
         amm:type "/ARITYPE/TEXTSTR";
       }
       amm:column tag {
         description
-          "A pattern for objects being accessed, which may match all objects.";
+          "A pattern for objects being accessed, which may match
+           all objects.";
         amm:type "./TYPEDEF/tag";
       }
     }
@@ -161,7 +164,8 @@ module ietf-dtnma-agent-acl {
   amm:ctrl ensure-access {
     amm:enum 3;
     description
-      "Ensures that an access control permission is set for the given group and ARI pattern.";
+      "Ensures that an access control permission is set for the
+       given group and ARI pattern.";
     amm:parameter group {
       description
         "Identify the group being assigned the permission";
@@ -169,7 +173,8 @@ module ietf-dtnma-agent-acl {
     }
     amm:parameter object-pattern {
       description
-        "ARI pattern to determine which objects shall be assigned the permission";
+        "ARI pattern to determine which objects shall be assigned
+         the permission";
       amm:type "/ARITYPE/TEXTSTR";
     }
     amm:parameter tag {
@@ -211,8 +216,8 @@ module ietf-dtnma-agent-acl {
   amm:edd current-group-id {
     amm:enum 3;
     description
-      "Get the group ID for the current execution context, which may be
-       the implicit Agent group ID zero.";
+      "Get the group ID for the current execution context, which may
+       be the implicit Agent group ID zero.";
     amm:type "./TYPEDEF/entry-id";
   }
   amm:edd group-list {
@@ -234,7 +239,8 @@ module ietf-dtnma-agent-acl {
       }
       amm:column members {
         description
-          "The list of members of the group, identified by matching transport endpoint.";
+          "The list of members of the group, identified by matching
+           transport endpoint.";
         amm:ulist {
           amm:type "//ietf/network-base/TYPEDEF/endpoint-pattern";
         }
@@ -244,7 +250,8 @@ module ietf-dtnma-agent-acl {
   amm:ctrl ensure-group {
     amm:enum 5;
     description
-      "Ensure that after the control completes a group exists with the given information";
+      "Ensure that after the control completes a group exists with
+       the given information";
     amm:parameter id {
       description
         "Uniquely identify the group";
@@ -264,7 +271,8 @@ module ietf-dtnma-agent-acl {
   amm:ctrl ensure-group-members {
     amm:enum 7;
     description
-      "Ensure that the membership of a group has a specific set of endpoint patterns.";
+      "Ensure that the membership of a group has a specific set of
+       endpoint patterns.";
     amm:parameter id {
       description
         "Uniquely identify the group";

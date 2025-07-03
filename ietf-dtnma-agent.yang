@@ -283,7 +283,8 @@ module ietf-dtnma-agent {
     description
       "A report template to indicate the presence of an agent
        on a network.";
-    amm:init-value "/AC/(./EDD/sw-vendor,./EDD/sw-version,./EDD/capability)";
+    amm:init-value "/AC/(./EDD/sw-vendor,./EDD/sw-version,"
+                 + "./EDD/capability)";
     amm:type "//ietf/amm-base/typedef/RPTT";
   }
 
@@ -334,7 +335,8 @@ module ietf-dtnma-agent {
             enum waiting {
               value 0;
               description
-                "The execution is waiting on a condition or timer to continue.";
+                "The execution is waiting on a condition or timer
+                 to continue.";
             }
             enum running {
               value 1;
@@ -385,8 +387,8 @@ module ietf-dtnma-agent {
   amm:ctrl catch {
     amm:enum 1;
     description
-      "Attempt to execute a target, and if there is some failure catch it
-       and execute an alternative target.";
+      "Attempt to execute a target, and if there is some failure
+       catch it and execute an alternative target.";
     amm:parameter try {
       description
         "The object to execute.";
@@ -410,9 +412,10 @@ module ietf-dtnma-agent {
   amm:ctrl wait-for {
     amm:enum 2;
     description
-      "This control causes the execution to pause for a given amount of time.
-       This is intended to be used within a macro to separate controls
-       in time.";
+      "This control causes the execution to pause for a given
+       amount of time.
+       This is intended to be used within a macro to separate
+       controls in time.";
     amm:parameter duration {
       amm:type "/aritype/TD";
     }
@@ -420,11 +423,11 @@ module ietf-dtnma-agent {
   amm:ctrl wait-until {
     amm:enum 3;
     description
-      "This control causes the execution to pause until a specific absolute
-       time point.
-       This is intended to be used within a macro to separate controls
-       in time or as a first macro item to delay execution after the time
-       of reception.";
+      "This control causes the execution to pause until a specific
+       absolute time point.
+       This is intended to be used within a macro to separate
+       controls in time or as a first macro item to delay execution
+       after the time of reception.";
     amm:parameter time {
       amm:type "/aritype/TP";
     }
@@ -432,11 +435,11 @@ module ietf-dtnma-agent {
   amm:ctrl wait-cond {
     amm:enum 4;
     description
-      "This control causes the execution to pause until a condition expression
-       evaluates to truthy.
-       This is intended to be used within a macro to separate controls
-       in time or as a first macro item to delay execution until the
-       condition is met.";
+      "This control causes the execution to pause until a condition
+       expression evaluates to truthy.
+       This is intended to be used within a macro to separate
+       controls in time or as a first macro item to delay execution
+       until the condition is met.";
     amm:parameter condition {
       amm:type "//ietf/amm-base/typedef/eval-tgt";
     }
@@ -462,16 +465,19 @@ module ietf-dtnma-agent {
   amm:ctrl report-on {
     amm:enum 6;
     description
-      "Agent-wide control to generate a report from a report template (RPTT).
-       The parameter is a single RPTT list that would be produced by an object.
+      "Agent-wide control to generate a report from a report
+       template (RPTT) value.
+       The parameter is a single RPTT list that would be produced
+       by an object.
        If used for more than one-shot diagnostics, defining a RPTT
-       (e.g. in a CONST within an ODM) is more efficient because the RPTT
-       value would not need be present in the EXECSET or RPTSET.";
+       (e.g. in a CONST within an ODM) is more efficient because
+       the RPTT value would not need be present in the EXECSET or
+       corresponding RPTSET.";
     amm:parameter template {
       description
-        "The reporting template, either as a RPTT value directly or as
-         a reference to a value-producing object (possibly parameterized)
-         which itself produces an RPTT value.";
+        "The reporting template, either as a RPTT value directly or
+         as a reference to a value-producing object (possibly
+         parameterized) which itself produces an RPTT value.";
       amm:type "//ietf/amm-base/typedef/rpt-tgt";
     }
     amm:parameter destinations {
@@ -627,14 +633,16 @@ module ietf-dtnma-agent {
     amm:parameter init {
       description
         "A required initializer expression.
-         This expression is evaluated once at the time of object creation.";
+         This expression is evaluated once at the time of object
+         creation.";
       amm:type "//ietf/amm-base/typedef/EXPR";
     }
   }
   amm:ctrl obsolete-const {
     amm:enum 12;
     description
-      "Mark a specific CONST as obsolete if it is present in an ODM.";
+      "Mark a specific CONST as obsolete if it is present in an
+       ODM.";
     amm:parameter obj {
       description
         "A reference to a CONST within an ODM only.";
@@ -671,7 +679,8 @@ module ietf-dtnma-agent {
     amm:parameter init {
       description
         "An optional initializer expression.
-         This expression is evaluated once at the time of object creation.";
+         This expression is evaluated once at the time of object
+         creation.";
       amm:default "null";
       amm:union {
         amm:type "/aritype/NULL";
@@ -978,7 +987,8 @@ module ietf-dtnma-agent {
     amm:enum 16;
     description
       "Compare two numbers by value.
-       The result is true if the left value is greater than the right.
+       The result is true if the left value is greater than the
+       right value.
        The operands are cast to the least compatible numeric type
        before the comparison.";
     uses numeric-binary-operands;
@@ -1034,8 +1044,8 @@ module ietf-dtnma-agent {
     amm:parameter row-match {
       description
         "A filter to match rows with specific cell contents.
-         Each key is a column to compare and each value is an expression
-         with LABEL values substituted by column names.";
+         Each key is a column to compare and each value is an
+         expression with LABEL values substituted by column names.";
       amm:ulist {
         amm:type "//ietf/amm-base/typedef/EXPR";
       }
@@ -1043,8 +1053,8 @@ module ietf-dtnma-agent {
     amm:parameter columns {
       description
         "A filter to match rows with specific cell contents.
-         Each key is a column to compare and each value is an expression
-         with LABEL values substituted by column names.";
+         Each key is a column to compare and each value is an
+         expression with LABEL values substituted by column names.";
       amm:ulist {
         amm:type "./typedef/column-id";
       }
