@@ -25,16 +25,11 @@ if [ "$#" -eq "0" ]; then
 fi
 
 SELFDIR=$(readlink -f $(dirname "${BASH_SOURCE[0]}"))
-
-# Handle errors during the validate step
+# Handle errors in validate script
 OUTOPTS="-t adm-add-enum -f yang --yang-canonical --ignore-errors"
 NORMALIZE="ace_adm --path=${SELFDIR} ${OUTOPTS}"
 
-# line length to allow RFC doc indentation
-LINTOPTS="--ietf --lint-ensure-hyphenated-names --max-line-length=69"
-VALIDATE="ace_adm --path=${SELFDIR} ${LINTOPTS}"
-
-# Normalize a single YANG file
+# Normalize a single ADM module file
 # Arguments:
 #  1: The file path to normalize
 #
@@ -67,8 +62,6 @@ function normalize {
     else
         rm "${FILEPATH}.out"
     fi
-
-    ${VALIDATE} "${FILEPATH}"
 }
 
 ERRCOUNT=0

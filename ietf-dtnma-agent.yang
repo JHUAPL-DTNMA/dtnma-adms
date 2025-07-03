@@ -17,7 +17,7 @@ module ietf-dtnma-agent {
   }
 
   organization
-    "IETF Delay Tolerant Networking (DTN) Working Group" {
+    "Internet Engineering Task Force (IETF)" {
     amm:enum 1;
   }
   contact
@@ -36,7 +36,7 @@ module ietf-dtnma-agent {
      described in BCP 14 (RFC 2119) (RFC 8174) when, and only when,
      they appear in all capitals, as shown here.
 
-     Copyright (c) 2024 IETF Trust and the persons identified as
+     Copyright (c) 2025 IETF Trust and the persons identified as
      authors of the code.  All rights reserved.
 
      Redistribution and use in source and binary forms, with or
@@ -52,7 +52,7 @@ module ietf-dtnma-agent {
   reference
     "draft-ietf-dtn-adm-yang";
 
-  revision 2025-05-28 {
+  revision 2025-07-03 {
     description
       "Updated for latest ADM document.";
     reference
@@ -769,13 +769,13 @@ module ietf-dtnma-agent {
     amm:parameter action {
       description
         "The execution when this rule triggers.";
-      amm:type "//ietf/amm/TYPEDEF/MAC";
+      amm:type "//ietf/amm-base/typedef/MAC";
     }
     amm:parameter start-time {
-      amm:type "//ietf/amm/TYPEDEF/TIME";
+      amm:type "//ietf/amm-base/typedef/TIME";
     }
     amm:parameter condition {
-      amm:type "//ietf/amm/TYPEDEF/EXPR";
+      amm:type "//ietf/amm-base/typedef/EXPR";
     }
     amm:parameter min-interval {
       amm:type "/ARITYPE/TD";
@@ -800,10 +800,10 @@ module ietf-dtnma-agent {
     amm:parameter action {
       description
         "The execution when this rule triggers.";
-      amm:type "//ietf/amm/TYPEDEF/MAC";
+      amm:type "//ietf/amm-base/typedef/MAC";
     }
     amm:parameter start-time {
-      amm:type "//ietf/amm/TYPEDEF/TIME";
+      amm:type "//ietf/amm-base/typedef/TIME";
     }
     amm:parameter period {
       amm:type "/ARITYPE/TD";
