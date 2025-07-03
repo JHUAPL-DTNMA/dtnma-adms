@@ -11,7 +11,7 @@ module ietf-network-base {
   }
 
   organization
-    "IETF Delay Tolerant Networking (DTN) Working Group" {
+    "Internet Engineering Task Force (IETF)" {
     amm:enum 1;
   }
   contact
@@ -48,7 +48,7 @@ module ietf-network-base {
   reference
     "draft-ietf-dtn-adm-yang";
 
-  revision 2025-05-21 {
+  revision 2025-07-03 {
     description
       "Updated for latest ADM document.";
     reference
