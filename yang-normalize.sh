@@ -25,12 +25,11 @@ if [ "$#" -eq "0" ]; then
 fi
 
 SELFDIR=$(readlink -f $(dirname "${BASH_SOURCE[0]}"))
-# line length to allow RFC doc indentation
-LINTOPTS="--ietf --lint-ensure-hyphenated-names --max-line-length=66"
-OUTOPTS="-t adm-add-enum -f yang --yang-canonical"
-NORMALIZE="ace_adm --path=${SELFDIR} ${LINTOPTS} ${OUTOPTS}"
+# Handle errors in validate script
+OUTOPTS="-t adm-add-enum -f yang --yang-canonical --ignore-errors"
+NORMALIZE="ace_adm --path=${SELFDIR} ${OUTOPTS}"
 
-# Normalize a single YANG file
+# Normalize a single ADM module file
 # Arguments:
 #  1: The file path to normalize
 #

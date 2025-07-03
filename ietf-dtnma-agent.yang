@@ -17,7 +17,7 @@ module ietf-dtnma-agent {
   }
 
   organization
-    "IETF Delay Tolerant Networking (DTN) Working Group" {
+    "Internet Engineering Task Force (IETF)" {
     amm:enum 1;
   }
   contact
@@ -36,7 +36,7 @@ module ietf-dtnma-agent {
      described in BCP 14 (RFC 2119) (RFC 8174) when, and only when,
      they appear in all capitals, as shown here.
 
-     Copyright (c) 2024 IETF Trust and the persons identified as
+     Copyright (c) 2025 IETF Trust and the persons identified as
      authors of the code.  All rights reserved.
 
      Redistribution and use in source and binary forms, with or
@@ -52,7 +52,7 @@ module ietf-dtnma-agent {
   reference
     "draft-ietf-dtn-adm-yang";
 
-  revision 2025-05-28 {
+  revision 2025-07-03 {
     description
       "Updated for latest ADM document.";
     reference
@@ -73,6 +73,35 @@ module ietf-dtnma-agent {
         "If true, listings will include objects from ADMs";
       amm:default "false";
       amm:type "/aritype/BOOL";
+    }
+  }
+
+  grouping ensure-object-id {
+    description
+      "Common parameters for providing object reference to
+       ensure an object exists in an ODM.
+
+       When this grouping is used, the logic operates according
+       to the following in order to succeed.
+       The parent 'namespace' SHALL refer to an existing ODM.
+       Both the text 'obj-name' and integer 'obj-enum' SHALL
+       either both not exist, in which case the object will be
+       created, or both are allocated to the same object, in
+       which case the object will be modified as needed.";
+    amm:parameter namespace {
+      description
+        "The parent ODM namespace.";
+      amm:type "/aritype/namespace";
+    }
+    amm:parameter obj-name {
+      description
+        "Text name for the desired object.";
+      amm:type "//ietf/amm-base/typedef/id-text";
+    }
+    amm:parameter obj-enum {
+      description
+        "Integer enumeration for the desired object.";
+      amm:type "//ietf/amm-base/typedef/id-int";
     }
   }
 
@@ -458,6 +487,76 @@ module ietf-dtnma-agent {
     }
   }
 
+  // Objects related to ODM handling
+  amm:edd odm-list {
+    amm:enum 16;
+    description
+      "A table of ODM within the agent.";
+    amm:tblt {
+      amm:key "org-name odm-name";
+      amm:column org-name {
+        description
+          "The organization name containing the ODM";
+        amm:type "//ietf/amm-base/typedef/id-text";
+      }
+      amm:column org-enum {
+        description
+          "The organization enumeration containing the ODM";
+        amm:type "//ietf/amm-base/typedef/id-int";
+      }
+      amm:column model-name {
+        description
+          "The model name of the ODM";
+        amm:type "//ietf/amm-base/typedef/id-text";
+      }
+      amm:column model-enum {
+        description
+          "The model enumeration of the ODM";
+        amm:type "//ietf/amm-base/typedef/id-int";
+      }
+      amm:column revision {
+        description
+          "The specific revision the agent supports.";
+        amm:type "/aritype/TEXTSTR";
+      }
+    }
+  }
+  amm:ctrl ensure-odm {
+    amm:enum 18;
+    description
+      "Ensure a specific ODM is present.";
+    amm:parameter org-name {
+      description
+        "The organization name containing the ODM";
+      amm:type "//ietf/amm-base/typedef/id-text";
+    }
+    amm:parameter org-id {
+      description
+        "The organization enumeration ID containing the ODM";
+      amm:type "//ietf/amm-base/typedef/id-int";
+    }
+    amm:parameter model-name {
+      description
+        "The model name containing the ODM";
+      amm:type "//ietf/amm-base/typedef/id-text";
+    }
+    amm:parameter model-id {
+      description
+        "The model enumeration ID containing the ODM";
+      amm:type "//ietf/amm-base/typedef/id-int";
+    }
+  }
+  amm:ctrl obsolete-odm {
+    amm:enum 19;
+    description
+      "Mark a specific ODM as obsolete if it is present.";
+    amm:parameter odm-ns {
+      description
+        "Namespace of the ODM";
+      amm:type "/aritype/namespace";
+    }
+  }
+
   // Helpers for VAR
   amm:ctrl var-reset {
     amm:enum 7;
@@ -518,12 +617,8 @@ module ietf-dtnma-agent {
   amm:ctrl ensure-const {
     amm:enum 11;
     description
-      "Ensure a specific CONST is present.";
-    amm:parameter obj {
-      description
-        "A reference to a CONST within an ODM only.";
-      amm:type "/aritype/CONST";
-    }
+      "Ensure a specific CONST is present in an ODM.";
+    uses ensure-object-id;
     amm:parameter type {
       description
         "The type for the CONST object.";
@@ -539,7 +634,7 @@ module ietf-dtnma-agent {
   amm:ctrl obsolete-const {
     amm:enum 12;
     description
-      "Mark a specific CONST as obsolete if it is present.";
+      "Mark a specific CONST as obsolete if it is present in an ODM.";
     amm:parameter obj {
       description
         "A reference to a CONST within an ODM only.";
@@ -566,12 +661,8 @@ module ietf-dtnma-agent {
   amm:ctrl ensure-var {
     amm:enum 9;
     description
-      "Ensure a specific VAR is present.";
-    amm:parameter obj {
-      description
-        "A reference to a VAR within an ODM only.";
-      amm:type "/aritype/VAR";
-    }
+      "Ensure a specific VAR is present in an ODM.";
+    uses ensure-object-id;
     amm:parameter type {
       description
         "The type for the VAR object.";
@@ -588,10 +679,10 @@ module ietf-dtnma-agent {
       }
     }
   }
-  amm:ctrl discard-var {
+  amm:ctrl obsolete-var {
     amm:enum 10;
     description
-      "Discard a specific VAR if it is present.";
+      "Mark a specific VAR as obsolete if it is present in an ODM.";
     amm:parameter obj {
       description
         "A reference to a VAR within an ODM only.";
@@ -625,6 +716,9 @@ module ietf-dtnma-agent {
       amm:column max-count {
         amm:type "/aritype/UVAST";
       }
+      amm:column init-enabled {
+        amm:type "/ARITYPE/BOOL";
+      }
       amm:column enabled {
         amm:type "/ARITYPE/BOOL";
       }
@@ -655,9 +749,131 @@ module ietf-dtnma-agent {
       amm:column max-count {
         amm:type "/aritype/UVAST";
       }
+      amm:column init-enabled {
+        amm:type "/ARITYPE/BOOL";
+      }
       amm:column enabled {
         amm:type "/ARITYPE/BOOL";
       }
+    }
+  }
+
+  // CTRLs related to rules
+  amm:ctrl ensure-sbr {
+    if-feature "rules";
+    amm:enum 13;
+    description
+      "Ensure that a state-based rule with the given identifiers
+       exists within an ODM.";
+    uses ensure-object-id;
+    amm:parameter action {
+      description
+        "The execution when this rule triggers.";
+      amm:type "//ietf/amm-base/typedef/MAC";
+    }
+    amm:parameter start-time {
+      amm:type "//ietf/amm-base/typedef/TIME";
+    }
+    amm:parameter condition {
+      amm:type "//ietf/amm-base/typedef/EXPR";
+    }
+    amm:parameter min-interval {
+      amm:type "/ARITYPE/TD";
+    }
+    amm:parameter max-count {
+      amm:type "/ARITYPE/UVAST";
+    }
+    amm:parameter init-enabled {
+      amm:type "/ARITYPE/BOOL";
+    }
+    amm:result res {
+      amm:type "/ARITYPE/UINT";
+    }
+  }
+  amm:ctrl ensure-tbr {
+    if-feature "rules";
+    amm:enum 14;
+    description
+      "Ensure that a time-based rule with the given identifiers
+       exists within an ODM.";
+    uses ensure-object-id;
+    amm:parameter action {
+      description
+        "The execution when this rule triggers.";
+      amm:type "//ietf/amm-base/typedef/MAC";
+    }
+    amm:parameter start-time {
+      amm:type "//ietf/amm-base/typedef/TIME";
+    }
+    amm:parameter period {
+      amm:type "/ARITYPE/TD";
+    }
+    amm:parameter max-count {
+      amm:type "/ARITYPE/UVAST";
+    }
+    amm:parameter max-count {
+      amm:type "/ARITYPE/UVAST";
+    }
+    amm:parameter init-enabled {
+      amm:type "/ARITYPE/BOOL";
+    }
+    amm:result res {
+      amm:type "/ARITYPE/UINT";
+    }
+  }
+  amm:ctrl ensure-rule-enabled {
+    if-feature "rules";
+    amm:enum 15;
+    description
+      "Ensure rule is enabled or disabled.";
+    amm:parameter obj-id {
+      description
+        "The rule to ensure enabled setting for.";
+      amm:union {
+        amm:type "/ARITYPE/SBR";
+        amm:type "/ARITYPE/TBR";
+      }
+    }
+    amm:parameter enabled {
+      amm:type "/ARITYPE/BOOL";
+    }
+    amm:result res {
+      amm:type "/ARITYPE/uint";
+    }
+  }
+  amm:ctrl reset-rule-enabled {
+    if-feature "rules";
+    amm:enum 16;
+    description
+      "Reset rule enabled to initial setting.";
+    amm:parameter obj-id {
+      description
+        "The rule to reset enabled seetting for.";
+      amm:union {
+        amm:type "/ARITYPE/SBR";
+        amm:type "/ARITYPE/TBR";
+      }
+    }
+    amm:result res {
+      amm:type "/ARITYPE/UINT";
+    }
+  }
+  amm:ctrl obsolete-rule {
+    if-feature "rules";
+    amm:enum 17;
+    description
+      "Mark a specific SBR or TBR as obsolete if it is present in
+       an ODM.";
+    amm:parameter obj-id {
+      description
+        "A reference to a rule within an ODM only.";
+      amm:union {
+        amm:type "/ARITYPE/SBR";
+        amm:type "/ARITYPE/TBR";
+      }
+    }
+    amm:result success {
+      amm:type "/ARITYPE/BOOL";
     }
   }
 
