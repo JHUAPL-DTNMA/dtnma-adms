@@ -167,7 +167,7 @@ module ietf-amm-semtype {
     }
     amm:parameter key {
       description
-        "The primary key column names tuples in this table, 
+        "The primary key column names tuples in this table,
          space-separated labels.";
       amm:default "null";
       amm:union {
