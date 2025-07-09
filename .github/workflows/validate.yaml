@@ -1,0 +1,30 @@
+name: Validate ADM modules with ACE
+on:
+  push:
+    branches:
+      - main
+      - 'apl-fy[0-9][0-9]'
+  pull_request: {} # any target
+  schedule:
+    - cron: '20 8 * * 4'
+
+env:
+  ACE_REPO: "git+https://github.com/JHUAPL-DTNMA/dtnma-ace.git@apl-fy24"
+
+jobs:
+  validate:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          submodules: false
+      - name: Set up OS
+        run: |
+          sudo apt-get update && sudo apt-get install -y \
+              python3-pip
+          pip3 install --upgrade pip
+          pip3 install ${ACE_REPO}
+      - name: Validate
+        run: ./validate.sh ietf-*.yang iana-*.yang
