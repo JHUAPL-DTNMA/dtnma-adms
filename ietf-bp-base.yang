@@ -87,7 +87,8 @@ module ietf-bp-base {
     reference
       "RFC 9171: Bundle Protocol Version 7
        RFC 9758: Updates to the ipn URI scheme
-       draft-ietf-dtn-eid-pattern: Bundle Protocol Endpoint ID Patterns";
+       draft-ietf-dtn-eid-pattern: Bundle Protocol Endpoint ID
+         Patterns";
     amm:type "/aritype/cbor" {
       amm:display-hint "./ident/display-bstr-eid";
     }
