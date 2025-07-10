@@ -24,8 +24,8 @@ module iana-display-hints {
      Tel:    +1 310 301 5800
      <mailto:iana@iana.org>";
   description
-    "This module defines intermediate and leaf IDENT objects usable as
-     display-hint annotations derived from the base
+    "This module defines leaf IDENT objects usable as 'display-hint'
+     semantic type annotations derived from the base
      <ari://ietf/amm-base/ident/display-hint> object.
 
      The key words 'MUST', 'MUST NOT', 'REQUIRED', 'SHALL', 'SHALL
@@ -94,7 +94,8 @@ module iana-display-hints {
   amm:ident display-float-hex {
     amm:enum 8;
     description
-      "Display floating point values as hexadecimal exponential form.";
+      "Display floating point values as hexadecimal exponential
+       form.";
     amm:base "//ietf/amm-base/ident/display-hint-float";
   }
 
@@ -129,7 +130,8 @@ module iana-display-hints {
   amm:ident display-time-text {
     amm:enum 14;
     description
-      "Display TP and TD values as text in accordance with RFC 3339.";
+      "Display TP and TD values as text in accordance with
+       RFC 3339 not using separator characters.";
     reference
       "draft-ietf-dtn-ari";
     amm:base "//ietf/amm-base/ident/display-hint-time";
@@ -137,7 +139,8 @@ module iana-display-hints {
   amm:ident display-time-dec {
     amm:enum 15;
     description
-      "Display TP and TD values as decimal fraction.";
+      "Display TP and TD values as decimal fraction with units of
+       seconds, which may or may not include a fractional part.";
     reference
       "draft-ietf-dtn-ari";
     amm:base "//ietf/amm-base/ident/display-hint-time";

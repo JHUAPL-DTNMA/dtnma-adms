@@ -48,7 +48,8 @@ module ietf-amm {
   }
 
   /*
-   * This section contains extensions for common behavior of AMM objects.
+   * This section contains extensions for common behavior of AMM
+   * objects.
    */
 
   extension enum {
@@ -162,7 +163,8 @@ module ietf-amm {
       "An individual operand taken from the expression stack
        during evaluation of the OPER.
        Each substatement is an operand as a leaf (ARI).
-       Order of operands is significant within an object definition.";
+       The order of operands is significant within an object
+       definition.";
   }
 
   extension var {
@@ -189,26 +191,31 @@ module ietf-amm {
   extension condition {
     argument expr;
     description
-      "Condition evaluated by an SBR object to determine whether to execute its action.
+      "Condition evaluated by an SBR object to determine whether to
+       execute its action.
        The argument to this statement is the expr to evaluate.";
   }
 
   extension min-interval {
     argument relative-time;
     description
-      "The argument to this statement is a time-based ARI specifying the minimum amount of time between condition evaluations for an SBR object.";
+      "The argument to this statement is a time-based ARI specifying
+       the minimum amount of time between condition evaluations
+       for an SBR object.";
   }
 
   extension max-count {
     argument count;
     description
-      "The argument to this statement is the integer maximum execution count for a rule object.";
+      "The argument to this statement is the integer maximum
+       execution count for a rule object.";
   }
 
   extension init-enabled {
     argument state;
     description
-      "The argument to this statement is the boolean initial enabled state for a rule object.";
+      "The argument to this statement is the boolean initial enabled
+       state for a rule object.";
   }
 
   extension tbr {
@@ -221,17 +228,20 @@ module ietf-amm {
   extension start {
     argument time;
     description
-      "The argument to this statement is the start time ARI for a TBR object.";
+      "The argument to this statement is the start time ARI for a
+       TBR object.";
   }
 
   extension period {
     argument relative-time;
     description
-      "The argument to this statement is an ARI defining the period for a TBR object.";
+      "The argument to this statement is an ARI defining the period
+       for a TBR object.";
   }
 
   /*
-   * This section contains extensions for defining semantic type instances.
+   * This section contains extensions for defining semantic type
+   * instances.
    */
 
   extension type {
@@ -243,14 +253,16 @@ module ietf-amm {
   extension display-hint {
     argument ident;
     description
-      "Reference an IDENT object which indicates how a value should be
-       displayed for human consumption.
-       The base of the IDENT SHALL be the ./IDENT/display-hint object.";
+      "Reference an IDENT object which indicates how a value should
+       be displayed for human consumption.
+       The base of the IDENT SHALL be the
+       <ari://ietf/amm-base/ident/display-hint> object.";
   }
 
   extension int-labels {
     description
-      "Type narrowing for an integer to label enum values or bit positions.";
+      "Type narrowing for an integer to label enum values or bit
+       positions.";
   }
 
   extension cddl {
@@ -277,7 +289,8 @@ module ietf-amm {
 
   extension umap {
     description
-      "Type for an AM containing a set of uniform-typed key-value pairs.";
+      "Type for an AM containing a set of uniform-typed key-value
+       pairs.";
   }
 
   extension keys {
@@ -311,13 +324,13 @@ module ietf-amm {
   extension unique {
     argument columns;
     description
-      "Names of columns composing a uniqueness constraint, separated by
-       spaces, within a 'tblt' definition.";
+      "Names of columns composing a uniqueness constraint, separated
+       by spaces, within a 'tblt' definition.";
   }
 
   extension union {
     description
-      "Type for a union of other types.";
+      "Semantic type for a union of other types in substatements.";
   }
 
   amm:enum 0;
