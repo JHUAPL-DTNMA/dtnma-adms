@@ -112,7 +112,8 @@ module ietf-alarms {
        This set of values is aligned with ITU-T X.733-1992,
        Section 8.1.2.3";
     reference
-      "ITU-T X.733-1992: Systems Management: Alarm Reporting Function";
+      "ITU-T X.733-1992: Systems Management: Alarm Reporting
+         Function";
     amm:type "/aritype/uint" {
       amm:int-labels {
         enum cleared {
@@ -162,7 +163,8 @@ module ietf-alarms {
           value 5;
           description
             "This indicates that a service affecting condition has
-             occurred and an immediate corrective action is required.";
+             occurred and an immediate corrective action is
+             required.";
           reference
             "ITU-T X.733-1992";
         }
@@ -222,7 +224,8 @@ module ietf-alarms {
       }
       amm:column category {
         description
-          "The specific category of alarm being indicated on the resource";
+          "The specific category of alarm being indicated on
+           the resource";
         amm:type "/aritype/ident" {
           amm:base "./ident/category";
         }
@@ -274,7 +277,8 @@ module ietf-alarms {
       }
       amm:column manager-identity {
         description
-          "The identity of the manager which last modified 'manager-state'.
+          "The identity of the manager which last modified the
+           'manager-state' column value.
            When first created this identity will be invalid.";
         amm:type "//ietf/network-base/typedef/endpoint";
       }
@@ -295,7 +299,7 @@ module ietf-alarms {
     amm:parameter filter {
       description
         "A filter to match rows with specific cell contents.";
-      amm:type "./typedef/tbl-row-filter";
+      amm:type "//ietf/dtnma-agent/typedef/tbl-row-filter";
     }
     amm:result affected {
       description
@@ -314,7 +318,7 @@ module ietf-alarms {
     amm:parameter filter {
       description
         "A filter to match rows with specific cell contents.";
-      amm:type "./typedef/tbl-row-filter";
+      amm:type "//ietf/dtnma-agent/typedef/tbl-row-filter";
     }
     amm:result affected {
       description
@@ -368,13 +372,15 @@ module ietf-alarms {
       amm:column resources {
         description
           "A pattern to match specific resource objects.
-           This MAY include only integer identifiers for compactness.";
+           This MAY include only integer identifiers for
+           compactness.";
         amm:type "//ietf/amm-base/typedef/ari-pattern";
       }
       amm:column categories {
         description
           "A pattern to match specific category objects.
-           This MAY include only integer identifiers for compactness.";
+           This MAY include only integer identifiers for
+           compactness.";
         amm:type "//ietf/amm-base/typedef/ari-pattern";
       }
     }
