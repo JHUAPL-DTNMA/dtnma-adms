@@ -9,7 +9,7 @@ on:
     - cron: '20 8 * * 4'
 
 env:
-  ACE_REPO: "git+https://github.com/JHUAPL-DTNMA/dtnma-ace.git@apl-fy24"
+  ACE_REPO: "git+https://github.com/JHUAPL-DTNMA/dtnma-ace.git@main"
 
 jobs:
   validate:
