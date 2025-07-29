@@ -780,9 +780,6 @@ module ietf-dtnma-agent {
         "The execution when this rule triggers.";
       amm:type "//ietf/amm-base/typedef/MAC";
     }
-    amm:parameter start-time {
-      amm:type "//ietf/amm-base/typedef/TIME";
-    }
     amm:parameter condition {
       amm:type "//ietf/amm-base/typedef/EXPR";
     }
