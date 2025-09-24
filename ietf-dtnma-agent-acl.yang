@@ -56,34 +56,8 @@ module ietf-dtnma-agent-acl {
       "draft-ietf-dtn-adm-yang";
   }
   amm:enum 2;
-  amm:typedef tag {
-    amm:enum 0;
-    description
-      "Datatype for access control list tags";
-    amm:type "./TYPEDEF/permissions";
-  }
-  amm:typedef permissions {
-    amm:enum 1;
-    amm:type "/ARITYPE/BYTE" {
-      amm:int-labels {
-        bit tag-read {
-          position 0;
-          description
-            "Permission bit for Read";
-        }
-        bit tag-write {
-          position 1;
-          description
-            "Permission bit for Write";
-        }
-        bit tag-execute {
-          position 2;
-          description
-            "Permission bit for Execute/Evaluate";
-        }
-      }
-    }
-  }
+
+  // Common types in this model
   amm:typedef entry-id {
     amm:enum 2;
     description
@@ -99,27 +73,27 @@ module ietf-dtnma-agent-acl {
       amm:type "/ARITYPE/null";
     }
   }
-  amm:typedef result {
-    amm:enum 4;
-    amm:type "/ARITYPE/INT" {
-      amm:int-labels {
-        enum success {
-          value 0;
-          description
-            "Execution was successful";
-        }
-        enum error-generic {
-          value 1;
-          description
-            "Generic execution failure";
-        }
-        enum error-permission-denied {
-          value 2;
-          description
-            "Manager does not have permission";
-        }
-      }
-    }
+
+  // Atomic permission objects
+  amm:ident permission {
+    amm:enum 0;
+    description
+      "The base IDENT for objects usable as permissions in the
+       access control table.
+       Derived objects MUST define the specific conditions in which
+       the permission is exercised.
+       Derived objects MAY be parameterized as needed to control
+       specific access granted by each permission.
+       This object itself is abstract and provides not specific
+       permission.";
+    amm:abstract true;
+  }
+  amm:typedef permission-list {
+    amm:enum 0;
+    description
+      "A list of permission object (IDENT) references.";
+    amm:type "/aritype/ident" {
+      amm:base "./ident/permission";
   }
 
   // Default access permission
@@ -127,8 +101,8 @@ module ietf-dtnma-agent-acl {
     amm:enum 1;
     description
       "The default permission for any object if no specific access
-       are present in the ./EDD/access-list table.";
-    amm:type "./TYPEDEF/tag";
+       are present in the <./EDD/access-list> table.";
+    amm:type "./TYPEDEF/permission-list";
   }
 
   // Access control table and modifier controls
@@ -143,21 +117,23 @@ module ietf-dtnma-agent-acl {
       }
       amm:column group {
         description
-          "A cross-reference to the group getting access, or null to
-           match all groups.";
+          "A cross-reference to the group getting access, or the
+           null value to match all groups.";
         amm:type "./TYPEDEF/optional-entry-id";
       }
-      amm:column object-pattern {
+      amm:column objects {
         description
-          "A pattern for objects being accessed, which may match
-           all objects.";
-        amm:type "/ARITYPE/TEXTSTR";
+          "A pattern for objects being granted access, which may
+           match all objects.";
+        amm:type "//ietf/amm-base/typedef/ari-pattern";
       }
-      amm:column tag {
+      amm:column permissions {
         description
-          "A pattern for objects being accessed, which may match
-           all objects.";
-        amm:type "./TYPEDEF/tag";
+          "Refernces to specific permissions being granted.
+           Individual permission references MAY be parameterized
+           as necessary.
+           The absence of permissions does not grant any access.";
+        amm:type "./TYPEDEF/permission-list";
       }
     }
   }
@@ -171,17 +147,16 @@ module ietf-dtnma-agent-acl {
         "Identify the group being assigned the permission";
       amm:type "./TYPEDEF/optional-entry-id";
     }
-    amm:parameter object-pattern {
+    amm:parameter objects {
       description
-        "ARI pattern to determine which objects shall be assigned
-         the permission";
-      amm:type "/ARITYPE/TEXTSTR";
+        "ARI pattern to determine which objects will be assigned
+         the permissions.";
+      amm:type "//ietf/amm-base/typedef/ari-pattern";
     }
-    amm:parameter tag {
+    amm:parameter permissions {
       description
-        "Permission tag value to set";
-      amm:default "0";
-      amm:type "./TYPEDEF/tag";
+        "Permissions to grant to the associated group and objects";
+      amm:type "./TYPEDEF/permission-list";
     }
     amm:result error-code {
       description
@@ -198,10 +173,10 @@ module ietf-dtnma-agent-acl {
         "Identify the group";
       amm:type "./TYPEDEF/optional-entry-id";
     }
-    amm:parameter object-pattern {
+    amm:parameter objects {
       description
         "ARI pattern";
-      amm:type "/ARITYPE/TEXTSTR";
+      amm:type "//ietf/amm-base/typedef/ari-pattern";
     }
     amm:result error-code {
       description
