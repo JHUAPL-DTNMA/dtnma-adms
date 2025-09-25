@@ -62,7 +62,7 @@ module ietf-dtnma-agent-acl {
     amm:enum 2;
     description
       "The identifier for an entry in any access control table.";
-    amm:type "/ARITYPE/UVAST";
+    amm:type "/ARITYPE/UINT";
   }
   amm:typedef optional-entry-id {
     amm:enum 3;
@@ -94,6 +94,7 @@ module ietf-dtnma-agent-acl {
       "A list of permission object (IDENT) references.";
     amm:type "/aritype/ident" {
       amm:base "./ident/permission";
+    }
   }
 
   // Default access permission
@@ -158,11 +159,6 @@ module ietf-dtnma-agent-acl {
         "Permissions to grant to the associated group and objects";
       amm:type "./TYPEDEF/permission-list";
     }
-    amm:result error-code {
-      description
-        "If non-zero, an indicator of an error.";
-      amm:type "./TYPEDEF/result";
-    }
   }
   amm:ctrl discard-access {
     amm:enum 4;
@@ -177,11 +173,6 @@ module ietf-dtnma-agent-acl {
       description
         "ARI pattern";
       amm:type "//ietf/amm-base/typedef/ari-pattern";
-    }
-    amm:result error-code {
-      description
-        "If non-zero, an indicator of an error.";
-      amm:type "./TYPEDEF/result";
     }
   }
 
@@ -237,11 +228,6 @@ module ietf-dtnma-agent-acl {
         "Name of the group";
       amm:type "/ARITYPE/TEXTSTR";
     }
-    amm:result error-code {
-      description
-        "If non-zero, an indicator of an error.";
-      amm:type "./TYPEDEF/result";
-    }
   }
   amm:ctrl ensure-group-members {
     amm:enum 7;
@@ -258,11 +244,6 @@ module ietf-dtnma-agent-acl {
         amm:type "//ietf/network-base/TYPEDEF/endpoint-pattern";
       }
     }
-    amm:result error-code {
-      description
-        "If non-zero, an indicator of an error.";
-      amm:type "./TYPEDEF/result";
-    }
   }
   amm:ctrl discard-group {
     amm:enum 6;
@@ -272,11 +253,6 @@ module ietf-dtnma-agent-acl {
       description
         "Uniquely identify the group";
       amm:type "./TYPEDEF/entry-id";
-    }
-    amm:result error-code {
-      description
-        "If non-zero, an indicator of an error.";
-      amm:type "./TYPEDEF/result";
     }
   }
 }
