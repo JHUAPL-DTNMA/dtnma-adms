@@ -228,16 +228,11 @@ module ietf-dtnma-agent-acl {
   amm:ctrl discard-access {
     amm:enum 4;
     description
-      "Discard any permissions for the given group and ARI pattern.";
-    amm:parameter group {
+      "Discard any access item with the given ID.";
+    amm:parameter access-id {
       description
-        "Identify the group";
-      amm:type "./TYPEDEF/optional-entry-id";
-    }
-    amm:parameter objects {
-      description
-        "ARI pattern";
-      amm:type "//ietf/amm-base/typedef/ari-pattern";
+        "Uniquely identify the access";
+      amm:type "./TYPEDEF/entry-id";
     }
   }
 
