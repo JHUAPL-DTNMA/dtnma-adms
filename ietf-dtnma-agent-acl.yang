@@ -92,9 +92,62 @@ module ietf-dtnma-agent-acl {
     amm:enum 0;
     description
       "A list of permission object (IDENT) references.";
-    amm:type "/aritype/ident" {
-      amm:base "./ident/permission";
+    amm:ulist {
+      amm:type "/aritype/ident" {
+        amm:base "./ident/permission";
+      }
     }
+  }
+  // built-in permissions
+  amm:ident execute {
+    amm:enum 10;
+    description
+      "Permission to allow executing specific CTRL objects.
+       This includes objects used directly as EXECSET targets,
+       indirectly within macros, or as actions of TBR or SBR
+       objects.";
+    amm:base "./ident/permission";
+  }
+  amm:ident produce {
+    amm:enum 11;
+    description
+      "Permission to allow producing values from CONST, VAR, or
+       EDD objects.
+       This includes production for use by reporting or evaluating
+       procedures of the Agent.";
+    amm:base "./ident/permission";
+  }
+  amm:ident modify-var {
+    amm:enum 12;
+    description
+      "Permission to allow modifying state on VAR objects.
+       This includes production for use by reporting or evaluating
+       procedures of the Agent.";
+    amm:base "./ident/permission";
+  }
+  amm:ident create-odm {
+    amm:enum 13;
+    description
+      "Permission to allow creating a new ODM within an Agent.";
+    amm:base "./ident/permission";
+  }
+  amm:ident delete-odm {
+    amm:enum 14;
+    description
+      "Permission to allow deleting an ODM within an Agent.";
+    amm:base "./ident/permission";
+  }
+  amm:ident create-object {
+    amm:enum 15;
+    description
+      "Permission to allow creating a new object within an ODM.";
+    amm:base "./ident/permission";
+  }
+  amm:ident delete-object {
+    amm:enum 16;
+    description
+      "Permission to allow deleting an object within an ODM.";
+    amm:base "./ident/permission";
   }
 
   // Default access permission
@@ -112,15 +165,19 @@ module ietf-dtnma-agent-acl {
     description
       "List the current group--object access.";
     amm:tblt {
-      amm:key "id";
-      amm:column id {
+      amm:key "access-id";
+      amm:column access-id {
+        description
+          "A unique identifier for this access list item.";
         amm:type "./TYPEDEF/entry-id";
       }
-      amm:column group {
+      amm:column group-ids {
         description
-          "A cross-reference to the group getting access, or the
-           null value to match all groups.";
-        amm:type "./TYPEDEF/optional-entry-id";
+          "A cross-reference to the groups getting access, or the
+           empty list to match all groups.";
+        amm:ulist {
+          amm:type "./TYPEDEF/entry-id";
+        }
       }
       amm:column objects {
         description
@@ -143,10 +200,18 @@ module ietf-dtnma-agent-acl {
     description
       "Ensures that an access control permission is set for the
        given group and ARI pattern.";
-    amm:parameter group {
+    amm:parameter access-id {
       description
-        "Identify the group being assigned the permission";
-      amm:type "./TYPEDEF/optional-entry-id";
+        "A unique identifier for this access list item.";
+      amm:type "./TYPEDEF/entry-id";
+    }
+    amm:parameter group-ids {
+      description
+        "Identify the groups being assigned the permission,
+         or the empty list for all-groups.";
+      amm:ulist {
+        amm:type "./TYPEDEF/entry-id";
+      }
     }
     amm:parameter objects {
       description
@@ -191,11 +256,12 @@ module ietf-dtnma-agent-acl {
     description
       "Get the defined access control groups.";
     amm:tblt {
-      amm:key "id";
-      amm:column id {
+      amm:key "group-id";
+      amm:column group-id {
         description
           "The unique identifier for a group.
-           The agent itself has implicit group ID zero.";
+           The agent itself has implicit group ID zero which cannot
+           be modified.";
         amm:type "./TYPEDEF/entry-id";
       }
       amm:column name {
@@ -218,7 +284,7 @@ module ietf-dtnma-agent-acl {
     description
       "Ensure that after the control completes a group exists with
        the given information";
-    amm:parameter id {
+    amm:parameter group-id {
       description
         "Uniquely identify the group";
       amm:type "./TYPEDEF/entry-id";
@@ -234,7 +300,7 @@ module ietf-dtnma-agent-acl {
     description
       "Ensure that the membership of a group has a specific set of
        endpoint patterns.";
-    amm:parameter id {
+    amm:parameter group-id {
       description
         "Uniquely identify the group";
       amm:type "./TYPEDEF/entry-id";
@@ -249,7 +315,7 @@ module ietf-dtnma-agent-acl {
     amm:enum 6;
     description
       "Discard any group with the given ID.";
-    amm:parameter group {
+    amm:parameter group-id {
       description
         "Uniquely identify the group";
       amm:type "./TYPEDEF/entry-id";
