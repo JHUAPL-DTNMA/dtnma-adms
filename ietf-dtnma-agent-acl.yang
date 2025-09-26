@@ -239,12 +239,14 @@ module ietf-dtnma-agent-acl {
   //
   // Group management
   //
-  amm:edd current-group-id {
+  amm:edd current-groups {
     amm:enum 3;
     description
-      "Get the group ID for the current execution context, which may
-       be the implicit Agent group ID zero.";
-    amm:type "./TYPEDEF/entry-id";
+      "Get the group IDs for the current execution context, which may
+       incude the implicit Agent group ID zero.";
+    amm:ulist {
+      amm:type "./TYPEDEF/entry-id";
+    }
   }
   amm:edd group-list {
     amm:enum 4;
