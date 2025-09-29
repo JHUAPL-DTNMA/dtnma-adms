@@ -193,6 +193,16 @@ module ietf-dtnma-agent-acl {
            The absence of permissions does not grant any access.";
         amm:type "./TYPEDEF/permission-list";
       }
+      amm:column added-at {
+        description
+          "Agent timestamp when this group was added.";
+        amm:type "//ietf/amm-base/typedef/timestamp";
+      }
+      amm:column updated-at {
+        description
+          "Agent timestamp when this group was added or updated.";
+        amm:type "//ietf/amm-base/typedef/timestamp";
+      }
     }
   }
   amm:ctrl ensure-access {
@@ -264,7 +274,7 @@ module ietf-dtnma-agent-acl {
       amm:column name {
         description
           "The human-friendly name of the group.";
-        amm:type "/ARITYPE/TEXTSTR";
+        amm:type "//ietf/amm-base/typedef/id-text";
       }
       amm:column members {
         description
@@ -273,6 +283,16 @@ module ietf-dtnma-agent-acl {
         amm:ulist {
           amm:type "//ietf/network-base/TYPEDEF/endpoint-pattern";
         }
+      }
+      amm:column added-at {
+        description
+          "Agent timestamp when this group was added.";
+        amm:type "//ietf/amm-base/typedef/timestamp";
+      }
+      amm:column updated-at {
+        description
+          "Agent timestamp when this group was added or updated.";
+        amm:type "//ietf/amm-base/typedef/timestamp";
       }
     }
   }
@@ -289,7 +309,7 @@ module ietf-dtnma-agent-acl {
     amm:parameter name {
       description
         "Name of the group";
-      amm:type "/ARITYPE/TEXTSTR";
+      amm:type "//ietf/amm-base/typedef/id-text";
     }
   }
   amm:ctrl ensure-group-members {
