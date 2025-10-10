@@ -628,19 +628,21 @@ module ietf-dtnma-agent {
   amm:ctrl ensure-const {
     amm:enum 11;
     description
-      "Ensure a specific CONST is present in an ODM.";
+      "Ensure a specific CONST is present in an ODM.
+       If an object already exists with the same identifiers, type,
+       and value this control will do nothing and succeed.
+       If an object already exists in the same namespace with either
+       of the object identifiers this control will fail.";
     uses ensure-object-id;
     amm:parameter type {
       description
         "The type for the CONST object.";
       amm:type "//ietf/amm-semtype/typedef/semtype";
     }
-    amm:parameter init {
+    amm:parameter value {
       description
-        "A required initializer expression.
-         This expression is evaluated once at the time of object
-         creation.";
-      amm:type "//ietf/amm-base/typedef/EXPR";
+        "A required constant value.";
+      amm:type "//ietf/amm-base/typedef/ANY";
     }
   }
   amm:ctrl obsolete-const {
@@ -674,23 +676,26 @@ module ietf-dtnma-agent {
   amm:ctrl ensure-var {
     amm:enum 9;
     description
-      "Ensure a specific VAR is present in an ODM.";
+      "Ensure a specific VAR is present in an ODM.
+       If an object already exists with the same identifiers, type,
+       and init-value this control will do nothing and succeed.
+       If an object already exists in the same namespace with either
+       of the object identifiers (but not both), or the type or
+       is different, this control will fail.
+       That means that this control can change only the initial value
+       of a pre-existing VAR object.";
     uses ensure-object-id;
     amm:parameter type {
       description
         "The type for the VAR object.";
       amm:type "//ietf/amm-semtype/typedef/semtype";
     }
-    amm:parameter init {
+    amm:parameter init-value {
       description
-        "An optional initializer expression.
-         This expression is evaluated once at the time of object
-         creation.";
-      amm:default "null";
-      amm:union {
-        amm:type "/aritype/NULL";
-        amm:type "//ietf/amm-base/typedef/EXPR";
-      }
+        "The exact value to use as the initial value of
+         the new object and to store as the initial state
+         of the object if created.";
+      amm:type "//ietf/amm-base/typedef/ANY";
     }
   }
   amm:ctrl obsolete-var {
