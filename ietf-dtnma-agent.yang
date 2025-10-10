@@ -120,6 +120,16 @@ module ietf-dtnma-agent {
     }
   }
 
+  grouping any-unary-result {
+    description
+      "Any-value result";
+    amm:result result {
+      description
+        "The single value.";
+      amm:type "//ietf/amm-base/typedef/ANY";
+    }
+  }
+
   grouping numeric-unary-operands {
     description
       "Numeric unary operand";
@@ -906,23 +916,23 @@ module ietf-dtnma-agent {
       "Add two numeric values.
        The operands are cast to the least compatible numeric type
        before the arithmetic.";
-    uses numeric-binary-operands;
-    uses numeric-unary-result;
+    uses any-binary-operands;
+    uses any-unary-result;
   }
   amm:oper sub {
     amm:enum 2;
-    uses numeric-binary-operands;
-    uses numeric-unary-result;
+    uses any-binary-operands;
+    uses any-unary-result;
   }
   amm:oper multiply {
     amm:enum 3;
-    uses numeric-binary-operands;
-    uses numeric-unary-result;
+    uses any-binary-operands;
+    uses any-unary-result;
   }
   amm:oper divide {
     amm:enum 4;
-    uses numeric-binary-operands;
-    uses numeric-unary-result;
+    uses any-binary-operands;
+    uses any-unary-result;
   }
   amm:oper remainder {
     amm:enum 5;
