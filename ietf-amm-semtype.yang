@@ -142,14 +142,16 @@ module ietf-amm-semtype {
     amm:parameter columns {
       description
         "The list of column definitions as rows in a table.
-         Each column SHALL have a unique name.
-         The order of these columns is significant.";
+         The order of these definitions is significant and correspond
+         exactly with the order of columns in the TBL values.";
       amm:tblt {
+        amm:key "name";
         amm:column name {
           description
             "The name of this column.
+             Each name SHALL be unique within a table template.
              Each name SHALL be restricted to valid label text.";
-          amm:type "/ARITYPE/label";
+          amm:type "//ietf/amm-base/typedef/id-text";
         }
         amm:column datatype {
           description
