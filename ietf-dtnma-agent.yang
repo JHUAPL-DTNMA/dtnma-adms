@@ -291,36 +291,52 @@ module ietf-dtnma-agent {
   // Messaging counters
   amm:edd num-msg-rx {
     amm:enum 3;
+    description
+      "Messaging counter";
     amm:type "//ietf/amm-base/typedef/counter64";
   }
   amm:edd num-msg-rx-failed {
     amm:enum 4;
+    description
+      "Messaging counter";
     amm:type "//ietf/amm-base/typedef/counter64";
   }
   amm:edd num-msg-tx {
     amm:enum 5;
+    description
+      "Messaging counter";
     amm:type "//ietf/amm-base/typedef/counter64";
   }
   amm:edd num-msg-tx-failed {
     amm:enum 15;
+    description
+      "Messaging counter";
     amm:type "//ietf/amm-base/typedef/counter64";
   }
 
   // Execution counters and states
   amm:edd num-exec-started {
     amm:enum 6;
+    description
+      "Execution counter and state";
     amm:type "//ietf/amm-base/typedef/counter64";
   }
   amm:edd num-exec-succeeded {
     amm:enum 7;
+    description
+      "Execution counter and state";
     amm:type "//ietf/amm-base/typedef/counter64";
   }
   amm:edd num-exec-failed {
     amm:enum 8;
+    description
+      "Execution counter and state";
     amm:type "//ietf/amm-base/typedef/counter64";
   }
   amm:edd exec-running {
     amm:enum 9;
+    description
+      "Execution counter and state";
     amm:tblt {
       amm:key "pid";
       amm:column pid {
@@ -418,6 +434,8 @@ module ietf-dtnma-agent {
        controls in time.";
     amm:parameter duration {
       amm:type "/aritype/TD";
+      description
+        "duration";
     }
   }
   amm:ctrl wait-until {
@@ -430,6 +448,8 @@ module ietf-dtnma-agent {
        after the time of reception.";
     amm:parameter time {
       amm:type "/aritype/TP";
+      description
+        "time";
     }
   }
   amm:ctrl wait-cond {
@@ -442,6 +462,8 @@ module ietf-dtnma-agent {
        until the condition is met.";
     amm:parameter condition {
       amm:type "//ietf/amm-base/typedef/eval-tgt";
+      description
+        "condition";
     }
   }
 
@@ -781,18 +803,28 @@ module ietf-dtnma-agent {
       amm:type "//ietf/amm-base/typedef/MAC";
     }
     amm:parameter condition {
+      description
+        "condition";
       amm:type "//ietf/amm-base/typedef/EXPR";
     }
     amm:parameter min-interval {
+      description
+        "minimum interval";
       amm:type "/ARITYPE/TD";
     }
     amm:parameter max-count {
+      description
+        "maximum count";
       amm:type "/ARITYPE/UVAST";
     }
     amm:parameter init-enabled {
+      description
+        "init enabled";
       amm:type "/ARITYPE/BOOL";
     }
     amm:result res {
+      description
+        "result";
       amm:type "/ARITYPE/UINT";
     }
   }
@@ -809,18 +841,28 @@ module ietf-dtnma-agent {
       amm:type "//ietf/amm-base/typedef/MAC";
     }
     amm:parameter start-time {
+      description
+        "start time";
       amm:type "//ietf/amm-base/typedef/TIME";
     }
     amm:parameter period {
+      description
+        "period";
       amm:type "/ARITYPE/TD";
     }
     amm:parameter max-count {
+      description
+        "maximum count";
       amm:type "/ARITYPE/UVAST";
     }
     amm:parameter init-enabled {
+      description
+        "init enabled";
       amm:type "/ARITYPE/BOOL";
     }
     amm:result res {
+      description
+        "result";
       amm:type "/ARITYPE/UINT";
     }
   }
@@ -841,6 +883,8 @@ module ietf-dtnma-agent {
       amm:type "/ARITYPE/BOOL";
     }
     amm:result res {
+      description
+        "result";
       amm:type "/ARITYPE/uint";
     }
   }
@@ -858,6 +902,8 @@ module ietf-dtnma-agent {
       }
     }
     amm:result res {
+      description
+        "result";
       amm:type "/ARITYPE/UINT";
     }
   }
@@ -876,6 +922,8 @@ module ietf-dtnma-agent {
       }
     }
     amm:result success {
+      description
+        "success";
       amm:type "/ARITYPE/BOOL";
     }
   }
@@ -901,21 +949,29 @@ module ietf-dtnma-agent {
   }
   amm:oper sub {
     amm:enum 2;
+    description 
+      "Subtract two numeric values.";
     uses numeric-binary-operands;
     uses numeric-unary-result;
   }
   amm:oper multiply {
     amm:enum 3;
+    description
+      "Multiply two numeric values.";
     uses numeric-binary-operands;
     uses numeric-unary-result;
   }
   amm:oper divide {
     amm:enum 4;
+    description
+      "Divide two numeric values."
     uses numeric-binary-operands;
     uses numeric-unary-result;
   }
   amm:oper remainder {
     amm:enum 5;
+    description
+      "Find the remainder of a numeric operation."
     uses numeric-binary-operands;
     uses numeric-unary-result;
   }
@@ -923,21 +979,29 @@ module ietf-dtnma-agent {
   // Bitwise operators
   amm:oper bit-not {
     amm:enum 6;
+    description
+      "bitwise NOT";
     uses integer-unary-operands;
     uses integer-unary-result;
   }
   amm:oper bit-and {
     amm:enum 7;
+    description
+      "bitwise AND";
     uses integer-binary-operands;
     uses integer-unary-result;
   }
   amm:oper bit-or {
     amm:enum 8;
+    description
+      "bitwise OR";
     uses integer-binary-operands;
     uses integer-unary-result;
   }
   amm:oper bit-xor {
     amm:enum 9;
+    description
+      "bitwise XOR";
     uses integer-binary-operands;
     uses integer-unary-result;
   }
@@ -967,11 +1031,15 @@ module ietf-dtnma-agent {
   // Value comparison
   amm:oper compare-eq {
     amm:enum 14;
+    description
+      "Value comparison";
     uses any-binary-operands;
     uses bool-unary-result;
   }
   amm:oper compare-ne {
     amm:enum 15;
+    description
+      "Value comparison";
     uses any-binary-operands;
     uses bool-unary-result;
   }
