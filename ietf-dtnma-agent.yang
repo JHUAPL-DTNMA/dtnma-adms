@@ -111,12 +111,12 @@ module ietf-dtnma-agent {
     amm:operand left {
       description
         "The left-side operand.";
-      amm:type "//ietf/amm-base/typedef/ANY";
+      amm:type "//ietf/amm-base/typedef/any";
     }
     amm:operand right {
       description
         "The left-side operand.";
-      amm:type "//ietf/amm-base/typedef/ANY";
+      amm:type "//ietf/amm-base/typedef/any";
     }
   }
 
@@ -126,7 +126,7 @@ module ietf-dtnma-agent {
     amm:result result {
       description
         "The single value.";
-      amm:type "//ietf/amm-base/typedef/ANY";
+      amm:type "//ietf/amm-base/typedef/any";
     }
   }
 
@@ -337,7 +337,7 @@ module ietf-dtnma-agent {
         amm:type "/aritype/UVAST";
       }
       amm:column target {
-        amm:type "//ietf/amm-base/typedef/ANY";
+        amm:type "//ietf/amm-base/typedef/any";
       }
       amm:column state {
         amm:type "/aritype/BYTE" {
@@ -469,7 +469,7 @@ module ietf-dtnma-agent {
     amm:result val {
       description
         "The produced value.";
-      amm:type "//ietf/amm-base/typedef/ANY";
+      amm:type "//ietf/amm-base/typedef/any";
     }
   }
   amm:ctrl report-on {
@@ -601,7 +601,7 @@ module ietf-dtnma-agent {
     amm:parameter value {
       description
         "The exact value to store in the VAR.";
-      amm:type "//ietf/amm-base/typedef/ANY";
+      amm:type "//ietf/amm-base/typedef/any";
     }
   }
 
@@ -651,8 +651,9 @@ module ietf-dtnma-agent {
     }
     amm:parameter value {
       description
-        "A required constant value.";
-      amm:type "//ietf/amm-base/typedef/ANY";
+        "A required constant value.
+         This value SHALL match the type given for this object.";
+      amm:type "//ietf/amm-base/typedef/any";
     }
   }
   amm:ctrl obsolete-const {
@@ -704,8 +705,9 @@ module ietf-dtnma-agent {
       description
         "The exact value to use as the initial value of
          the new object and to store as the initial state
-         of the object if created.";
-      amm:type "//ietf/amm-base/typedef/ANY";
+         of the object if created.
+         This value SHALL match the type given for this object.";
+      amm:type "//ietf/amm-base/typedef/any";
     }
   }
   amm:ctrl obsolete-var {
