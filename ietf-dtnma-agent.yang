@@ -482,13 +482,18 @@ module ietf-dtnma-agent {
     }
     amm:parameter destinations {
       description
-        "One or more destination for the resulting report.
+        "Destinations for the resulting report.
+         If given an empty list (the default) reports will be sent
+         to the manager executing this CTRL.
+         When executed as a rule action, the destinations list is
+         mandatory.
+
          It is possible that each destination has different access
          limitations so each destination might see different report
          contents.";
-      amm:union {
+      amm:default "/ac/()";
+      amm:ulist {
         amm:type "//ietf/network-base/typedef/endpoint-or-uri";
-        amm:type "/aritype/null";
       }
     }
   }
