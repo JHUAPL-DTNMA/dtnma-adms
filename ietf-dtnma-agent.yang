@@ -111,12 +111,22 @@ module ietf-dtnma-agent {
     amm:operand left {
       description
         "The left-side operand.";
-      amm:type "//ietf/amm-base/typedef/ANY";
+      amm:type "//ietf/amm-base/typedef/any";
     }
     amm:operand right {
       description
         "The left-side operand.";
-      amm:type "//ietf/amm-base/typedef/ANY";
+      amm:type "//ietf/amm-base/typedef/any";
+    }
+  }
+
+  grouping any-unary-result {
+    description
+      "Any-value result";
+    amm:result result {
+      description
+        "The single value.";
+      amm:type "//ietf/amm-base/typedef/any";
     }
   }
 
@@ -343,7 +353,7 @@ module ietf-dtnma-agent {
         amm:type "/aritype/UVAST";
       }
       amm:column target {
-        amm:type "//ietf/amm-base/typedef/ANY";
+        amm:type "//ietf/amm-base/typedef/any";
       }
       amm:column state {
         amm:type "/aritype/BYTE" {
@@ -481,7 +491,7 @@ module ietf-dtnma-agent {
     amm:result val {
       description
         "The produced value.";
-      amm:type "//ietf/amm-base/typedef/ANY";
+      amm:type "//ietf/amm-base/typedef/any";
     }
   }
   amm:ctrl report-on {
@@ -504,13 +514,18 @@ module ietf-dtnma-agent {
     }
     amm:parameter destinations {
       description
-        "One or more destination for the resulting report.
+        "Destinations for the resulting report.
+         If given an empty list (the default) reports will be sent
+         to the manager executing this CTRL.
+         When executed as a rule action, the destinations list is
+         mandatory.
+
          It is possible that each destination has different access
          limitations so each destination might see different report
          contents.";
-      amm:union {
+      amm:default "/ac/()";
+      amm:ulist {
         amm:type "//ietf/network-base/typedef/endpoint-or-uri";
-        amm:type "/aritype/null";
       }
     }
   }
@@ -608,7 +623,7 @@ module ietf-dtnma-agent {
     amm:parameter value {
       description
         "The exact value to store in the VAR.";
-      amm:type "//ietf/amm-base/typedef/ANY";
+      amm:type "//ietf/amm-base/typedef/any";
     }
   }
 
@@ -645,19 +660,22 @@ module ietf-dtnma-agent {
   amm:ctrl ensure-const {
     amm:enum 11;
     description
-      "Ensure a specific CONST is present in an ODM.";
+      "Ensure a specific CONST is present in an ODM.
+       If an object already exists with the same identifiers, type,
+       and value this control will do nothing and succeed.
+       If an object already exists in the same namespace with either
+       of the object identifiers this control will fail.";
     uses ensure-object-id;
     amm:parameter type {
       description
         "The type for the CONST object.";
       amm:type "//ietf/amm-semtype/typedef/semtype";
     }
-    amm:parameter init {
+    amm:parameter value {
       description
-        "A required initializer expression.
-         This expression is evaluated once at the time of object
-         creation.";
-      amm:type "//ietf/amm-base/typedef/EXPR";
+        "A required constant value.
+         This value SHALL match the type given for this object.";
+      amm:type "//ietf/amm-base/typedef/any";
     }
   }
   amm:ctrl obsolete-const {
@@ -691,23 +709,27 @@ module ietf-dtnma-agent {
   amm:ctrl ensure-var {
     amm:enum 9;
     description
-      "Ensure a specific VAR is present in an ODM.";
+      "Ensure a specific VAR is present in an ODM.
+       If an object already exists with the same identifiers, type,
+       and init-value this control will do nothing and succeed.
+       If an object already exists in the same namespace with either
+       of the object identifiers (but not both), or the type or
+       is different, this control will fail.
+       That means that this control can change only the initial value
+       of a pre-existing VAR object.";
     uses ensure-object-id;
     amm:parameter type {
       description
         "The type for the VAR object.";
       amm:type "//ietf/amm-semtype/typedef/semtype";
     }
-    amm:parameter init {
+    amm:parameter init-value {
       description
-        "An optional initializer expression.
-         This expression is evaluated once at the time of object
-         creation.";
-      amm:default "null";
-      amm:union {
-        amm:type "/aritype/NULL";
-        amm:type "//ietf/amm-base/typedef/EXPR";
-      }
+        "The exact value to use as the initial value of
+         the new object and to store as the initial state
+         of the object if created.
+         This value SHALL match the type given for this object.";
+      amm:type "//ietf/amm-base/typedef/any";
     }
   }
   amm:ctrl obsolete-var {
@@ -941,37 +963,54 @@ module ietf-dtnma-agent {
   amm:oper add {
     amm:enum 1;
     description
-      "Add two numeric values.
+      "Add two numeric values or a TP and TD value (in either order).
        The operands are cast to the least compatible numeric type
        before the arithmetic.";
-    uses numeric-binary-operands;
-    uses numeric-unary-result;
+    uses any-binary-operands;
+    uses any-unary-result;
   }
   amm:oper sub {
     amm:enum 2;
     description 
-      "Subtract two numeric values.";
-    uses numeric-binary-operands;
-    uses numeric-unary-result;
+      "Subtract two numeric values or a TP less a TD value.
+       The left (second) operand is the minuend and the right (first)
+       operand is the subtrahend; this means that the EXPR
+       </AC/(10, 2, ./OPER/sub)> behaves as the infix "10 - 2".
+       The operands are cast to the least compatible numeric type
+       before the arithmetic.";
+    uses any-binary-operands;
+    uses any-unary-result;
   }
   amm:oper multiply {
     amm:enum 3;
     description
-      "Multiply two numeric values.";
-    uses numeric-binary-operands;
-    uses numeric-unary-result;
+      "Multiply two numeric values or a TD value (in either order).
+       The operands are cast to the least compatible numeric type
+       before the arithmetic.";
+    uses any-binary-operands;
+    uses any-unary-result;
   }
   amm:oper divide {
     amm:enum 4;
     description
-      "Divide two numeric values."
-    uses numeric-binary-operands;
-    uses numeric-unary-result;
+      "Divide two numeric values or a TD value (as numerator).
+       The left (second) operand is the numerator and the right (first)
+       operand is the divisor; this means that the EXPR
+       </AC/(10, 2, ./OPER/divide)> behaves as the infix "10 / 2".
+       The operands are cast to the least compatible numeric type
+       before the arithmetic.";
+    uses any-binary-operands;
+    uses any-unary-result;
   }
   amm:oper remainder {
     amm:enum 5;
     description
-      "Find the remainder of a numeric operation."
+      "Find the remainder of a numeric operation.
+       The left (second) operand is the numerator and the right (first)
+       operand is the divisor; this means that the EXPR
+       </AC/(10, 2, ./OPER/divide)> behaves as the infix "10 % 2".
+       The operands are cast to the least compatible numeric type
+       before the arithmetic.";
     uses numeric-binary-operands;
     uses numeric-unary-result;
   }
