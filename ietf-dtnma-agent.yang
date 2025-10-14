@@ -443,9 +443,9 @@ module ietf-dtnma-agent {
        This is intended to be used within a macro to separate
        controls in time.";
     amm:parameter duration {
-      amm:type "/aritype/TD";
       description
         "duration";
+      amm:type "/aritype/TD";
     }
   }
   amm:ctrl wait-until {
@@ -457,9 +457,9 @@ module ietf-dtnma-agent {
        controls in time or as a first macro item to delay execution
        after the time of reception.";
     amm:parameter time {
-      amm:type "/aritype/TP";
       description
         "time";
+      amm:type "/aritype/TP";
     }
   }
   amm:ctrl wait-cond {
@@ -471,9 +471,9 @@ module ietf-dtnma-agent {
        controls in time or as a first macro item to delay execution
        until the condition is met.";
     amm:parameter condition {
-      amm:type "//ietf/amm-base/typedef/eval-tgt";
       description
         "condition";
+      amm:type "//ietf/amm-base/typedef/eval-tgt";
     }
   }
 
@@ -971,11 +971,11 @@ module ietf-dtnma-agent {
   }
   amm:oper sub {
     amm:enum 2;
-    description 
+    description
       "Subtract two numeric values or a TP less a TD value.
        The left (second) operand is the minuend and the right (first)
        operand is the subtrahend; this means that the EXPR
-       </AC/(10, 2, ./OPER/sub)> behaves as the infix "10 - 2".
+       </AC/(10, 2, ./OPER/sub)> behaves as the infix '10 - 2'.
        The operands are cast to the least compatible numeric type
        before the arithmetic.";
     uses any-binary-operands;
@@ -996,7 +996,7 @@ module ietf-dtnma-agent {
       "Divide two numeric values or a TD value (as numerator).
        The left (second) operand is the numerator and the right (first)
        operand is the divisor; this means that the EXPR
-       </AC/(10, 2, ./OPER/divide)> behaves as the infix "10 / 2".
+       </AC/(10, 2, ./OPER/divide)> behaves as the infix '10 / 2'.
        The operands are cast to the least compatible numeric type
        before the arithmetic.";
     uses any-binary-operands;
@@ -1008,7 +1008,7 @@ module ietf-dtnma-agent {
       "Find the remainder of a numeric operation.
        The left (second) operand is the numerator and the right (first)
        operand is the divisor; this means that the EXPR
-       </AC/(10, 2, ./OPER/divide)> behaves as the infix "10 % 2".
+       </AC/(10, 2, ./OPER/divide)> behaves as the infix '10 % 2'.
        The operands are cast to the least compatible numeric type
        before the arithmetic.";
     uses numeric-binary-operands;
