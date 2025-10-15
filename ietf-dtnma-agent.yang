@@ -902,6 +902,8 @@ module ietf-dtnma-agent {
       }
     }
     amm:parameter enabled {
+      description
+        "parameter";
       amm:type "/ARITYPE/BOOL";
     }
     amm:result res {
@@ -1048,21 +1050,29 @@ module ietf-dtnma-agent {
   // Boolean operators
   amm:oper bool-not {
     amm:enum 10;
+    description
+      "bitwise NOT";
     uses bool-unary-operands;
     uses bool-unary-result;
   }
   amm:oper bool-and {
     amm:enum 11;
+    description
+      "bitwise AND";
     uses bool-binary-operands;
     uses bool-unary-result;
   }
   amm:oper bool-or {
     amm:enum 12;
+    description
+      "bitwise OR";
     uses bool-binary-operands;
     uses bool-unary-result;
   }
   amm:oper bool-xor {
     amm:enum 13;
+    description
+      "bitwise XOR";
     uses bool-binary-operands;
     uses bool-unary-result;
   }
