@@ -10,11 +10,13 @@ on:
     - cron: '20 8 * * 4'
 
 env:
-  ACE_REPO: "git+https://github.com/JHUAPL-DTNMA/dtnma-ace.git@apl-fy24"
+  ACE_REPO: "git+https://github.com/JHUAPL-DTNMA/dtnma-ace.git@main"
 
 jobs:
   check-formatting:
-    runs-on: ubuntu-22.04
+    permissions:
+      contents: read
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -23,9 +25,10 @@ jobs:
           submodules: false
       - name: Set up OS
         run: |
-          sudo apt-get update && sudo apt-get install -y \
+          sudo rm /var/lib/man-db/auto-update
+          sudo apt-get update
+          sudo apt-get install -y \
               python3-pip
-          pip3 install --upgrade pip
           pip3 install ${ACE_REPO}
       - name: Check formatting
         run: ./check_format.sh
