@@ -302,25 +302,25 @@ module ietf-dtnma-agent {
   amm:edd num-msg-rx {
     amm:enum 3;
     description
-      "Messaging counter";
+      "Counter for the number of EXECSET values received from any manager";
     amm:type "//ietf/amm-base/typedef/counter64";
   }
   amm:edd num-msg-rx-failed {
     amm:enum 4;
     description
-      "Messaging counter";
+      "Counter of EXECSET values that failed to be received";
     amm:type "//ietf/amm-base/typedef/counter64";
   }
   amm:edd num-msg-tx {
     amm:enum 5;
     description
-      "Messaging counter";
+      "Counter for the number of RPTSET values transmitted to any manager";
     amm:type "//ietf/amm-base/typedef/counter64";
   }
   amm:edd num-msg-tx-failed {
     amm:enum 15;
     description
-      "Messaging counter";
+      "Count of RPTSET values that failed to be sent";
     amm:type "//ietf/amm-base/typedef/counter64";
   }
 
@@ -328,25 +328,25 @@ module ietf-dtnma-agent {
   amm:edd num-exec-started {
     amm:enum 6;
     description
-      "Execution counter and state";
+      "Number of CTRL executions started";
     amm:type "//ietf/amm-base/typedef/counter64";
   }
   amm:edd num-exec-succeeded {
     amm:enum 7;
     description
-      "Execution counter and state";
+      "Number of successful CTRL executions";
     amm:type "//ietf/amm-base/typedef/counter64";
   }
   amm:edd num-exec-failed {
     amm:enum 8;
     description
-      "Execution counter and state";
+      "Number of failed CTRL executions";
     amm:type "//ietf/amm-base/typedef/counter64";
   }
   amm:edd exec-running {
     amm:enum 9;
     description
-      "Execution counter and state";
+      "Information on CTRL's currently being executed";
     amm:tblt {
       amm:key "pid";
       amm:column pid {
@@ -444,7 +444,7 @@ module ietf-dtnma-agent {
        controls in time.";
     amm:parameter duration {
       description
-        "duration";
+        "Amount of time to wait";
       amm:type "/aritype/TD";
     }
   }
@@ -458,7 +458,7 @@ module ietf-dtnma-agent {
        after the time of reception.";
     amm:parameter time {
       description
-        "time";
+        "Time at which to stop waiting";
       amm:type "/aritype/TP";
     }
   }
@@ -826,7 +826,7 @@ module ietf-dtnma-agent {
     }
     amm:parameter condition {
       description
-        "condition";
+        "condition to periodically evaluate";
       amm:type "//ietf/amm-base/typedef/EXPR";
     }
     amm:parameter min-interval {
@@ -836,12 +836,12 @@ module ietf-dtnma-agent {
     }
     amm:parameter max-count {
       description
-        "maximum count";
+        "maximum number of executions for the rule";
       amm:type "/ARITYPE/UVAST";
     }
     amm:parameter init-enabled {
       description
-        "init enabled";
+        "Whether the rule is initially enabled";
       amm:type "/ARITYPE/BOOL";
     }
     amm:result res {
@@ -864,12 +864,12 @@ module ietf-dtnma-agent {
     }
     amm:parameter start-time {
       description
-        "start time";
+        "start time of the rule";
       amm:type "//ietf/amm-base/typedef/TIME";
     }
     amm:parameter period {
       description
-        "period";
+        "How often the rule is executed";
       amm:type "/ARITYPE/TD";
     }
     amm:parameter max-count {
@@ -947,7 +947,7 @@ module ietf-dtnma-agent {
     }
     amm:result success {
       description
-        "success";
+        "Boolean indicating whether the rule was marked obsolete";
       amm:type "/ARITYPE/BOOL";
     }
   }
@@ -1051,28 +1051,28 @@ module ietf-dtnma-agent {
   amm:oper bool-not {
     amm:enum 10;
     description
-      "bitwise NOT";
+      "Boolean NOT";
     uses bool-unary-operands;
     uses bool-unary-result;
   }
   amm:oper bool-and {
     amm:enum 11;
     description
-      "bitwise AND";
+      "Boolean AND";
     uses bool-binary-operands;
     uses bool-unary-result;
   }
   amm:oper bool-or {
     amm:enum 12;
     description
-      "bitwise OR";
+      "Boolean OR";
     uses bool-binary-operands;
     uses bool-unary-result;
   }
   amm:oper bool-xor {
     amm:enum 13;
     description
-      "bitwise XOR";
+      "Boolean XOR";
     uses bool-binary-operands;
     uses bool-unary-result;
   }
@@ -1081,14 +1081,14 @@ module ietf-dtnma-agent {
   amm:oper compare-eq {
     amm:enum 14;
     description
-      "Value comparison";
+      "Determine if given ARI's are equal";
     uses any-binary-operands;
     uses bool-unary-result;
   }
   amm:oper compare-ne {
     amm:enum 15;
     description
-      "Value comparison";
+      "Determine if given ARI's are not equal";
     uses any-binary-operands;
     uses bool-unary-result;
   }

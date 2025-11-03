@@ -65,7 +65,7 @@ module ietf-dtnma-agent-acl {
   amm:typedef permissions {
     amm:enum 1;
     description
-      "Permissions";
+      "Enumeration of supported types of permissions";
     amm:type "/ARITYPE/BYTE" {
       amm:int-labels {
         bit tag-read {
@@ -104,7 +104,7 @@ module ietf-dtnma-agent-acl {
   amm:typedef result {
     amm:enum 4;
     description
-      "result";
+      "Enumeration of possible execution results";
     amm:type "/ARITYPE/INT" {
       amm:int-labels {
         enum success {
@@ -284,7 +284,7 @@ module ietf-dtnma-agent-acl {
     }
     amm:parameter members {
       description
-        "members";
+        "The list of endpoint patterns denoting group membership";
       amm:ulist {
         amm:type "//ietf/network-base/TYPEDEF/endpoint-pattern";
       }
