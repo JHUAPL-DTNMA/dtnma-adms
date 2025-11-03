@@ -301,36 +301,52 @@ module ietf-dtnma-agent {
   // Messaging counters
   amm:edd num-msg-rx {
     amm:enum 3;
+    description
+      "Counter for the number of EXECSET values received from any manager";
     amm:type "//ietf/amm-base/typedef/counter64";
   }
   amm:edd num-msg-rx-failed {
     amm:enum 4;
+    description
+      "Counter of EXECSET values that failed to be received";
     amm:type "//ietf/amm-base/typedef/counter64";
   }
   amm:edd num-msg-tx {
     amm:enum 5;
+    description
+      "Counter for the number of RPTSET values transmitted to any manager";
     amm:type "//ietf/amm-base/typedef/counter64";
   }
   amm:edd num-msg-tx-failed {
     amm:enum 15;
+    description
+      "Count of RPTSET values that failed to be sent";
     amm:type "//ietf/amm-base/typedef/counter64";
   }
 
   // Execution counters and states
   amm:edd num-exec-started {
     amm:enum 6;
+    description
+      "Number of CTRL executions started";
     amm:type "//ietf/amm-base/typedef/counter64";
   }
   amm:edd num-exec-succeeded {
     amm:enum 7;
+    description
+      "Number of successful CTRL executions";
     amm:type "//ietf/amm-base/typedef/counter64";
   }
   amm:edd num-exec-failed {
     amm:enum 8;
+    description
+      "Number of failed CTRL executions";
     amm:type "//ietf/amm-base/typedef/counter64";
   }
   amm:edd exec-running {
     amm:enum 9;
+    description
+      "Information on CTRL's currently being executed";
     amm:tblt {
       amm:key "pid";
       amm:column pid {
@@ -427,6 +443,8 @@ module ietf-dtnma-agent {
        This is intended to be used within a macro to separate
        controls in time.";
     amm:parameter duration {
+      description
+        "Amount of time to wait";
       amm:type "/aritype/TD";
     }
   }
@@ -439,6 +457,8 @@ module ietf-dtnma-agent {
        controls in time or as a first macro item to delay execution
        after the time of reception.";
     amm:parameter time {
+      description
+        "Time at which to stop waiting";
       amm:type "/aritype/TP";
     }
   }
@@ -451,6 +471,8 @@ module ietf-dtnma-agent {
        controls in time or as a first macro item to delay execution
        until the condition is met.";
     amm:parameter condition {
+      description
+        "condition";
       amm:type "//ietf/amm-base/typedef/eval-tgt";
     }
   }
@@ -810,18 +832,28 @@ module ietf-dtnma-agent {
       amm:type "//ietf/amm-base/typedef/MAC";
     }
     amm:parameter condition {
+      description
+        "condition to periodically evaluate";
       amm:type "//ietf/amm-base/typedef/EXPR";
     }
     amm:parameter min-interval {
+      description
+        "minimum interval";
       amm:type "/ARITYPE/TD";
     }
     amm:parameter max-count {
+      description
+        "maximum number of executions of the rule";
       amm:type "/ARITYPE/UVAST";
     }
     amm:parameter init-enabled {
+      description
+        "Whether the rule is initially enabled";
       amm:type "/ARITYPE/BOOL";
     }
     amm:result res {
+      description
+        "result";
       amm:type "/ARITYPE/UINT";
     }
   }
@@ -838,18 +870,28 @@ module ietf-dtnma-agent {
       amm:type "//ietf/amm-base/typedef/MAC";
     }
     amm:parameter start-time {
+      description
+        "start time of the rule";
       amm:type "//ietf/amm-base/typedef/TIME";
     }
     amm:parameter period {
+      description
+        "How often the rule is executed";
       amm:type "/ARITYPE/TD";
     }
     amm:parameter max-count {
+      description
+        "maximum number of executions of the rule";
       amm:type "/ARITYPE/UVAST";
     }
     amm:parameter init-enabled {
+      description
+        "init enabled";
       amm:type "/ARITYPE/BOOL";
     }
     amm:result res {
+      description
+        "result";
       amm:type "/ARITYPE/UINT";
     }
   }
@@ -867,9 +909,13 @@ module ietf-dtnma-agent {
       }
     }
     amm:parameter enabled {
+      description
+        "parameter";
       amm:type "/ARITYPE/BOOL";
     }
     amm:result res {
+      description
+        "result";
       amm:type "/ARITYPE/uint";
     }
   }
@@ -887,6 +933,8 @@ module ietf-dtnma-agent {
       }
     }
     amm:result res {
+      description
+        "result";
       amm:type "/ARITYPE/UINT";
     }
   }
@@ -905,6 +953,8 @@ module ietf-dtnma-agent {
       }
     }
     amm:result success {
+      description
+        "Boolean indicating whether the rule was marked obsolete";
       amm:type "/ARITYPE/BOOL";
     }
   }
@@ -922,7 +972,7 @@ module ietf-dtnma-agent {
   amm:oper add {
     amm:enum 1;
     description
-      "Add two numeric values.
+      "Add two numeric values or a TP and TD value (in either order).
        The operands are cast to the least compatible numeric type
        before the arithmetic.";
     uses any-binary-operands;
@@ -930,21 +980,46 @@ module ietf-dtnma-agent {
   }
   amm:oper sub {
     amm:enum 2;
+    description
+      "Subtract two numeric values or a TP less a TD value.
+       The left (second) operand is the minuend and the right (first)
+       operand is the subtrahend; this means that the EXPR
+       </AC/(10, 2, ./OPER/sub)> behaves as the infix '10 - 2'.
+       The operands are cast to the least compatible numeric type
+       before the arithmetic.";
     uses any-binary-operands;
     uses any-unary-result;
   }
   amm:oper multiply {
     amm:enum 3;
+    description
+      "Multiply two numeric values or a TD value (in either order).
+       The operands are cast to the least compatible numeric type
+       before the arithmetic.";
     uses any-binary-operands;
     uses any-unary-result;
   }
   amm:oper divide {
     amm:enum 4;
+    description
+      "Divide two numeric values or a TD value (as numerator).
+       The left (second) operand is the numerator and the right (first)
+       operand is the divisor; this means that the EXPR
+       </AC/(10, 2, ./OPER/divide)> behaves as the infix '10 / 2'.
+       The operands are cast to the least compatible numeric type
+       before the arithmetic.";
     uses any-binary-operands;
     uses any-unary-result;
   }
   amm:oper remainder {
     amm:enum 5;
+    description
+      "Find the remainder of a numeric operation.
+       The left (second) operand is the numerator and the right (first)
+       operand is the divisor; this means that the EXPR
+       </AC/(10, 2, ./OPER/divide)> behaves as the infix '10 % 2'.
+       The operands are cast to the least compatible numeric type
+       before the arithmetic.";
     uses numeric-binary-operands;
     uses numeric-unary-result;
   }
@@ -952,21 +1027,29 @@ module ietf-dtnma-agent {
   // Bitwise operators
   amm:oper bit-not {
     amm:enum 6;
+    description
+      "bitwise NOT";
     uses integer-unary-operands;
     uses integer-unary-result;
   }
   amm:oper bit-and {
     amm:enum 7;
+    description
+      "bitwise AND";
     uses integer-binary-operands;
     uses integer-unary-result;
   }
   amm:oper bit-or {
     amm:enum 8;
+    description
+      "bitwise OR";
     uses integer-binary-operands;
     uses integer-unary-result;
   }
   amm:oper bit-xor {
     amm:enum 9;
+    description
+      "bitwise XOR";
     uses integer-binary-operands;
     uses integer-unary-result;
   }
@@ -974,21 +1057,29 @@ module ietf-dtnma-agent {
   // Boolean operators
   amm:oper bool-not {
     amm:enum 10;
+    description
+      "Boolean NOT";
     uses bool-unary-operands;
     uses bool-unary-result;
   }
   amm:oper bool-and {
     amm:enum 11;
+    description
+      "Boolean AND";
     uses bool-binary-operands;
     uses bool-unary-result;
   }
   amm:oper bool-or {
     amm:enum 12;
+    description
+      "Boolean OR";
     uses bool-binary-operands;
     uses bool-unary-result;
   }
   amm:oper bool-xor {
     amm:enum 13;
+    description
+      "Boolean XOR";
     uses bool-binary-operands;
     uses bool-unary-result;
   }
@@ -996,11 +1087,15 @@ module ietf-dtnma-agent {
   // Value comparison
   amm:oper compare-eq {
     amm:enum 14;
+    description
+      "Determine if given ARI's are equal";
     uses any-binary-operands;
     uses bool-unary-result;
   }
   amm:oper compare-ne {
     amm:enum 15;
+    description
+      "Determine if given ARI's are not equal";
     uses any-binary-operands;
     uses bool-unary-result;
   }
