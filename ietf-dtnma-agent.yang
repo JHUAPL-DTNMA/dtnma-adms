@@ -874,7 +874,7 @@ module ietf-dtnma-agent {
     }
     amm:parameter max-count {
       description
-        "maximum count";
+        "maximum number of executions of the rule";
       amm:type "/ARITYPE/UVAST";
     }
     amm:parameter init-enabled {
