@@ -121,9 +121,7 @@ module ietf-dtnma-agent-acl {
   amm:ident modify-var {
     amm:enum 12;
     description
-      "Permission to allow modifying state on VAR objects.
-       This includes production for use by reporting or evaluating
-       procedures of the Agent.";
+      "Permission to allow modifying state on VAR objects.";
     amm:base "./ident/permission";
   }
   amm:ident create-odm {
@@ -141,13 +139,19 @@ module ietf-dtnma-agent-acl {
   amm:ident create-object {
     amm:enum 15;
     description
-      "Permission to allow creating a new object within an ODM.";
+      "Permission to allow creating a new object within an ODM.
+       The permission itself does not restrict the type of object,
+       but the access list can limit the item to specific object
+       types and names.";
     amm:base "./ident/permission";
   }
   amm:ident delete-object {
     amm:enum 16;
     description
-      "Permission to allow deleting an object within an ODM.";
+      "Permission to allow deleting an object within an ODM.
+       The permission itself does not restrict the type of object,
+       but the access list can limit the item to specific object
+       types and names.";
     amm:base "./ident/permission";
   }
 
