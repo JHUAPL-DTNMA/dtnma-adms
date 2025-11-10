@@ -316,7 +316,7 @@ module ietf-dtnma-agent {
     amm:type "//ietf/amm-base/typedef/counter64";
   }
   amm:edd last-msg-rx-time {
-    amm:enum 16;
+    amm:enum 17;
     amm:type "//ietf/amm-base/typedef/counter64";
   }
 
