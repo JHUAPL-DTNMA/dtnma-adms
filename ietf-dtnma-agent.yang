@@ -315,6 +315,10 @@ module ietf-dtnma-agent {
     amm:enum 15;
     amm:type "//ietf/amm-base/typedef/counter64";
   }
+  amm:edd last-msg-rx-time {
+    amm:enum 16;
+    amm:type "//ietf/amm-base/typedef/counter64";
+  }
 
   // Execution counters and states
   amm:edd num-exec-started {
