@@ -317,7 +317,7 @@ module ietf-dtnma-agent {
   }
   amm:edd last-msg-rx-time {
     amm:enum 17;
-    amm:type "//ietf/amm-base/typedef/counter64";
+    amm:type "/aritype/TP";
   }
 
   // Execution counters and states
