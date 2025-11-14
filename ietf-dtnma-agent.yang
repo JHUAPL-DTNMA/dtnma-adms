@@ -1070,18 +1070,20 @@ module ietf-dtnma-agent {
       "Filter a table first by rows and then by columns.";
     amm:parameter row-match {
       description
-        "A filter to match rows with specific cell contents.
-         Each key is a column to compare and each value is an
-         expression with LABEL values substituted by column names.";
+        "A filter applied using two phases for each row:
+           1. Substitute row values for LABEL items within EXPR
+           2. Evaluate the expression
+         Each LABEL item refers to a name/index value within 
+         the context of the input row. Label substitution is 
+         performed as described in the value production section 
+         of the DTNMA AMM document.";
       amm:ulist {
         amm:type "//ietf/amm-base/typedef/EXPR";
       }
     }
     amm:parameter columns {
       description
-        "A filter to match rows with specific cell contents.
-         Each key is a column to compare and each value is an
-         expression with LABEL values substituted by column names.";
+        "A filter to restrict output to only the listed columns.";
       amm:ulist {
         amm:type "./typedef/column-id";
       }
