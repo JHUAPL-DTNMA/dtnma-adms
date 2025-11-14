@@ -1099,4 +1099,26 @@ module ietf-dtnma-agent {
       amm:type "/aritype/TBL";
     }
   }
+
+  // List filtering
+  amm:oper list-get {
+    amm:enum 21;
+    description
+      "Retrieve an item from the given list.";
+    amm:parameter index {
+      description
+      "Index of the value to retrieve from the list.";
+      amm:type "//ietf/amm-base/typedef/INTEGER";
+    }
+    amm:operand in {
+      description
+        "List to retrieve a value from.";
+      amm:type "/aritype/AC";
+    }
+    amm:result out {
+      description
+        "The retrieved value.";
+      amm:type "//ietf/amm-base/typedef/any";
+    }
+  }
 }
