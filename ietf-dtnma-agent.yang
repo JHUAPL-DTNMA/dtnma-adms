@@ -1135,7 +1135,7 @@ module ietf-dtnma-agent {
     }
     amm:result out {
       description
-        "The retrieved value.";
+        "The retrieved value or undefined if the key is not valid.";
       amm:type "//ietf/amm-base/typedef/any";
     }
   }
