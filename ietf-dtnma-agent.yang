@@ -1058,11 +1058,8 @@ module ietf-dtnma-agent {
   amm:typedef column-id {
     amm:enum 1;
     description
-      "Name or index of an individual column in a table.";
-    amm:union {
-      amm:type "/aritype/UVAST";
-      amm:type "/aritype/TEXTSTR";
-    }
+      "Index of an individual column in a table.";
+    amm:type "/aritype/UVAST";
   }
   amm:oper tbl-filter {
     amm:enum 20;
@@ -1072,14 +1069,13 @@ module ietf-dtnma-agent {
       description
         "A filter applied using two phases for each row:
            1. Substitute row values for LABEL items within EXPR
-           2. Evaluate the expression
-         Each LABEL item refers to a name/index value within 
-         the context of the input row. Label substitution is 
-         performed as described in the value production section 
+           2. Evaluate the expression and consider the row matched
+              if the result is a truthy value
+         Each LABEL item refers to the value at a column index 
+         within the context of the input row. Label substitution 
+         is performed as described in the value production section 
          of the DTNMA AMM document.";
-      amm:ulist {
-        amm:type "//ietf/amm-base/typedef/EXPR";
-      }
+      amm:type "//ietf/amm-base/typedef/EXPR";
     }
     amm:parameter columns {
       description
@@ -1114,6 +1110,28 @@ module ietf-dtnma-agent {
       description
         "List to retrieve a value from.";
       amm:type "/aritype/AC";
+    }
+    amm:result out {
+      description
+        "The retrieved value.";
+      amm:type "//ietf/amm-base/typedef/any";
+    }
+  }
+
+  // Map filtering
+  amm:oper map-get {
+    amm:enum 22;
+    description
+      "Retrieve an item from the given map.";
+    amm:parameter key {
+      description
+      "Key of the value to retrieve from the map.";
+      amm:type "//ietf/amm-base/typedef/primitive";
+    }
+    amm:operand in {
+      description
+        "Map to retrieve a value from.";
+      amm:type "/aritype/AM";
     }
     amm:result out {
       description
