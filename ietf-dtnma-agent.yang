@@ -1055,12 +1055,6 @@ module ietf-dtnma-agent {
   }
 
   // Table filtering
-  amm:typedef column-id {
-    amm:enum 1;
-    description
-      "Index of an individual column in a table.";
-    amm:type "/aritype/UVAST";
-  }
   amm:oper tbl-filter {
     amm:enum 20;
     description
@@ -1071,9 +1065,9 @@ module ietf-dtnma-agent {
            1. Substitute row values for LABEL items within EXPR
            2. Evaluate the expression and consider the row matched
               if the result is a truthy value
-         Each LABEL item refers to the value at a column index 
-         within the context of the input row. Label substitution 
-         is performed as described in the value production section 
+         Each LABEL item refers to the value at a column index
+         within the context of the input row. Label substitution
+         is performed as described in the value production section
          of the DTNMA AMM document.";
       amm:type "//ietf/amm-base/typedef/EXPR";
     }
@@ -1081,7 +1075,7 @@ module ietf-dtnma-agent {
       description
         "A filter to restrict output to only the listed columns.";
       amm:ulist {
-        amm:type "./typedef/column-id";
+        amm:type "/aritype/UVAST";
       }
     }
     amm:operand in {
@@ -1103,7 +1097,7 @@ module ietf-dtnma-agent {
       "Retrieve an item from the given list.";
     amm:parameter index {
       description
-      "Index of the value to retrieve from the list.";
+        "Index of the value to retrieve from the list.";
       amm:type "//ietf/amm-base/typedef/INTEGER";
     }
     amm:operand in {
@@ -1125,7 +1119,7 @@ module ietf-dtnma-agent {
       "Retrieve an item from the given map.";
     amm:parameter key {
       description
-      "Key of the value to retrieve from the map.";
+        "Key of the value to retrieve from the map.";
       amm:type "//ietf/amm-base/typedef/primitive";
     }
     amm:operand in {
