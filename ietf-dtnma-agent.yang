@@ -1073,7 +1073,9 @@ module ietf-dtnma-agent {
     }
     amm:parameter columns {
       description
-        "A filter to restrict output to only the listed columns.";
+        "A filter to restrict output to only the listed columns.
+         The order of columns in the filtered table shall
+         correspond with the order of columns in this list.";
       amm:ulist {
         amm:type "/aritype/UVAST";
       }
