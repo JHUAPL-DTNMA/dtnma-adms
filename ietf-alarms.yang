@@ -81,7 +81,7 @@ module ietf-alarms {
       "The abstract base IDENT for all resources able to have alarm
        states.
        Derived objects form the full inventory of resources which
-       can be present in the 'alarm-list' of this model.
+       can be present in the <./edd/alarm-list> of this model.
 
        Derived objects MAY contain parameters in order to further
        specify and narrow-down the logical or physical instance
@@ -174,7 +174,7 @@ module ietf-alarms {
   amm:typedef manager-state {
     amm:enum 1;
     description
-      "The manager-controlled state of an 'alarm-list' entry.
+      "The manager-controlled state of an <./edd/alarm-list> entry.
        This is separate from and independent of the severity state
        of an entry, which is entirely controlled by the resource.";
     amm:type "/aritype/uint" {
@@ -296,7 +296,7 @@ module ietf-alarms {
   amm:ctrl purge-alarms {
     amm:enum 2;
     description
-      "Remove specific entries of the 'alarm-list' table";
+      "Remove specific entries of the <./edd/alarm-list> table";
     amm:parameter filter {
       description
         "A filter to match rows with specific cell contents.";
@@ -304,7 +304,7 @@ module ietf-alarms {
     }
     amm:result affected {
       description
-        "The count of 'alarm-list' entries affected by the
+        "The count of alarm-list entries affected by the
          execution.";
       amm:type "/aritype/uvast";
     }
@@ -313,7 +313,7 @@ module ietf-alarms {
     amm:enum 3;
     description
       "Compress the timeline expressed in the 'history' column of
-       the 'alarm-list' table.
+       the <./edd/alarm-list> table.
        The result on affected entries will be a history which
        is compressed to only a single, current row.";
     amm:parameter filter {
@@ -323,7 +323,7 @@ module ietf-alarms {
     }
     amm:result affected {
       description
-        "The count of 'alarm-list' entries affected by the
+        "The count of alarm-list entries affected by the
          execution.";
       amm:type "/aritype/uvast";
     }
@@ -391,8 +391,8 @@ module ietf-alarms {
     amm:enum 3;
     description
       "A table to indicate which alarms are being shelved
-       This can be edited by the corresponding 'ensure-shelf'
-       and 'discard-shelf' controls'.";
+       This can be edited by <./ctrl/ensure-shelf>
+       and <./ctrl/discard-shelf> controls.";
     amm:type "./typedef/shelf-tblt";
   }
   amm:ctrl ensure-shelf {
@@ -400,7 +400,9 @@ module ietf-alarms {
     amm:enum 0;
     description
       "Ensure a specific set of rows is present in the
-       <./edd/shelf-list>, adding rows where necessary.";
+       <./edd/shelf-list>, adding rows where necessary.
+       If rows are added then existing alarm entries will be
+       shelved as necessary.";
     amm:parameter rows {
       description
         "The rows which need to be present.";
@@ -412,7 +414,9 @@ module ietf-alarms {
     amm:enum 1;
     description
       "Discard a specific set of rows from the
-       <./edd/shelf-list> where necessary.";
+       <./edd/shelf-list> where necessary.
+       If rows are removed then existing alarm entries will be
+       un-shelved as necessary.";
     amm:parameter rows {
       description
         "The rows which need to be absent.";
