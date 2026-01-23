@@ -198,10 +198,11 @@ module ietf-alarms {
           value 3;
           description
             "The alarm is shelved and moved out of the
-             'alarm-list' table.
+             <./edd/alarm-list> table.
              If a manager sets this state manually, it SHALL
              be equivalent to adding the specific resource and
-             category of that entry to the 'shelf-list'";
+             category of that entry to the
+             <./edd/shelf-list> as a single row.";
         }
       }
     }
@@ -365,7 +366,7 @@ module ietf-alarms {
     if-feature "shelving";
     amm:enum 3;
     description
-      "The type for values of 'shelf-list' and for controls to
+      "The type for values of <./edd/shelf-list> and for controls to
        manipulate that list.";
     amm:tblt {
       amm:key "resources categories";
@@ -399,7 +400,7 @@ module ietf-alarms {
     amm:enum 0;
     description
       "Ensure a specific set of rows is present in the
-       'shelf-list', adding rows where necessary.";
+       <./edd/shelf-list>, adding rows where necessary.";
     amm:parameter rows {
       description
         "The rows which need to be present.";
@@ -410,8 +411,8 @@ module ietf-alarms {
     if-feature "shelving";
     amm:enum 1;
     description
-      "Discard a specific set of rows from  the
-       'shelf-list' where necessary.";
+      "Discard a specific set of rows from the
+       <./edd/shelf-list> where necessary.";
     amm:parameter rows {
       description
         "The rows which need to be absent.";
