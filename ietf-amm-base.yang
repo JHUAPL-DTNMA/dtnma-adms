@@ -311,11 +311,12 @@ module ietf-amm-base {
   amm:typedef eval-tgt {
     amm:enum 16;
     description
-      "A value which can be the target of an evaluation.";
+      "A value which can be the target of an evaluation.
+       An inline <./typedef/expr> value is evaluated directly.
+       A reference to a value-producing object is dereferenced and
+       SHALL produce a value that matches <./typedef/expr>.";
     amm:union {
-      // special case of literal value result
-      amm:type "./TYPEDEF/simple";
-      // produces an eval-tgt
+      // object which produces an eval-tgt
       amm:type "./TYPEDEF/value-obj";
       amm:type "./TYPEDEF/expr";
     }
@@ -326,7 +327,7 @@ module ietf-amm-base {
       "Each item of an EXPR list.";
     amm:union {
       amm:type "./TYPEDEF/simple";
-      // produces an eval-tgt
+      // object which produces an eval-tgt
       amm:type "./TYPEDEF/value-obj";
       // treated as unary operator
       amm:type "./TYPEDEF/type-ref";
