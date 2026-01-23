@@ -920,11 +920,6 @@ module ietf-dtnma-agent {
         "Whether the rule is enabled at Agent initialization.";
       amm:type "/ARITYPE/BOOL";
     }
-    amm:result res {
-      description
-        "result";
-      amm:type "/ARITYPE/UINT";
-    }
   }
   amm:ctrl ensure-tbr {
     if-feature "rules";
@@ -960,11 +955,6 @@ module ietf-dtnma-agent {
       description
         "Whether the rule is enabled at Agent initialization.";
       amm:type "/ARITYPE/BOOL";
-    }
-    amm:result res {
-      description
-        "result";
-      amm:type "/ARITYPE/UINT";
     }
   }
   amm:ctrl ensure-rule-enabled {
