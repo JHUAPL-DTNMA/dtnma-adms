@@ -328,6 +328,8 @@ module ietf-dtnma-agent-acl {
       amm:type "./TYPEDEF/entry-id";
     }
     amm:parameter members {
+      description
+        "The list of endpoint patterns denoting group membership";
       amm:ulist {
         amm:type "//ietf/network-base/TYPEDEF/endpoint-pattern";
       }
