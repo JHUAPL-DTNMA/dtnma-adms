@@ -315,6 +315,10 @@ module ietf-dtnma-agent {
     amm:enum 15;
     amm:type "//ietf/amm-base/typedef/counter64";
   }
+  amm:edd last-msg-rx-time {
+    amm:enum 17;
+    amm:type "/aritype/TP";
+  }
 
   // Execution counters and states
   amm:edd num-exec-started {
@@ -545,7 +549,10 @@ module ietf-dtnma-agent {
   amm:ctrl ensure-odm {
     amm:enum 18;
     description
-      "Ensure a specific ODM is present.";
+      "Ensure a specific ODM is present.
+       The referenced organization and model identifiers SHALL either
+       not already exist or exist with the exact combination given by
+       these parameters";
     amm:parameter org-name {
       description
         "The organization name containing the ODM";
@@ -558,13 +565,17 @@ module ietf-dtnma-agent {
     }
     amm:parameter model-name {
       description
-        "The model name containing the ODM";
-      amm:type "//ietf/amm-base/typedef/id-text";
+        "The model name containing the ODM.";
+      amm:type "//ietf/amm-base/typedef/id-text" {
+        pattern '!.+';
+      }
     }
     amm:parameter model-id {
       description
         "The model enumeration ID containing the ODM";
-      amm:type "//ietf/amm-base/typedef/id-int";
+      amm:type "//ietf/amm-base/typedef/id-int" {
+        range "min..-1";
+      }
     }
   }
   amm:ctrl obsolete-odm {
@@ -1044,20 +1055,6 @@ module ietf-dtnma-agent {
   }
 
   // Table filtering
-  amm:typedef tbl-row-filter {
-    amm:enum 0;
-    description
-      "An expression used to filter-in rows of a table.
-       This value is an expression with LABEL values treated as
-       column identifiers and substituted with the associated
-       cell value for each table row.
-       The result of evaluating the expression is converted to
-       boolean type and any rows which evalute as truthy
-       are filtered-in.
-       An expression with a single literal 'true' value can be
-       used to match all rows.";
-    amm:type "//ietf/amm-base/typedef/EXPR";
-  }
   amm:oper tbl-filter {
     amm:enum 20;
     description
@@ -1065,18 +1062,23 @@ module ietf-dtnma-agent {
        by columns (using identifiers).";
     amm:parameter rows {
       description
-        "A filter to match rows with specific cell contents.";
-      amm:type "./typedef/tbl-row-filter";
+        "A filter applied using two phases for each row:
+           1. Substitute row values for LABEL items within EXPR
+           2. Evaluate the expression and consider the row matched
+              if the result is a truthy value
+         Each LABEL item refers to the value at a column index
+         within the context of the input row. Label substitution
+         is performed as described in the value production section
+         of the DTNMA AMM document.";
+      amm:type "//ietf/amm-base/typedef/EXPR";
     }
     amm:parameter columns {
       description
-        "An ordered list of column identifiers (text or integer labels)
-         used to filter-in which columns to include in the result
-         table value.
-         An empty list SHALL be treated as including all columns from
-         the input table in their original order.";
+        "A filter to restrict output to only the listed columns.
+         The order of columns in the filtered table shall
+         correspond with the order of columns in this list.";
       amm:ulist {
-        amm:type "/aritype/label";
+        amm:type "/aritype/UVAST";
       }
     }
     amm:operand in {
@@ -1088,6 +1090,50 @@ module ietf-dtnma-agent {
       description
         "The filtered table.";
       amm:type "/aritype/TBL";
+    }
+  }
+
+  // List filtering
+  amm:oper list-get {
+    amm:enum 21;
+    description
+      "Retrieve an item from the given list.";
+    amm:parameter index {
+      description
+        "Index of the value to retrieve from the list.";
+      amm:type "//ietf/amm-base/typedef/INTEGER";
+    }
+    amm:operand in {
+      description
+        "List to retrieve a value from.";
+      amm:type "/aritype/AC";
+    }
+    amm:result out {
+      description
+        "The retrieved value or undefined if the index is not valid.";
+      amm:type "//ietf/amm-base/typedef/any";
+    }
+  }
+
+  // Map filtering
+  amm:oper map-get {
+    amm:enum 22;
+    description
+      "Retrieve an item from the given map.";
+    amm:parameter key {
+      description
+        "Key of the value to retrieve from the map.";
+      amm:type "//ietf/amm-base/typedef/primitive";
+    }
+    amm:operand in {
+      description
+        "Map to retrieve a value from.";
+      amm:type "/aritype/AM";
+    }
+    amm:result out {
+      description
+        "The retrieved value or undefined if the key is not valid.";
+      amm:type "//ietf/amm-base/typedef/any";
     }
   }
 }
