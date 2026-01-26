@@ -30,6 +30,13 @@ module ietf-alarms {
      RFC 8632 for NETCONF, RFC 3877 for SMIv2, and ITU-T X.733
      terminology.
 
+     In this module, the alarm list is owned exclusively by the
+     Agent, and controls are provided to allow a Manager to influence
+     parts of the alarm state.
+     When supported by an Agent, the shelving behavior is configured
+     exclusively by Managers and used to influence how specific matching
+     alarm entries are shelved (ignored from the active list).
+
      The key words 'MUST', 'MUST NOT', 'REQUIRED', 'SHALL', 'SHALL
      NOT', 'SHOULD', 'SHOULD NOT', 'RECOMMENDED', 'NOT RECOMMENDED',
      'MAY', and 'OPTIONAL' in this document are to be interpreted as
