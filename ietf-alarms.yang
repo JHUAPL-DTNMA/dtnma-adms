@@ -69,7 +69,7 @@ module ietf-alarms {
 
   feature shelving {
     description
-      "This feature indicates that alarm shelving is supported.";
+      "This feature indicates that shelving of alarms by the manager is supported.";
   }
 
   amm:enum 4;
