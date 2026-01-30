@@ -1,0 +1,433 @@
+module ietf-alarms {
+  yang-version 1.1;
+  namespace "ari://ietf/alarms/";
+  prefix alarms;
+
+  import ietf-amm {
+    prefix amm;
+  }
+  import ietf-amm-base {
+    prefix amm-base;
+  }
+  import ietf-network-base {
+    prefix network-base;
+  }
+
+  organization
+    "IETF Delay Tolerant Networking (DTN) Working Group" {
+    amm:enum 1;
+  }
+  contact
+    "WG Web: <http://tools.ietf.org/wg/dtn/>
+     WG List: <mailto:dtn@ietf.org>
+
+     Editor: Brian Sipos
+             <mailto:brian.sipos+ietf@gmail.com>";
+  description
+    "This module implements alarm state recording and management
+     within a DTNMA Agent.
+     Alarm logic here is defined to be consistent with
+     RFC 8632 for NETCONF, RFC 3877 for SMIv2, and ITU-T X.733
+     terminology.
+
+     In this module, the alarm list is owned exclusively by the
+     Agent, and controls are provided to allow a Manager to influence
+     parts of the alarm state.
+     When supported by an Agent, the shelving behavior is configured
+     exclusively by Managers and used to influence how specific matching
+     alarm entries are shelved (ignored from the active list).
+
+     The key words 'MUST', 'MUST NOT', 'REQUIRED', 'SHALL', 'SHALL
+     NOT', 'SHOULD', 'SHOULD NOT', 'RECOMMENDED', 'NOT RECOMMENDED',
+     'MAY', and 'OPTIONAL' in this document are to be interpreted as
+     described in BCP 14 (RFC 2119) (RFC 8174) when, and only when,
+     they appear in all capitals, as shown here.
+
+     Copyright (c) 2024 IETF Trust and the persons identified as
+     authors of the code.  All rights reserved.
+
+     Redistribution and use in source and binary forms, with or
+     without modification, is permitted pursuant to, and subject to
+     the license terms contained in, the Revised BSD License set
+     forth in Section 4.c of the IETF Trust's Legal Provisions
+     Relating to IETF Documents
+     (https://trustee.ietf.org/license-info).
+
+     This version of this YANG module is part of RFC XXXX
+     (https://www.rfc-editor.org/info/rfcXXXX); see the RFC itself
+     for full legal notices.";
+  reference
+    "RFC TBD
+     RFC 8632: A YANG Data Model for Alarm Management
+     RFC 3877: Alarm Management Information Base (MIB)";
+
+  revision 2025-04-11 {
+    description
+      "Updated for latest document.";
+    reference
+      "TBD";
+  }
+
+  feature history {
+    description
+      "This feature indicates that a history of alarm states is
+       supported.";
+  }
+
+  feature shelving {
+    description
+      "This feature indicates that shelving of alarms by the manager is supported.";
+  }
+
+  amm:enum 4;
+
+  // Base identities and types for alarm states
+  amm:ident resource {
+    amm:enum 0;
+    description
+      "The abstract base IDENT for all resources able to have alarm
+       states.
+       Derived objects form the full inventory of resources which
+       can be present in the <./edd/alarm-list> of this model.
+
+       Derived objects MAY contain parameters in order to further
+       specify and narrow-down the logical or physical instance
+       experiencing an alarm state.";
+    amm:abstract true;
+  }
+  amm:ident category {
+    amm:enum 1;
+    description
+      "The abstract base IDENT for all alarm categories.
+       Derived objects define more specific categories for faults.
+       The term 'type' was specifically avoided for this name to
+       avoid conflating with AMM value or object types.
+
+       Derived objects SHALL specify details of the meaning of each
+       sub-category of alarm state to enough level of detail for
+       users to distinguish between all non-abstract categories.";
+    amm:abstract true;
+  }
+  amm:typedef severity {
+    amm:enum 0;
+    description
+      "Levels of perceived severity for alarms are limited to
+       specific values.
+       There is not a strict logical ordering of these values
+       because in some cases an indeterminate severity can be
+       worse than a critical failure of a resource.
+       This set of values is aligned with ITU-T X.733-1992,
+       Section 8.1.2.3";
+    reference
+      "ITU-T X.733-1992: Systems Management: Alarm Reporting
+         Function";
+    amm:type "/aritype/uint" {
+      amm:int-labels {
+        enum cleared {
+          value 0;
+          description
+            "There is currently no specific alarm condition on
+             a resource";
+          reference
+            "ITU-T X.733-1992";
+        }
+        enum indeterminate {
+          value 1;
+          description
+            "This indicates that the severity level cannot be
+             determined.";
+          reference
+            "ITU-T X.733-1992";
+        }
+        enum warning {
+          value 2;
+          description
+            "This indicates the detection of a potential or
+             impending service affecting fault, before any
+             significant effects have been felt.";
+          reference
+            "ITU-T X.733-1992";
+        }
+        enum minor {
+          value 3;
+          description
+            "This indicates the existence of a non-service
+             affecting fault condition and that corrective action
+             should be taken in order to prevent a more serious
+             (for example, service affecting) fault.";
+          reference
+            "ITU-T X.733-1992";
+        }
+        enum major {
+          value 4;
+          description
+            "This indicates that a service affecting condition has
+             developed and an urgent corrective action is required.";
+          reference
+            "ITU-T X.733-1992";
+        }
+        enum critical {
+          value 5;
+          description
+            "This indicates that a service affecting condition has
+             occurred and an immediate corrective action is
+             required.";
+          reference
+            "ITU-T X.733-1992";
+        }
+      }
+    }
+  }
+  amm:typedef manager-state {
+    amm:enum 1;
+    description
+      "The manager-controlled state of an <./edd/alarm-list> entry.
+       This is separate from and independent of the severity state
+       of an entry, which is entirely controlled by the resource.";
+    amm:type "/aritype/uint" {
+      amm:int-labels {
+        enum none {
+          value 0;
+          description
+            "The alarm is not being taken care of.";
+        }
+        enum acknowledged {
+          value 1;
+          description
+            "The alarm is being taken care of.";
+        }
+        enum closed {
+          value 2;
+          description
+            "Corrective action taken successfully.";
+        }
+        enum shelved {
+          value 3;
+          description
+            "The alarm is shelved and moved out of the
+             <./edd/alarm-list> table.
+             If a manager sets this state manually, it SHALL
+             be equivalent to adding the specific resource and
+             category of that entry to the
+             <./edd/shelf-list> as a single row.";
+        }
+      }
+    }
+  }
+
+  // Main introspection objects for this module
+  amm:edd alarm-list {
+    amm:enum 0;
+    description
+      "A table to indicate the current and historical alarm states.
+       Rows of the table SHALL be ordered ";
+    amm:tblt {
+      amm:key "resource category";
+      amm:column resource {
+        description
+          "The resource with an alarm condition";
+        amm:type "/aritype/ident" {
+          amm:base "./ident/resource";
+        }
+      }
+      amm:column category {
+        description
+          "The specific category of alarm being indicated on
+           the resource";
+        amm:type "/aritype/ident" {
+          amm:base "./ident/category";
+        }
+      }
+      amm:column severity {
+        description
+          "The latest severity of alarm state.";
+        amm:type "./typedef/severity";
+      }
+      amm:column time-created {
+        description
+          "The time at which this entry was added to the list.";
+        amm:type "//ietf/amm-base/typedef/timestamp";
+      }
+      amm:column time-updated {
+        description
+          "The time at which this entry was last updated.";
+        amm:type "//ietf/amm-base/typedef/timestamp";
+      }
+      amm:column history {
+        if-feature "history";
+        description
+          "A sub-table of severity update history for this entry.
+           If the agent does not support the 'history' feature then
+           this column SHALL always be produced as the undefined
+           value.
+           Rows of the table SHALL be ordered by 'time' with the
+           most recent time first.";
+        amm:tblt {
+          min-elements 1;
+          amm:key "time";
+          amm:column time {
+            description
+              "The time at which the status was updated.";
+            amm:type "//ietf/amm-base/typedef/timestamp";
+          }
+          amm:column severity {
+            description
+              "The severity at this update.";
+            amm:type "./typedef/severity";
+          }
+        }
+      }
+      amm:column manager-state {
+        description
+          "The state set on this entry by a manager.
+           When first created the entry's state will be 'none'.";
+        amm:type "./typedef/manager-state";
+      }
+      amm:column manager-identity {
+        description
+          "The identity of the manager which last modified the
+           'manager-state' column value.
+           When first created this identity will be invalid.";
+        amm:type "//ietf/network-base/typedef/endpoint";
+      }
+      amm:column manager-time {
+        description
+          "The time at which the 'manager-state' was last modified.";
+        amm:union {
+          amm:type "//ietf/amm-base/typedef/timestamp";
+          amm:type "/aritype/null";
+        }
+      }
+    }
+  }
+  amm:ctrl purge-alarms {
+    amm:enum 2;
+    description
+      "Remove specific entries of the <./edd/alarm-list> table";
+    amm:parameter filter {
+      description
+        "A filter to match rows with specific cell contents.";
+      amm:type "//ietf/dtnma-agent/typedef/tbl-row-filter";
+    }
+    amm:result affected {
+      description
+        "The count of alarm-list entries affected by the
+         execution.";
+      amm:type "/aritype/uvast";
+    }
+  }
+  amm:ctrl compress-alarms {
+    amm:enum 3;
+    description
+      "Compress the timeline expressed in the 'history' column of
+       the <./edd/alarm-list> table.
+       The result on affected entries will be a history which
+       is compressed to only a single, current row.";
+    amm:parameter filter {
+      description
+        "A filter to match rows with specific cell contents.";
+      amm:type "//ietf/dtnma-agent/typedef/tbl-row-filter";
+    }
+    amm:result affected {
+      description
+        "The count of alarm-list entries affected by the
+         execution.";
+      amm:type "/aritype/uvast";
+    }
+  }
+
+  // Introspection of available objects for alarms
+  amm:edd resource-inventory {
+    amm:enum 1;
+    description
+      "A table to list all alarm resources defined on the Agent.";
+    amm:tblt {
+      amm:key "resource";
+      amm:column resource {
+        description
+          "The non-abstract resource object.";
+        amm:type "/aritype/ident" {
+          amm:base "./ident/resource";
+        }
+      }
+    }
+  }
+  amm:edd category-inventory {
+    amm:enum 2;
+    description
+      "A table to list all alarm categories defined on the Agent.";
+    amm:tblt {
+      amm:key "category";
+      amm:column category {
+        description
+          "The non-abstract category object.";
+        amm:type "/aritype/ident" {
+          amm:base "./ident/category";
+        }
+      }
+    }
+  }
+
+  // shelving introspection and control
+  amm:typedef shelf-tblt {
+    if-feature "shelving";
+    amm:enum 3;
+    description
+      "The type for values of <./edd/shelf-list> and for controls to
+       manipulate that list.";
+    amm:tblt {
+      amm:key "resources categories";
+      amm:column resources {
+        description
+          "A pattern to match specific resource objects.
+           This MAY include only integer identifiers for
+           compactness.";
+        amm:type "//ietf/amm-base/typedef/ari-pattern";
+      }
+      amm:column categories {
+        description
+          "A pattern to match specific category objects.
+           This MAY include only integer identifiers for
+           compactness.";
+        amm:type "//ietf/amm-base/typedef/ari-pattern";
+      }
+    }
+  }
+  amm:edd shelf-list {
+    if-feature "shelving";
+    amm:enum 3;
+    description
+      "A table to indicate which alarms are being shelved
+       This can be edited by <./ctrl/ensure-shelf>
+       and <./ctrl/discard-shelf> controls.";
+    amm:type "./typedef/shelf-tblt";
+  }
+  amm:ctrl ensure-shelf {
+    if-feature "shelving";
+    amm:enum 0;
+    description
+      "Ensure a specific set of rows is present in the
+       <./edd/shelf-list>, adding rows where necessary.
+       If rows are added then existing alarm entries will be
+       shelved as necessary.";
+    amm:parameter rows {
+      description
+        "The rows which need to be present.";
+      amm:type "./typedef/shelf-tblt";
+    }
+  }
+  amm:ctrl discard-shelf {
+    if-feature "shelving";
+    amm:enum 1;
+    description
+      "Discard a specific set of rows from the
+       <./edd/shelf-list> where necessary.
+       If rows are removed then existing alarm entries will be
+       un-shelved as necessary.";
+    amm:parameter rows {
+      description
+        "The rows which need to be absent.";
+      amm:type "./typedef/shelf-tblt";
+    }
+  }
+}
