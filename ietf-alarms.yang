@@ -127,7 +127,7 @@ module ietf-alarms {
           value 0;
           description
             "There is currently no specific alarm condition on
-             a resource";
+             a resource.";
           reference
             "ITU-T X.733-1992";
         }
@@ -220,22 +220,27 @@ module ietf-alarms {
     amm:enum 0;
     description
       "A table to indicate the current and historical alarm states.
-       Rows of the table SHALL be ordered ";
+       Rows of the table SHALL be ordered by resource and category
+       in that order.";
     amm:tblt {
       amm:key "resource category";
       amm:column resource {
         description
-          "The resource with an alarm condition";
+          "The resource having an alarm condition (or history).";
         amm:type "/aritype/ident" {
           amm:base "./ident/resource";
         }
       }
       amm:column category {
         description
-          "The specific category of alarm being indicated on
-           the resource";
-        amm:type "/aritype/ident" {
-          amm:base "./ident/category";
+          "The optional category of alarm being indicated on
+           the resource. Only some categories will apply to specific
+           resource objects.";
+        amm:union {
+          amm:type "/aritype/null";
+          amm:type "/aritype/ident" {
+            amm:base "./ident/category";
+          }
         }
       }
       amm:column severity {
