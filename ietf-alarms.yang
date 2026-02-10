@@ -220,8 +220,8 @@ module ietf-alarms {
     amm:enum 0;
     description
       "A table to indicate the current and historical alarm states.
-       Rows of the table SHALL be ordered by resource and category
-       in that order.";
+       Rows of the table SHALL be ordered by their 'time-created'
+       values.";
     amm:tblt {
       amm:key "resource category";
       amm:column resource {
@@ -308,10 +308,14 @@ module ietf-alarms {
   amm:ctrl purge-alarms {
     amm:enum 2;
     description
-      "Remove specific entries of the <./edd/alarm-list> table";
+      "Remove specific entries of the <./edd/alarm-list> table.
+       Removed entries can reappear if their alarm state changes
+       after a purge.";
     amm:parameter filter {
       description
-        "A filter to match rows with specific cell contents.";
+        "A filter to match rows with specific cell contents.
+         Both column index and column name LABEL values SHALL be
+         substituted before evaluating this expression.";
       amm:type "//ietf/dtnma-agent/typedef/tbl-row-filter";
     }
     amm:result affected {
