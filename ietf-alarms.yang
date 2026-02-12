@@ -310,6 +310,7 @@ module ietf-alarms {
     }
   }
   amm:typedef alarm-filter {
+    amm:enum 4;
     description
       "A filter to match alarm entries by a subset of the columns
        available in the <./edd/alarm-list> table.
