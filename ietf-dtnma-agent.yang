@@ -1201,26 +1201,37 @@ module ietf-dtnma-agent {
   }
 
   // Table (TBL) filtering
+  amm:typedef tbl-row-filter {
+    amm:enum 0;
+    description
+      "A table filter applied using two phases for each row:
+         1. Substitute row values for LABEL items within EXPR.
+            This does not apply recursively to VALUE-OBJ within
+            the expression.
+         2. Evaluate the expression and consider the row matched
+            if the result is a truthy value.
+       Each LABEL item refers to the value at a column index
+       within the context of the input row. Label substitution
+       is performed as described in the value production section
+       of the DTNMA AMM document.";
+    reference
+      "draft-ietf-dtn-amm";
+    amm:type "//ietf/amm-base/typedef/EXPR";
+  }
   amm:oper tbl-filter {
     amm:enum 20;
     description
-      "Filter a table first by rows and then by columns.";
-    amm:parameter row-match {
+      "Filter a table first by rows (using an expression) and then
+       by columns (using identifiers).";
+    amm:parameter rows {
       description
-        "A filter applied using two phases for each row:
-           1. Substitute row values for LABEL items within EXPR
-           2. Evaluate the expression and consider the row matched
-              if the result is a truthy value
-         Each LABEL item refers to the value at a column index
-         within the context of the input row. Label substitution
-         is performed as described in the value production section
-         of the DTNMA AMM document.";
-      amm:type "//ietf/amm-base/typedef/EXPR";
+        "A filter for each row.";
+      amm:type "./typedef/tbl-row-filter";
     }
     amm:parameter columns {
       description
         "A filter to restrict output to only the listed columns.
-         The order of columns in the filtered table shall
+         The order of columns in the filtered result table SHALL
          correspond with the order of columns in this list.";
       amm:ulist {
         amm:type "/aritype/UVAST";
