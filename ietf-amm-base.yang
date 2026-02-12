@@ -311,12 +311,15 @@ module ietf-amm-base {
   amm:typedef eval-tgt {
     amm:enum 16;
     description
-      "A value which can be the target of an evaluation.";
+      "A value which can be the target of an evaluation.
+       An inline <./typedef/expr> value is evaluated directly.
+       A reference to a value-producing object is dereferenced and
+       SHALL produce a value that matches <./typedef/expr>, which
+       is then evaluated.";
     amm:union {
-      // special case of literal value result
-      amm:type "./TYPEDEF/simple";
-      // produces an eval-tgt
+      // object which produces an eval-tgt
       amm:type "./TYPEDEF/value-obj";
+      // inline expression
       amm:type "./TYPEDEF/expr";
     }
   }
@@ -326,7 +329,7 @@ module ietf-amm-base {
       "Each item of an EXPR list.";
     amm:union {
       amm:type "./TYPEDEF/simple";
-      // produces an eval-tgt
+      // object which produces an eval-tgt
       amm:type "./TYPEDEF/value-obj";
       // treated as unary operator
       amm:type "./TYPEDEF/type-ref";
@@ -348,9 +351,15 @@ module ietf-amm-base {
   amm:typedef exec-tgt {
     amm:enum 19;
     description
-      "A value which can be the target of an execution.";
+      "A value which can be the target of an execution.
+       An inline <./typedef/mac> value is expanded and executed.
+       A reference to a value-producing object is dereferenced and
+       SHALL produce a value that matches <./typedef/exec-tgt>,
+       which is then executed.
+       A reference to a CTRL is executed directly.";
     amm:union {
       amm:type "./TYPEDEF/exec-item";
+      // inline MAC
       amm:type "./TYPEDEF/mac";
     }
   }
@@ -358,10 +367,12 @@ module ietf-amm-base {
     amm:enum 20;
     description
       "A reference to an object which can be executed.
-       The value-object must be typed to contain an exec-tgt.";
+       The value-object must be typed to contain a
+       <./typedef/exec-tgt>.";
     amm:union {
       amm:type "/ARITYPE/ctrl";
-      amm:type "./TYPEDEF/value-obj"; // produces an exec-tgt
+      // object which produces an exec-tgt
+      amm:type "./TYPEDEF/value-obj";
     }
   }
   amm:typedef mac {
@@ -380,7 +391,9 @@ module ietf-amm-base {
     description
       "A value which can be the target of reporting.";
     amm:union {
-      amm:type "./TYPEDEF/value-obj"; // produces an RPTT
+      // object which produces an RPTT
+      amm:type "./TYPEDEF/value-obj";
+      // inline RPTT
       amm:type "./TYPEDEF/rptt";
     }
   }

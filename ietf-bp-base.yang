@@ -137,7 +137,7 @@ module ietf-bp-base {
     amm:enum 2;
     description
       "This object defines parameters for pattern matching
-       bp-endpoint values.
+       <./ident/bp-endpoint> reference values.
        The 'pattern' uses the binary form for compactness,
        which includes a display-hint to help end users.";
     reference
