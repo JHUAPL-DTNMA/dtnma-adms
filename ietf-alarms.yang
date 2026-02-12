@@ -292,18 +292,46 @@ module ietf-alarms {
         description
           "The identity of the manager which last modified the
            'manager-state' column value.
-           When first created this identity will be invalid.";
-        amm:type "//ietf/network-base/typedef/endpoint";
+           When first created this value will be null.";
+        amm:union {
+          amm:type "//ietf/network-base/typedef/endpoint";
+          amm:type "/aritype/null";
+        }
       }
       amm:column manager-time {
         description
-          "The time at which the 'manager-state' was last modified.";
+          "The time at which the 'manager-state' was last modified.
+           When first created this value will be null.";
         amm:union {
           amm:type "//ietf/amm-base/typedef/timestamp";
           amm:type "/aritype/null";
         }
       }
     }
+  }
+  amm:typedef alarm-filter {
+    description
+      "A filter to match alarm entries by a subset of the columns
+       available in the <./edd/alarm-list> table.
+       The columns available SHALL include:
+         resource,
+         category,
+         severity,
+         time-created,
+         time-updated,
+         manager-state,
+         manager-identity, and
+         manager-time
+
+       The filter is applied using two phases for each row:
+         1. Substitute row values for LABEL items within EXPR.
+            This does not apply recursively to VALUE-OBJ within
+            the expression.
+         2. Evaluate the expression and consider the row matched
+            if the result is a truthy value.
+       Both column index and column name LABEL values SHALL be
+       substituted before evaluating this expression.";
+    amm:type "//ietf/amm-base/typedef/EXPR";
   }
   amm:ctrl purge-alarms {
     amm:enum 2;
@@ -313,10 +341,8 @@ module ietf-alarms {
        after a purge.";
     amm:parameter filter {
       description
-        "A filter to match rows with specific cell contents.
-         Both column index and column name LABEL values SHALL be
-         substituted before evaluating this expression.";
-      amm:type "//ietf/dtnma-agent/typedef/tbl-row-filter";
+        "A filter to match specific alarm-list entries.";
+      amm:type "./typedef/alarm-filter";
     }
     amm:result affected {
       description
@@ -330,12 +356,38 @@ module ietf-alarms {
     description
       "Compress the timeline expressed in the 'history' column of
        the <./edd/alarm-list> table.
-       The result on affected entries will be a history which
-       is compressed to only a single, current row.";
+       Affected alarm entries will have a history which
+       is compressed to only a single, current-severity row.";
     amm:parameter filter {
       description
-        "A filter to match rows with specific cell contents.";
-      amm:type "//ietf/dtnma-agent/typedef/tbl-row-filter";
+        "A filter to match specific alarm-list entries.";
+      amm:type "./typedef/alarm-filter";
+    }
+    amm:result affected {
+      description
+        "The count of alarm-list entries affected by the
+         execution.";
+      amm:type "/aritype/uvast";
+    }
+  }
+  amm:ctrl set-alarms-manager-state {
+    amm:enum 4;
+    description
+      "Set the 'manager-state' column of entries in
+       the <./edd/alarm-list> table.
+       Affected alarm entries will their new manager state and
+       related columns updated.";
+    amm:parameter filter {
+      description
+        "A filter to match specific alarm-list entries.";
+      amm:type "./typedef/alarm-filter";
+    }
+    amm:parameter manager-state {
+      description
+        "The new state to set.
+         If this new state is shelved (3), it will add associated
+         items to the <./edd/shelf-list> table.";
+      amm:type "./typedef/manager-state";
     }
     amm:result affected {
       description
