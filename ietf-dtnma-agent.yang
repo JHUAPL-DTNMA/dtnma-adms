@@ -641,6 +641,15 @@ module ietf-dtnma-agent {
        One possible filter is provided by the 'base' parameter to
        limit to a specific subtree of objects. Another is whether
        or not to include abstract objects in the list.";
+    uses obj-list-params;
+    amm:parameter include-abstract {
+      description
+        "Determine whether abstract objects are included in the
+         list (when true), or only non-abstract objects (when
+         false).";
+      amm:default "false";
+      amm:type "/aritype/bool";
+    }
     amm:parameter base {
       description
         "The optional base object from which to traverse derived
@@ -653,14 +662,6 @@ module ietf-dtnma-agent {
         amm:type "/aritype/ident";
         amm:type "/aritype/null";
       }
-    }
-    amm:parameter include-abstract {
-      description
-        "Determine whether abstract objects are included in the
-         list (when true), or only non-abstract objects (when
-         false).";
-      amm:default "false";
-      amm:type "/aritype/bool";
     }
     amm:tblt {
       amm:key "obj";
