@@ -105,6 +105,22 @@ module ietf-dtnma-agent {
     }
   }
 
+  grouping ensure-object-params {
+    description
+      "Common parameter for providing formal parameter
+       definitions to ensure an object exists in an ODM.
+
+       When this grouping is used it should be after all of
+       the mandatory parameters (those with no default value)
+       to allow the default no-formal-parameters to be used.";
+    amm:parameter formal-params {
+      description
+        "An optional list of formal parameters for the object.";
+      amm:default "/tbl/c=3;";
+      amm:type "./typedef/formal-params-tbl";
+    }
+  }
+
   grouping any-binary-operands {
     description
       "Any-value bianry operands";
@@ -616,6 +632,84 @@ module ietf-dtnma-agent {
     }
   }
 
+  // Objects related to IDENT handling
+  amm:edd ident-list {
+    amm:enum 18;
+    description
+      "Inspect the set of (possibly filtered) IDENT objects known
+       to the Agent.
+       One possible filter is provided by the 'base' parameter to
+       limit to a specific subtree of objects. Another is whether
+       or not to include abstract objects in the list.";
+    uses obj-list-params;
+    amm:parameter include-abstract {
+      description
+        "Determine whether abstract objects are included in the
+         list (when true), or only non-abstract objects (when
+         false).";
+      amm:default "false";
+      amm:type "/aritype/bool";
+    }
+    amm:parameter base {
+      description
+        "The optional base object from which to traverse derived
+         objects. If this does not reference a known object the
+         produced list SHALL be empty.
+         The base object is not considered to be derived from
+         itself, so it SHALL not be present in the produced list.";
+      amm:default "null";
+      amm:union {
+        amm:type "/aritype/ident";
+        amm:type "/aritype/null";
+      }
+    }
+    amm:tblt {
+      amm:key "obj";
+      amm:column obj {
+        amm:type "/aritype/ident";
+      }
+      amm:column is-abstract {
+        amm:type "/aritype/bool";
+      }
+    }
+  }
+  amm:ctrl ensure-ident {
+    amm:enum 20;
+    description
+      "Ensure a specific IDENT is present in an ODM.
+       If an object already exists with the same identifiers,
+       parameters, and bases this control will do nothing
+       and succeed.
+       If an object already exists in the same namespace with either
+       of the object identifiers this control will fail.";
+    uses ensure-object-id;
+    amm:parameter abstract {
+      description
+        "If true the object is abstract and SHALL NOT contain any
+         formal parameters.";
+      amm:type "/aritype/bool";
+    }
+    amm:parameter bases {
+      description
+        "The set of base objects for this object.";
+      amm:ulist {
+        amm:type "/aritype/ident";
+      }
+    }
+    uses ensure-object-params;
+  }
+  amm:ctrl obsolete-ident {
+    amm:enum 21;
+    description
+      "Mark a specific IDENT as obsolete if it is present in an
+       ODM.";
+    amm:parameter obj {
+      description
+        "A reference to a IDENT within an ODM only.";
+      amm:type "/aritype/IDENT";
+    }
+  }
+
   // Objects related to TYPEDEF handling
   amm:edd typedef-list {
     amm:enum 10;
@@ -650,8 +744,9 @@ module ietf-dtnma-agent {
     amm:enum 11;
     description
       "Ensure a specific CONST is present in an ODM.
-       If an object already exists with the same identifiers, type,
-       and value this control will do nothing and succeed.
+       If an object already exists with the same identifiers,
+       parameters, type, and value this control will do nothing
+       and succeed.
        If an object already exists in the same namespace with either
        of the object identifiers this control will fail.";
     uses ensure-object-id;
@@ -665,6 +760,36 @@ module ietf-dtnma-agent {
         "A required constant value.
          This value SHALL match the type given for this object.";
       amm:type "//ietf/amm-base/typedef/any";
+    }
+    uses ensure-object-params;
+  }
+  amm:typedef formal-params-tbl {
+    amm:enum 1;
+    description
+      "Introspection on formal parameters of an object which
+       can be parameterized.
+       The order of rows of the table is significant and
+       corresponds with the index of each parameter.";
+    amm:tblt {
+      amm:key "name";
+      amm:column name {
+        description
+          "The name of the parameter.
+           This is unique among all rows.";
+        amm:type "//ietf/amm-base/typedef/id-text";
+      }
+      amm:column type {
+        description
+          "The type for values of the parameter.";
+        amm:type "//ietf/amm-semtype/typedef/semtype";
+      }
+      amm:column default {
+        description
+          "An optional default value.
+           When there is no default, the undefined value is
+           used here.";
+        amm:type "//ietf/amm-base/typedef/any";
+      }
     }
   }
   amm:ctrl obsolete-const {
@@ -699,8 +824,9 @@ module ietf-dtnma-agent {
     amm:enum 9;
     description
       "Ensure a specific VAR is present in an ODM.
-       If an object already exists with the same identifiers, type,
-       and init-value this control will do nothing and succeed.
+       If an object already exists with the same identifiers,
+       parameters, type, and init-value this control will do
+       nothing and succeed.
        If an object already exists in the same namespace with either
        of the object identifiers (but not both), or the type or
        is different, this control will fail.
@@ -720,6 +846,7 @@ module ietf-dtnma-agent {
          This value SHALL match the type given for this object.";
       amm:type "//ietf/amm-base/typedef/any";
     }
+    uses ensure-object-params;
   }
   amm:ctrl obsolete-var {
     amm:enum 10;
