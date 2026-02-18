@@ -301,56 +301,100 @@ module ietf-dtnma-agent {
   // Messaging counters
   amm:edd num-msg-rx {
     amm:enum 3;
+    description
+      "Counter of the number of AMP messages of any type received
+       from any manager.";
     amm:type "//ietf/amm-base/typedef/counter64";
   }
   amm:edd num-msg-rx-failed {
     amm:enum 4;
+    description
+      "Counter of received EXECSET values that failed to be decoded
+       and processed.";
     amm:type "//ietf/amm-base/typedef/counter64";
   }
   amm:edd num-msg-tx {
     amm:enum 5;
+    description
+      "Counter of the number of AMP messages of any type transmitted
+       to any manager.";
     amm:type "//ietf/amm-base/typedef/counter64";
   }
   amm:edd num-msg-tx-failed {
     amm:enum 15;
+    description
+      "Counter of RPTSET values that encoded but failed to be sent.";
     amm:type "//ietf/amm-base/typedef/counter64";
   }
   amm:edd last-msg-rx-time {
     amm:enum 17;
+    description
+      "A timestamp on the Agent when the latest AMP message was
+       received from any manager.";
     amm:type "/aritype/TP";
   }
 
   // Execution counters and states
   amm:edd num-exec-started {
     amm:enum 6;
+    description
+      "Number of CTRL executions started.
+       This does not include EXECSETs which have been received and
+       are still queued for execution.
+       See <./edd/exec-running> table for those details.";
     amm:type "//ietf/amm-base/typedef/counter64";
   }
   amm:edd num-exec-succeeded {
     amm:enum 7;
+    description
+      "Number of successful CTRL executions.
+       This means the CTRL result was not undefined.";
     amm:type "//ietf/amm-base/typedef/counter64";
   }
   amm:edd num-exec-failed {
     amm:enum 8;
+    description
+      "Number of failed CTRL executions.
+       This means the CTRL result was undefined.";
     amm:type "//ietf/amm-base/typedef/counter64";
   }
   amm:edd exec-running {
     amm:enum 9;
+    description
+      "Information on controls currently being executed.
+       This represents tracking of execution requests from
+       received EXECSET values until the entire execution is
+       finished (successfully or not).
+       Once finished, the Agent SHALL remove the associated row
+       from this table and never re-use its 'pid' value.";
     amm:tblt {
       amm:key "pid";
       amm:column pid {
+        description
+          "An identifier internal to an Agent used to correlate
+           table rows over time.
+           An implemention MAY assign values from a smaller domain
+           than this column can represent.";
         amm:type "/aritype/UVAST";
       }
       amm:column target {
-        amm:type "//ietf/amm-base/typedef/any";
+        description
+          "The original, full target of the execution.
+           This can be an inline MAC or a CTRL reference.";
+        amm:type "//ietf/amm-base/typedef/exec-tgt";
       }
       amm:column state {
+        description
+          "The state of executing the target within the Agent.";
         amm:type "/aritype/BYTE" {
           amm:int-labels {
             enum waiting {
               value 0;
               description
                 "The execution is waiting on a condition or timer
-                 to continue.";
+                 to continue.
+                 This includes waiting on Agent resources for the
+                 execution itself.";
             }
             enum running {
               value 1;
@@ -371,7 +415,8 @@ module ietf-dtnma-agent {
        further evaluation.";
     amm:parameter condition {
       description
-        "The condition to evaluate.";
+        "The condition (inline or reference) to evaluate and
+         convert to BOOL type.";
       amm:type "//ietf/amm-base/typedef/eval-tgt";
     }
     amm:parameter on-truthy {
@@ -431,6 +476,8 @@ module ietf-dtnma-agent {
        This is intended to be used within a macro to separate
        controls in time.";
     amm:parameter duration {
+      description
+        "The relative of time on the Agent to wait for.";
       amm:type "/aritype/TD";
     }
   }
@@ -443,6 +490,8 @@ module ietf-dtnma-agent {
        controls in time or as a first macro item to delay execution
        after the time of reception.";
     amm:parameter time {
+      description
+        "The absolute Agent time at which to stop waiting.";
       amm:type "/aritype/TP";
     }
   }
@@ -455,6 +504,9 @@ module ietf-dtnma-agent {
        controls in time or as a first macro item to delay execution
        until the condition is met.";
     amm:parameter condition {
+      description
+        "The condition (inline or reference) to evaluate and
+         convert to BOOL type.";
       amm:type "//ietf/amm-base/typedef/eval-tgt";
     }
   }
@@ -746,22 +798,38 @@ module ietf-dtnma-agent {
       }
       amm:column action {
         description
-          "The execution when this rule triggers.";
-        amm:type "//ietf/amm-base/typedef/MAC";
+          "The action (inline MAC or CTRL reference) to execute when
+           this rule triggers.";
+        amm:type "//ietf/amm-base/typedef/exec-tgt";
       }
       amm:column condition {
-        amm:type "//ietf/amm-base/typedef/EXPR";
+        description
+          "The condition (inline or reference) to periodically
+           evaluate and convert to BOOL type.";
+        amm:type "//ietf/amm-base/typedef/eval-tgt";
       }
       amm:column min-interval {
+        description
+          "The minimum interval of Agent time between executions of
+           the action.
+           This can also be used by an Agent to limit how frequently
+           the condition is evaluated.";
         amm:type "/aritype/TD";
       }
       amm:column max-count {
+        description
+          "Number of executions of the action, after being enabled,
+           when the rule is disabled.";
         amm:type "/aritype/UVAST";
       }
       amm:column init-enabled {
+        description
+          "Whether the rule is enabled at Agent initialization.";
         amm:type "/ARITYPE/BOOL";
       }
       amm:column enabled {
+        description
+          "The current enabled state of the rule.";
         amm:type "/ARITYPE/BOOL";
       }
     }
@@ -779,22 +847,35 @@ module ietf-dtnma-agent {
       }
       amm:column action {
         description
-          "The execution when this rule triggers.";
-        amm:type "//ietf/amm-base/typedef/MAC";
+          "The action (inline MAC or CTRL reference) to execute when
+           this rule triggers.";
+        amm:type "//ietf/amm-base/typedef/exec-tgt";
       }
       amm:column start-time {
+        description
+          "The earliest time (absolute or init-relative) at which
+           the action is executed.";
         amm:type "//ietf/amm-base/typedef/TIME";
       }
       amm:column period {
+        description
+          "How often the action is executed.";
         amm:type "/aritype/TD";
       }
       amm:column max-count {
+        description
+          "Number of executions of the action, after being enabled,
+           when the rule is disabled.";
         amm:type "/aritype/UVAST";
       }
       amm:column init-enabled {
+        description
+          "Whether the rule is enabled at Agent initialization.";
         amm:type "/ARITYPE/BOOL";
       }
       amm:column enabled {
+        description
+          "The current enabled state of the rule.";
         amm:type "/ARITYPE/BOOL";
       }
     }
@@ -810,23 +891,34 @@ module ietf-dtnma-agent {
     uses ensure-object-id;
     amm:parameter action {
       description
-        "The execution when this rule triggers.";
-      amm:type "//ietf/amm-base/typedef/MAC";
+        "The action (inline MAC or CTRL reference) to execute when
+         this rule triggers.";
+      amm:type "//ietf/amm-base/typedef/exec-tgt";
     }
     amm:parameter condition {
-      amm:type "//ietf/amm-base/typedef/EXPR";
+      description
+        "The condition (inline or reference) to periodically
+         evaluate and convert to BOOL type.";
+      amm:type "//ietf/amm-base/typedef/eval-tgt";
     }
     amm:parameter min-interval {
+      description
+        "The minimum interval of Agent time between executions of
+         the action.
+         This can also be used by an Agent to limit how frequently
+         the condition is evaluated.";
       amm:type "/ARITYPE/TD";
     }
     amm:parameter max-count {
+      description
+        "Number of executions of the action, after being enabled,
+         when the rule is disabled.";
       amm:type "/ARITYPE/UVAST";
     }
     amm:parameter init-enabled {
+      description
+        "Whether the rule is enabled at Agent initialization.";
       amm:type "/ARITYPE/BOOL";
-    }
-    amm:result res {
-      amm:type "/ARITYPE/UINT";
     }
   }
   amm:ctrl ensure-tbr {
@@ -838,43 +930,50 @@ module ietf-dtnma-agent {
     uses ensure-object-id;
     amm:parameter action {
       description
-        "The execution when this rule triggers.";
-      amm:type "//ietf/amm-base/typedef/MAC";
+        "The action (inline MAC or CTRL reference) to execute when
+         this rule triggers.";
+      amm:type "//ietf/amm-base/typedef/exec-tgt";
     }
     amm:parameter start-time {
+      description
+        "The earliest time (absolute or init-relative) at which
+         the action is executed.";
       amm:type "//ietf/amm-base/typedef/TIME";
     }
     amm:parameter period {
+      description
+        "How often the action is executed.";
       amm:type "/ARITYPE/TD";
     }
     amm:parameter max-count {
+      description
+        "Number of executions of the action, after being enabled,
+         when the rule is disabled.";
       amm:type "/ARITYPE/UVAST";
     }
     amm:parameter init-enabled {
+      description
+        "Whether the rule is enabled at Agent initialization.";
       amm:type "/ARITYPE/BOOL";
-    }
-    amm:result res {
-      amm:type "/ARITYPE/UINT";
     }
   }
   amm:ctrl ensure-rule-enabled {
     if-feature "rules";
     amm:enum 15;
     description
-      "Ensure rule is enabled or disabled.";
+      "Ensure a specific rule is enabled or disabled.";
     amm:parameter obj-id {
       description
-        "The rule to ensure enabled setting for.";
+        "The rule of which to ensure the enabled state.";
       amm:union {
         amm:type "/ARITYPE/SBR";
         amm:type "/ARITYPE/TBR";
       }
     }
     amm:parameter enabled {
+      description
+        "The desired enabled state of the rule.";
       amm:type "/ARITYPE/BOOL";
-    }
-    amm:result res {
-      amm:type "/ARITYPE/uint";
     }
   }
   amm:ctrl reset-rule-enabled {
@@ -884,14 +983,11 @@ module ietf-dtnma-agent {
       "Reset rule enabled to initial setting.";
     amm:parameter obj-id {
       description
-        "The rule to reset enabled seetting for.";
+        "The rule of which to reset the enabled state.";
       amm:union {
         amm:type "/ARITYPE/SBR";
         amm:type "/ARITYPE/TBR";
       }
-    }
-    amm:result res {
-      amm:type "/ARITYPE/UINT";
     }
   }
   amm:ctrl obsolete-rule {
@@ -909,6 +1005,8 @@ module ietf-dtnma-agent {
       }
     }
     amm:result success {
+      description
+        "Boolean indicating whether the rule was marked obsolete";
       amm:type "/ARITYPE/BOOL";
     }
   }
@@ -926,7 +1024,7 @@ module ietf-dtnma-agent {
   amm:oper add {
     amm:enum 1;
     description
-      "Add two numeric values.
+      "Add two numeric values or a TP and TD value (in either order).
        The operands are cast to the least compatible numeric type
        before the arithmetic.";
     uses any-binary-operands;
@@ -934,21 +1032,46 @@ module ietf-dtnma-agent {
   }
   amm:oper sub {
     amm:enum 2;
+    description
+      "Subtract two numeric values or a TP less a TD value.
+       The left (second) operand is the minuend and the right (first)
+       operand is the subtrahend; this means that the EXPR
+       </AC/(10, 2, ./OPER/sub)> behaves as the infix '10 - 2'.
+       The operands are cast to the least compatible numeric type
+       before the arithmetic.";
     uses any-binary-operands;
     uses any-unary-result;
   }
   amm:oper multiply {
     amm:enum 3;
+    description
+      "Multiply two numeric values or a TD value (in either order).
+       The operands are cast to the least compatible numeric type
+       before the arithmetic.";
     uses any-binary-operands;
     uses any-unary-result;
   }
   amm:oper divide {
     amm:enum 4;
+    description
+      "Divide two numeric values or a TD value (as numerator).
+       The left (second) operand is the numerator and the right
+       (first) operand is the divisor; this means that the EXPR
+       </AC/(10, 2, ./OPER/divide)> behaves as the infix '10 / 2'.
+       The operands are cast to the least compatible numeric type
+       before the arithmetic.";
     uses any-binary-operands;
     uses any-unary-result;
   }
   amm:oper remainder {
     amm:enum 5;
+    description
+      "Find the remainder of a numeric operation.
+       The left (second) operand is the numerator and the right
+       (first) operand is the divisor; this means that the EXPR
+       </AC/(10, 2, ./OPER/divide)> behaves as the infix '10 % 2'.
+       The operands are cast to the least compatible numeric type
+       before the arithmetic.";
     uses numeric-binary-operands;
     uses numeric-unary-result;
   }
@@ -956,21 +1079,30 @@ module ietf-dtnma-agent {
   // Bitwise operators
   amm:oper bit-not {
     amm:enum 6;
+    description
+      "Perform a bitwise NOT on an integer value.";
     uses integer-unary-operands;
     uses integer-unary-result;
   }
   amm:oper bit-and {
     amm:enum 7;
+    description
+      "Perform a bitwise AND between two integer values.";
     uses integer-binary-operands;
     uses integer-unary-result;
   }
   amm:oper bit-or {
     amm:enum 8;
+    description
+      "Perform a bitwise OR between two integer values.";
     uses integer-binary-operands;
     uses integer-unary-result;
   }
   amm:oper bit-xor {
     amm:enum 9;
+    description
+      "Perform a bitwise exclusive or (XOR) between two integer
+       values.";
     uses integer-binary-operands;
     uses integer-unary-result;
   }
@@ -978,21 +1110,29 @@ module ietf-dtnma-agent {
   // Boolean operators
   amm:oper bool-not {
     amm:enum 10;
+    description
+      "Perform a boolean NOT on a boolean value.";
     uses bool-unary-operands;
     uses bool-unary-result;
   }
   amm:oper bool-and {
     amm:enum 11;
+    description
+      "Perform a boolean AND between two boolean values.";
     uses bool-binary-operands;
     uses bool-unary-result;
   }
   amm:oper bool-or {
     amm:enum 12;
+    description
+      "Perform a boolean OR between two boolean values.";
     uses bool-binary-operands;
     uses bool-unary-result;
   }
   amm:oper bool-xor {
     amm:enum 13;
+    description
+      "Perform a boolean XOR between two boolean values.";
     uses bool-binary-operands;
     uses bool-unary-result;
   }
@@ -1000,11 +1140,17 @@ module ietf-dtnma-agent {
   // Value comparison
   amm:oper compare-eq {
     amm:enum 14;
+    description
+      "Compare two values for equality as defined by
+       Section 6.12.1 of the AMM.";
     uses any-binary-operands;
     uses bool-unary-result;
   }
   amm:oper compare-ne {
     amm:enum 15;
+    description
+      "Compare two values for inequality as defined by
+       Section 6.12.1 of the AMM.";
     uses any-binary-operands;
     uses bool-unary-result;
   }
@@ -1054,7 +1200,7 @@ module ietf-dtnma-agent {
     uses bool-unary-result;
   }
 
-  // Table filtering
+  // Table (TBL) filtering
   amm:typedef tbl-row-filter {
     amm:enum 0;
     description
@@ -1103,7 +1249,7 @@ module ietf-dtnma-agent {
     }
   }
 
-  // List filtering
+  // List (AC) filtering
   amm:oper list-get {
     amm:enum 21;
     description
@@ -1120,12 +1266,13 @@ module ietf-dtnma-agent {
     }
     amm:result out {
       description
-        "The retrieved value or undefined if the index is not valid.";
+        "The retrieved value or undefined if the index is not
+         valid.";
       amm:type "//ietf/amm-base/typedef/any";
     }
   }
 
-  // Map filtering
+  // Map (AM) filtering
   amm:oper map-get {
     amm:enum 22;
     description
