@@ -216,8 +216,8 @@ module ietf-network-base {
     description
       "This object defines a means to match a full URI using a
        regular expression limited to I-Regexp compatibility.
-       This only allows matching text values, more specifically those that
-       already match the <./typedef/uri> semantic type.";
+       This only allows matching text values, more specifically
+       those that already match the <./typedef/uri> semantic type.";
     reference
       "RFC 9485: I-Regexp: An Interoperable Regular Expression Format";
     amm:base "//ietf/network-base/ident/abstract-endpoint-pattern";
