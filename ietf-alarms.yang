@@ -444,14 +444,14 @@ module ietf-alarms {
           "A pattern to match specific resource objects.
            This MAY include only integer identifiers for
            compactness.";
-        amm:type "//ietf/amm-base/typedef/ari-pattern";
+        amm:type "/aritype/objpat";
       }
       amm:column categories {
         description
           "A pattern to match specific category objects.
            This MAY include only integer identifiers for
            compactness.";
-        amm:type "//ietf/amm-base/typedef/ari-pattern";
+        amm:type "/aritype/objpat";
       }
     }
   }

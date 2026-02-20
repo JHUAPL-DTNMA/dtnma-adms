@@ -186,9 +186,11 @@ module ietf-dtnma-agent-acl {
       }
       amm:column objects {
         description
-          "A pattern for objects being granted access, which may
-           match all objects.";
-        amm:type "//ietf/amm-base/typedef/ari-pattern";
+          "A set of patterns for objects being granted access, 
+           which may match all objects.";
+        amm:ulist {
+          amm:type "/aritype/objpat";
+        }
       }
       amm:column permissions {
         description
@@ -230,9 +232,11 @@ module ietf-dtnma-agent-acl {
     }
     amm:parameter objects {
       description
-        "ARI pattern to determine which objects will be assigned
-         the permissions.";
-      amm:type "//ietf/amm-base/typedef/ari-pattern";
+        "A set of patterns for objects being granted access, 
+         which may match all objects.";
+      amm:ulist {
+        amm:type "/aritype/objpat";
+      }
     }
     amm:parameter permissions {
       description
