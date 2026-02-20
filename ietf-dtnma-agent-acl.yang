@@ -186,7 +186,7 @@ module ietf-dtnma-agent-acl {
       }
       amm:column objects {
         description
-          "A set of patterns for objects being granted access, 
+          "A set of patterns for objects being granted access,
            which may match all objects.";
         amm:ulist {
           amm:type "/aritype/objpat";
@@ -232,7 +232,7 @@ module ietf-dtnma-agent-acl {
     }
     amm:parameter objects {
       description
-        "A set of patterns for objects being granted access, 
+        "A set of patterns for objects being granted access,
          which may match all objects.";
       amm:ulist {
         amm:type "/aritype/objpat";
