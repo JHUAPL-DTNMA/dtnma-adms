@@ -35,7 +35,8 @@ module ietf-alarms {
      parts of the alarm state.
      When supported by an Agent, the shelving behavior is configured
      exclusively by Managers and used to influence how specific
-     matching alarm entries are shelved (ignored from the active list).
+     matching alarm entries are shelved (ignored from the active
+     alarm list).
 
      The key words 'MUST', 'MUST NOT', 'REQUIRED', 'SHALL', 'SHALL
      NOT', 'SHOULD', 'SHOULD NOT', 'RECOMMENDED', 'NOT RECOMMENDED',
