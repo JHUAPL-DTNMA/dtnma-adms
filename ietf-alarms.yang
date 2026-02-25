@@ -444,14 +444,18 @@ module ietf-alarms {
           "A pattern to match specific resource objects.
            This MAY include only integer identifiers for
            compactness.";
-        amm:type "/aritype/objpat";
+        amm:ulist {
+          amm:type "/aritype/objpat";
+        }
       }
       amm:column categories {
         description
           "A pattern to match specific category objects.
            This MAY include only integer identifiers for
            compactness.";
-        amm:type "/aritype/objpat";
+        amm:ulist {
+          amm:type "/aritype/objpat";
+        }
       }
     }
   }
