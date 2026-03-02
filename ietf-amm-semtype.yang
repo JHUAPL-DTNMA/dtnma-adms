@@ -57,6 +57,7 @@ module ietf-amm-semtype {
     description
       "The base IDENT for semantic type introspection.
        This object itself provides no type information.";
+    amm:abstract true;
   }
 
   // Semantic-type leaf IDENT objects
