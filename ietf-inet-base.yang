@@ -255,10 +255,13 @@ module ietf-inet-base {
       }
     }
   }
-  amm:ident ip-vlsm-pattern {
-    amm:enum 3;
+
+  // Pattern matching predicates
+  amm:oper match-ip-vlsm {
+    amm:enum 0;
     description
-      "An IP address pattern based on concepts of variable-length
+      "This is a unary predicate operator which will compare an
+       IP address operand based on concepts of variable-length
        subnet masking (VLSM) from Classless Inter-domain Routing
        (CIDR) definitions.
        This representation does not use the text form of CIDR
@@ -268,13 +271,12 @@ module ietf-inet-base {
        'ip-transport' references.
 
        Because of the limitations of VLSM, each reference to this
-       IDENT can only represent a single contiguous, bit-aligned
+       object can only represent a single contiguous, bit-aligned
        IP block. Not all possible blocks can be represented by a
        single VLSM pattern.";
     reference
       "RFC 4632: Classless Inter-domain Routing (CIDR)
        RFC 4291: IPv6 Addressing Architecture";
-    amm:base "//ietf/network-base/ident/abstract-endpoint-pattern";
     amm:parameter base {
       description
         "The base address for the subnet mask.";
@@ -288,6 +290,26 @@ module ietf-inet-base {
       amm:type "/aritype/uint" {
         range "0..128";
       }
+    }
+    amm:operand value {
+      description
+        "The value to check for a match.";
+      amm:union {
+        // raw address bytes
+        amm:type "./typedef/ip-address";
+        // address-as-parameter
+        amm:type "/aritype/ident" {
+          amm:base "./ident/ip-endpoint";
+        }
+        amm:type "/aritype/ident" {
+          amm:base "./ident/ip-transport";
+        }
+      }
+    }
+    amm:result is-match {
+      description
+        "The result is true if the value matches the given pattern.";
+      amm:type "/aritype/bool";
     }
   }
 }
