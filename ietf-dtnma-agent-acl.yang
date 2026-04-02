@@ -258,6 +258,22 @@ module ietf-dtnma-agent-acl {
   //
   // Group management
   //
+  amm:typedef group-member-filter {
+    amm:enum 4;
+    description
+      "A member filter applied using two phases for each row:
+         1. Substitute manager identities for LABEL items within EXPR.
+            This does not apply recursively to VALUE-OBJ within
+            the expression.
+         2. Evaluate the expression and consider the identity matched
+            if the result is a truthy value.
+       Only LABEL value 0 is valid.
+       Label substitution is performed as described in the value
+       production section of the DTNMA AMM document.";
+    reference
+      "draft-ietf-dtn-amm";
+    amm:type "//ietf/amm-base/typedef/EXPR";
+  }
   amm:edd current-groups {
     amm:enum 3;
     description
@@ -289,9 +305,7 @@ module ietf-dtnma-agent-acl {
         description
           "The list of members of the group, identified by matching
            transport endpoint.";
-        amm:ulist {
-          amm:type "//ietf/network-base/TYPEDEF/endpoint-pattern";
-        }
+        amm:type "./typedef/group-member-filter";
       }
       amm:column added-at {
         description
@@ -334,9 +348,7 @@ module ietf-dtnma-agent-acl {
     amm:parameter members {
       description
         "The list of endpoint patterns denoting group membership";
-      amm:ulist {
-        amm:type "//ietf/network-base/TYPEDEF/endpoint-pattern";
-      }
+      amm:type "./typedef/group-member-filter";
     }
   }
   amm:ctrl discard-group {

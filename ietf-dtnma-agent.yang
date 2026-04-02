@@ -1331,6 +1331,35 @@ module ietf-dtnma-agent {
     uses bool-unary-result;
   }
 
+  // Unary predicate (match) operators
+  amm:oper match-regexp {
+    amm:enum 23;
+    description
+      "This is a unary predicate operator which will compare
+       a text value to a regular expression pattern.
+       The regular expression is limited to I-Regexp compatibility.";
+    reference
+      "RFC 9485: I-Regexp: An Interoperable Regular Expression Format";
+    amm:parameter regexp {
+      description
+        "The I-Regexp text pattern to match.
+         In accordance with that definition, this pattern is implicitly
+         anchored to the start and end of the text being matched
+         (i.e. it is always a full match).";
+      amm:type "/aritype/textstr";
+    }
+    amm:operand value {
+      description
+        "The value to check for a match.";
+      amm:type "/aritype/textstr";
+    }
+    amm:result is-match {
+      description
+        "The result is true if the value matches the given pattern.";
+      amm:type "/aritype/bool";
+    }
+  }
+
   // Table (TBL) filtering
   amm:typedef tbl-row-filter {
     amm:enum 0;

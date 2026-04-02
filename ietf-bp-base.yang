@@ -133,20 +133,37 @@ module ietf-bp-base {
       amm:type "./TYPEDEF/eid-cbor";
     }
   }
-  amm:ident bp-eid-pattern {
-    amm:enum 2;
+  amm:oper match-eid-pattern {
+    amm:enum 0;
     description
-      "This object defines parameters for pattern matching
-       <./ident/bp-endpoint> reference values.
+      "This is a unary predicate operator which will compare
+       text URI or <./ident/bp-endpoint> reference values against
+       an EID pattern.
        The 'pattern' uses the binary form for compactness,
        which includes a display-hint to help end users.";
     reference
       "RFC TBA: Bundle Protocol Endpoint ID Patterns";
-    amm:base "//ietf/network-base/ident/abstract-endpoint-pattern";
     amm:parameter pattern {
       description
         "The EID of the endpoint.";
       amm:type "./TYPEDEF/eid-pattern-cbor";
+    }
+    amm:operand value {
+      description
+        "The value to check for a match.";
+      amm:union {
+        // text URI
+        amm:type "//ietf/network-base/typedef/uri";
+        // structured EID
+        amm:type "/aritype/ident" {
+          amm:base "./ident/bp-endpoint";
+        }
+      }
+    }
+    amm:result is-match {
+      description
+        "The result is true if the value matches the given pattern.";
+      amm:type "/aritype/bool";
     }
   }
 }
