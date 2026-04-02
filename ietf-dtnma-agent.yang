@@ -251,6 +251,31 @@ module ietf-dtnma-agent {
     }
   }
 
+  grouping predicate-compose-interface {
+    description
+      "A common interface for all predicate composition
+       operators below.";
+    amm:parameter operators {
+      description
+        "The list of other predicate operators to evaluate and
+         combine their results.";
+      amm:ulist {
+        amm:type "/aritype/oper";
+      }
+    }
+    amm:operand value {
+      description
+        "The value to pass-through and evaluate with each of the
+         subordinate operators.";
+      amm:type "//ietf/amm-base/typedef/any";
+    }
+    amm:result combined {
+      description
+        "The combined boolean result.";
+      amm:type "/aritype/bool";
+    }
+  }
+
   amm:enum 1;
   amm:edd sw-vendor {
     amm:enum 0;
@@ -1332,6 +1357,36 @@ module ietf-dtnma-agent {
   }
 
   // Unary predicate (match) operators
+  amm:oper is-undefined {
+    amm:enum 29;
+    description
+      "Predicate to check for the undefined value.";
+    amm:operand value {
+      description
+        "The value to check.";
+      amm:type "//ietf/amm-base/typedef/any";
+    }
+    amm:result match {
+      description
+        "True if and only if the value is the undefined value.";
+      amm:type "/aritype/bool";
+    }
+  }
+  amm:oper is-not-undefined {
+    amm:enum 30;
+    description
+      "Predicate to check for the undefined value.";
+    amm:operand value {
+      description
+        "The value to check.";
+      amm:type "//ietf/amm-base/typedef/any";
+    }
+    amm:result match {
+      description
+        "False if and only if the value is the undefined value.";
+      amm:type "/aritype/bool";
+    }
+  }
   amm:oper match-regexp {
     amm:enum 23;
     description
@@ -1357,6 +1412,89 @@ module ietf-dtnma-agent {
       description
         "The result is true if the value matches the given pattern.";
       amm:type "/aritype/bool";
+    }
+  }
+
+  // Unary predicate function composition
+  amm:oper predicate-all {
+    amm:enum 24;
+    description
+      "Compose unary predicate operators with a result that is true
+       only when all of the subordinate operators evaluate to a
+       truthy result.
+       If any operator evaluates to the undefined value it is
+       considered not truthy and this result will be false.";
+    uses predicate-compose-interface;
+  }
+  amm:oper predicate-any {
+    amm:enum 25;
+    description
+      "Compose unary predicate operators with a result that is true
+       when any of the subordinate operators evaluate to a
+       truthy result.
+       If any operator evaluates to the undefined value it is
+       considered not truthy, so other operators are still
+       part of the result which may be true.";
+    uses predicate-compose-interface;
+  }
+  amm:oper predicate-none {
+    amm:enum 26;
+    description
+      "Compose unary predicate operators with a result that is true
+       when all of the subordinate operators do not evaluate to a
+       truthy result.
+       If any operator evaluates to the undefined value it is
+       considered not truthy, so other operators are still
+       part of the result which may be true.";
+    uses predicate-compose-interface;
+  }
+  amm:oper predicate-eval {
+    amm:enum 27;
+    description
+      "A unary predicate operator which functions by evaluating a
+       sub-expression using the following phases:
+         1. Substitute the bind-value for </label/0> items
+            within the target (expression or reference).
+         2. If the target is a reference, it is used to produce
+            a value which itself SHALL be an expression.
+            Otherwise, the target SHALL itself be an expression.
+         3. Evaluate the expression and consider the evaluation
+            result as this operator result.";
+    amm:parameter target {
+      description
+        "Either an inline sub-expression or a reference to an
+         object which produces an expression.";
+      amm:type "//ietf/amm-base/typedef/eval-tgt";
+    }
+    amm:operand bind-value {
+      description
+        "The value to pass-through and evaluate with each of the
+         subordinate operators.";
+      amm:type "//ietf/amm-base/typedef/any";
+    }
+    amm:result sub-result {
+      description
+        "The result of the sub-expression evaluation.";
+      amm:type "//ietf/amm-base/typedef/any";
+    }
+  }
+  amm:oper eval {
+    amm:enum 28;
+    description
+      "A zero-ary operator which evaluates a sub-expression or
+       by reference to expression-producing VALUE-OBJ.
+       The result of the evaluation is the result of this
+       operator.";
+    amm:parameter target {
+      description
+        "Either an inline sub-expression or a reference to an
+         object which produces an expression.";
+      amm:type "//ietf/amm-base/typedef/eval-tgt";
+    }
+    amm:result sub-result {
+      description
+        "The result of the sub-expression evaluation.";
+      amm:type "//ietf/amm-base/typedef/any";
     }
   }
 
