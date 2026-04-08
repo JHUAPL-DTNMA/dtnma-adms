@@ -1448,18 +1448,45 @@ module ietf-dtnma-agent {
        part of the result which may be true.";
     uses predicate-compose-interface;
   }
-  amm:oper predicate-eval {
+
+  // sub-expression evaluation operators
+  amm:oper eval {
+    amm:enum 28;
+    description
+      "A zero-ary operator which functions by evaluating a target
+       sub-expression using the following phases:
+         1. If the target is a reference, it is used to produce
+            a value which SHALL be an expression.
+            Otherwise, the target SHALL itself be an expression.
+         2. Evaluate the expression and consider the evaluation
+            result as this operator result.";
+    amm:parameter target {
+      description
+        "Either an inline sub-expression or a reference to an
+         object which produces an expression.";
+      amm:type "//ietf/amm-base/typedef/eval-tgt";
+    }
+    amm:result sub-result {
+      description
+        "The result of the sub-expression evaluation.";
+      amm:type "//ietf/amm-base/typedef/any";
+    }
+  }
+  amm:oper unary-eval {
     amm:enum 27;
     description
-      "A unary predicate operator which functions by evaluating a
+      "A unary operator which functions by evaluating a target
        sub-expression using the following phases:
-         1. Substitute the bind-value for </label/0> items
-            within the target (expression or reference).
+         1. Substitute the bind-value actual parameter for
+            </label/0> items within the target value
+            (literal expression or object reference).
          2. If the target is a reference, it is used to produce
-            a value which itself SHALL be an expression.
+            a value which SHALL be an expression.
             Otherwise, the target SHALL itself be an expression.
          3. Evaluate the expression and consider the evaluation
-            result as this operator result.";
+            result as this operator result.
+       This is similar to the <./oper/eval> object with the
+       addition of the unary operand binding.";
     amm:parameter target {
       description
         "Either an inline sub-expression or a reference to an
@@ -1468,28 +1495,10 @@ module ietf-dtnma-agent {
     }
     amm:operand bind-value {
       description
-        "The value to pass-through and evaluate with each of the
+        "The value to pass-through as </label/0> during
+         the substitution phase of evaluation with each of the
          subordinate operators.";
       amm:type "//ietf/amm-base/typedef/any";
-    }
-    amm:result sub-result {
-      description
-        "The result of the sub-expression evaluation.";
-      amm:type "//ietf/amm-base/typedef/any";
-    }
-  }
-  amm:oper eval {
-    amm:enum 28;
-    description
-      "A zero-ary operator which evaluates a sub-expression or
-       by reference to expression-producing VALUE-OBJ.
-       The result of the evaluation is the result of this
-       operator.";
-    amm:parameter target {
-      description
-        "Either an inline sub-expression or a reference to an
-         object which produces an expression.";
-      amm:type "//ietf/amm-base/typedef/eval-tgt";
     }
     amm:result sub-result {
       description
