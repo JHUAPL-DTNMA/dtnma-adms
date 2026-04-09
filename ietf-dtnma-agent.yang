@@ -1506,6 +1506,51 @@ module ietf-dtnma-agent {
       amm:type "//ietf/amm-base/typedef/any";
     }
   }
+  amm:oper nary-eval {
+    amm:enum 31;
+    description
+      "An N-ary operator which functions by evaluating a target
+       sub-expression using the following phases:
+         1. Substitute the bind-values actual parameter for
+            LABEL items with integer primitive (e.g. </label/0>)
+            within the target value
+            (literal expression or object reference).
+            The number of bind-able operands is given by the
+            operand-count parameter.
+         2. If the target is a reference, it is used to produce
+            a value which SHALL be an expression.
+            Otherwise, the target SHALL itself be an expression.
+         3. Evaluate the expression and consider the evaluation
+            result as this operator result.
+       This is similar to the <./oper/eval> object with the
+       addition of the unary operand binding.";
+    amm:parameter operand-count {
+      description
+        "The number of operands to take from the evaluation stack
+         and use as bind-values for the target parameter.";
+      amm:type "/aritype/uint";
+    }
+    amm:parameter target {
+      description
+        "Either an inline sub-expression or a reference to an
+         object which produces an expression.";
+      amm:type "//ietf/amm-base/typedef/eval-tgt";
+    }
+    amm:operand bind-values {
+      description
+        "The value to pass-through as </label/0> during
+         the substitution phase of evaluation with each of the
+         subordinate operators.";
+      amm:seq {
+        amm:type "//ietf/amm-base/typedef/any";
+      }
+    }
+    amm:result sub-result {
+      description
+        "The result of the sub-expression evaluation.";
+      amm:type "//ietf/amm-base/typedef/any";
+    }
+  }
 
   // Table (TBL) filtering
   amm:typedef tbl-row-filter {
