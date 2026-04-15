@@ -320,7 +320,7 @@ module ietf-amm-base {
        SHALL produce a value that matches <./typedef/expr>, which
        is then evaluated.";
     amm:union {
-      // object which produces an eval-tgt
+      // object which produces an expression
       amm:type "./TYPEDEF/value-obj";
       // inline expression
       amm:type "./TYPEDEF/expr";
@@ -333,10 +333,8 @@ module ietf-amm-base {
     amm:union {
       // plain value for the stack
       amm:type "/ARITYPE/literal";
-      // object which produces an eval-tgt
+      // object which produces a value for the stack
       amm:type "./TYPEDEF/value-obj";
-      // treated as unary operator
-      amm:type "./TYPEDEF/type-ref";
       // operator to evaluate
       amm:type "/ARITYPE/oper";
     }
