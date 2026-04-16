@@ -1,5 +1,6 @@
 # Editor files
-.project
+/.project
+/.externalToolBuilders/
 
 # Temporary files
 *.out
