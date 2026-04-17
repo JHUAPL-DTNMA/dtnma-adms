@@ -77,7 +77,7 @@ module ietf-dtnma-agent {
        A basic implementation can omit these controls and
        allow only straightforward linear execution sequences
        with no waiting and no conditional branching.";
-   }
+  }
 
   grouping obj-list-params {
     description
@@ -464,7 +464,7 @@ module ietf-dtnma-agent {
 
   // MAC helper controls
   amm:ctrl if-then-else {
-    feature "exec-control";
+    if-feature "exec-control";
     amm:enum 0;
     description
       "Evaluate an expression and follow one of two branches of
@@ -500,7 +500,7 @@ module ietf-dtnma-agent {
     }
   }
   amm:ctrl catch {
-    feature "exec-control";
+    if-feature "exec-control";
     amm:enum 1;
     description
       "Attempt to execute a target, and if there is some failure
@@ -526,7 +526,7 @@ module ietf-dtnma-agent {
     }
   }
   amm:ctrl wait-for {
-    feature "exec-control";
+    if-feature "exec-control";
     amm:enum 2;
     description
       "This control causes the execution to pause for a given
@@ -540,7 +540,7 @@ module ietf-dtnma-agent {
     }
   }
   amm:ctrl wait-until {
-    feature "exec-control";
+    if-feature "exec-control";
     amm:enum 3;
     description
       "This control causes the execution to pause until a specific
@@ -555,7 +555,7 @@ module ietf-dtnma-agent {
     }
   }
   amm:ctrl wait-cond {
-    feature "exec-control";
+    if-feature "exec-control";
     amm:enum 4;
     description
       "This control causes the execution to pause until a condition
