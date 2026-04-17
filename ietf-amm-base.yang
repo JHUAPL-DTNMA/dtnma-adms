@@ -141,6 +141,16 @@ module ietf-amm-base {
       amm:type "./TYPEDEF/float";
     }
   }
+  amm:typedef numeric-or-time {
+    amm:enum 27;
+    description
+      "Any type which can be used with numeric or time-as-numeric
+       expressions.";
+    amm:union {
+      amm:type "./TYPEDEF/numeric";
+      amm:type "./TYPEDEF/time";
+    }
+  }
   amm:typedef primitive {
     amm:enum 4;
     description
