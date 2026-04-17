@@ -123,7 +123,7 @@ module ietf-dtnma-agent {
 
   grouping any-binary-operands {
     description
-      "Any-value bianry operands";
+      "Any-value binary operands";
     amm:operand left {
       description
         "The left-side operand.";
@@ -146,19 +146,24 @@ module ietf-dtnma-agent {
     }
   }
 
-  grouping numeric-unary-operands {
+  grouping numeric-time-binary-operands {
     description
-      "Numeric unary operand";
-    amm:operand val {
+      "Numeric or time binary operands";
+    amm:operand left {
       description
-        "The single value.";
-      amm:type "//ietf/amm-base/typedef/NUMERIC";
+        "The left-side operand.";
+      amm:type "//ietf/amm-base/typedef/numeric-or-time";
+    }
+    amm:operand right {
+      description
+        "The left-side operand.";
+      amm:type "//ietf/amm-base/typedef/numeric-or-time";
     }
   }
 
   grouping numeric-binary-operands {
     description
-      "Numeric bianry operands";
+      "Numeric binary operands";
     amm:operand left {
       description
         "The left-side operand.";
@@ -193,7 +198,7 @@ module ietf-dtnma-agent {
 
   grouping integer-binary-operands {
     description
-      "Integer bianry operands";
+      "Integer binary operands";
     amm:operand left {
       description
         "The left-side operand.";
@@ -228,7 +233,7 @@ module ietf-dtnma-agent {
 
   grouping bool-binary-operands {
     description
-      "Boolean bianry operands";
+      "Boolean binary operands";
     amm:operand left {
       description
         "The left-side operand.";
@@ -1219,10 +1224,14 @@ module ietf-dtnma-agent {
   amm:oper negate {
     amm:enum 0;
     description
-      "Negate a value.
+      "Negate a value, numeric or TD.
        This is equivalent to multiplying by -1 but a shorter
        expression.";
-    uses numeric-unary-operands;
+    amm:operand val {
+      description
+        "The single value.";
+      amm:type "//ietf/amm-base/typedef/numeric-or-time";
+    }
     uses numeric-unary-result;
   }
   amm:oper add {
@@ -1231,7 +1240,7 @@ module ietf-dtnma-agent {
       "Add two numeric values or a TP and TD value (in either order).
        The operands are cast to the least compatible numeric type
        before the arithmetic.";
-    uses any-binary-operands;
+    uses numeric-time-binary-operands;
     uses any-unary-result;
   }
   amm:oper sub {
@@ -1243,7 +1252,7 @@ module ietf-dtnma-agent {
        </AC/(10, 2, ./OPER/sub)> behaves as the infix '10 - 2'.
        The operands are cast to the least compatible numeric type
        before the arithmetic.";
-    uses any-binary-operands;
+    uses numeric-time-binary-operands;
     uses any-unary-result;
   }
   amm:oper multiply {
@@ -1252,7 +1261,7 @@ module ietf-dtnma-agent {
       "Multiply two numeric values or a TD value (in either order).
        The operands are cast to the least compatible numeric type
        before the arithmetic.";
-    uses any-binary-operands;
+    uses numeric-time-binary-operands;
     uses any-unary-result;
   }
   amm:oper divide {
@@ -1264,7 +1273,7 @@ module ietf-dtnma-agent {
        </AC/(10, 2, ./OPER/divide)> behaves as the infix '10 / 2'.
        The operands are cast to the least compatible numeric type
        before the arithmetic.";
-    uses any-binary-operands;
+    uses numeric-time-binary-operands;
     uses any-unary-result;
   }
   amm:oper remainder {
@@ -1341,25 +1350,47 @@ module ietf-dtnma-agent {
     uses bool-unary-result;
   }
 
-  // Value comparison
+  // Strict value comparison
+  amm:oper strict-eq {
+    amm:enum 33;
+    description
+      "Compare two values for strict equality as defined by
+       Section 6.12.1 of the AMM.";
+    uses any-binary-operands;
+    uses bool-unary-result;
+  }
+  amm:oper strict-ne {
+    amm:enum 34;
+    description
+      "Compare two values for strict inequality as defined by
+       Section 6.12.1 of the AMM.";
+    uses any-binary-operands;
+    uses bool-unary-result;
+  }
+
+  // Loose value comparison
   amm:oper compare-eq {
     amm:enum 14;
     description
-      "Compare two values for equality as defined by
-       Section 6.12.1 of the AMM.";
+      "Compare two values for loose equality as defined by
+       Section 6.12.1 of the AMM.
+       Numeric operands MAY be converted to a least compatible
+       numeric type for the comparison.";
     uses any-binary-operands;
     uses bool-unary-result;
   }
   amm:oper compare-ne {
     amm:enum 15;
     description
-      "Compare two values for inequality as defined by
-       Section 6.12.1 of the AMM.";
+      "Compare two values for loose equality as defined by
+       Section 6.12.1 of the AMM.
+       Numeric operands MAY be converted to a least compatible
+       numeric type for the comparison.";
     uses any-binary-operands;
     uses bool-unary-result;
   }
 
-  // Numeric comparison
+  // Numeric (or time-as-numeric) comparison
   amm:oper compare-gt {
     amm:enum 16;
     description
@@ -1368,7 +1399,7 @@ module ietf-dtnma-agent {
        right value.
        The operands are cast to the least compatible numeric type
        before the comparison.";
-    uses numeric-binary-operands;
+    uses any-binary-operands;
     uses bool-unary-result;
   }
   amm:oper compare-ge {
@@ -1379,7 +1410,7 @@ module ietf-dtnma-agent {
        to the right.
        The operands are cast to the least compatible numeric type
        before the comparison.";
-    uses numeric-binary-operands;
+    uses any-binary-operands;
     uses bool-unary-result;
   }
   amm:oper compare-lt {
@@ -1389,7 +1420,7 @@ module ietf-dtnma-agent {
        The result is true if the left value is less than the right.
        The operands are cast to the least compatible numeric type
        before the comparison.";
-    uses numeric-binary-operands;
+    uses any-binary-operands;
     uses bool-unary-result;
   }
   amm:oper compare-le {
@@ -1400,7 +1431,7 @@ module ietf-dtnma-agent {
        equal to the right.
        The operands are cast to the least compatible numeric type
        before the comparison.";
-    uses numeric-binary-operands;
+    uses any-binary-operands;
     uses bool-unary-result;
   }
 
@@ -1432,6 +1463,25 @@ module ietf-dtnma-agent {
     amm:result match {
       description
         "False if and only if the value is the undefined value.";
+      amm:type "/aritype/bool";
+    }
+  }
+  amm:oper is-truthy {
+    amm:enum 35;
+    description
+      "Predicate to convert to bool type.
+       This operator will specifically consider the undefined value
+       as not-truthy with a match result of false.
+       This logic is the same as what is used internal to the Agent
+       for conditional expressions and filters.";
+    amm:operand value {
+      description
+        "The value to check.";
+      amm:type "//ietf/amm-base/typedef/any";
+    }
+    amm:result match {
+      description
+        "True if and only if the value is truthy.";
       amm:type "/aritype/bool";
     }
   }
@@ -1603,6 +1653,32 @@ module ietf-dtnma-agent {
       amm:type "/aritype/TBL";
     }
   }
+  amm:oper tbl-get {
+    amm:enum 32;
+    description
+      "Retrieve an item from the given table.";
+    amm:parameter row {
+      description
+        "Index of the row (major axis) of the item.";
+      amm:type "/aritype/uint";
+    }
+    amm:parameter column {
+      description
+        "Index of the column (minor axis) of the item.";
+      amm:type "/aritype/uint";
+    }
+    amm:operand in {
+      description
+        "List to retrieve a value from.";
+      amm:type "/aritype/TBL";
+    }
+    amm:result out {
+      description
+        "The retrieved value or undefined if the index is not
+         valid.";
+      amm:type "//ietf/amm-base/typedef/any";
+    }
+  }
 
   // List (AC) filtering
   amm:oper list-get {
@@ -1612,7 +1688,7 @@ module ietf-dtnma-agent {
     amm:parameter index {
       description
         "Index of the value to retrieve from the list.";
-      amm:type "//ietf/amm-base/typedef/INTEGER";
+      amm:type "/aritype/uint";
     }
     amm:operand in {
       description
