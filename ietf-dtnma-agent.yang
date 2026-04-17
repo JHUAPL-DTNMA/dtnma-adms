@@ -462,7 +462,7 @@ module ietf-dtnma-agent {
     }
     amm:parameter on-truthy {
       description
-        "The object to execute when the condition is truthy.";
+        "The target to execute when the condition is truthy.";
       amm:default "null";
       amm:union {
         amm:type "//ietf/amm-base/typedef/exec-tgt";
@@ -471,7 +471,8 @@ module ietf-dtnma-agent {
     }
     amm:parameter on-falsy {
       description
-        "An optional execution when the condition is falsey.";
+        "An optional target to execute when the condition is
+         not truthy (including if evaluates to undefined).";
       amm:default "null";
       amm:union {
         amm:type "//ietf/amm-base/typedef/exec-tgt";
@@ -491,12 +492,12 @@ module ietf-dtnma-agent {
        catch it and execute an alternative target.";
     amm:parameter try {
       description
-        "The object to execute.";
+        "The target to execute.";
       amm:type "//ietf/amm-base/typedef/exec-tgt";
     }
     amm:parameter on-failure {
       description
-        "An optional execution after failure.";
+        "An optional target to execute after failure.";
       amm:default "null";
       amm:union {
         amm:type "//ietf/amm-base/typedef/exec-tgt";
@@ -506,6 +507,41 @@ module ietf-dtnma-agent {
     amm:result try-success {
       description
         "True if the try target succeeded without exception.";
+      amm:type "/aritype/BOOL";
+    }
+  }
+  amm:ctrl exec-deadline {
+    amm:enum 1;
+    description
+      "Execute a desired target and wait for it to finish before
+       a relative time deadline.
+       If it does not finish, it is terminated and an alternative
+       timeout target is executed.
+       If the target experiences a failure executing before the
+       deadline, then this control will also fail.";
+    amm:parameter target {
+      description
+        "The target to execute.";
+      amm:type "//ietf/amm-base/typedef/exec-tgt";
+    }
+    amm:parameter deadline {
+      description
+        "The relative of time on the Agent to wait for
+         the target to finish executing.";
+      amm:type "/aritype/TD";
+    }
+    amm:parameter on-timeout {
+      description
+        "An optional target to execute after a timeout.";
+      amm:default "null";
+      amm:union {
+        amm:type "//ietf/amm-base/typedef/exec-tgt";
+        amm:type "/aritype/NULL";
+      }
+    }
+    amm:result success {
+      description
+        "True if the target finished before the deadline.";
       amm:type "/aritype/BOOL";
     }
   }
@@ -549,6 +585,18 @@ module ietf-dtnma-agent {
         "The condition (inline or reference) to evaluate and
          convert to BOOL type.";
       amm:type "//ietf/amm-base/typedef/eval-tgt";
+    }
+    amm:parameter min-interval {
+      description
+        "An optional hint used by an Agent to limit how frequently
+         the condition is evaluated.
+         If this is null, an implementation-defined default will
+         be used.";
+      amm:default "null";
+      amm:union {
+        amm:type "/aritype/TD";
+        amm:type "/aritype/NULL";
+      }
     }
   }
 
