@@ -511,7 +511,7 @@ module ietf-dtnma-agent {
     }
   }
   amm:ctrl exec-deadline {
-    amm:enum 1;
+    amm:enum 22;
     description
       "Execute a desired target and wait for it to finish before
        a relative time deadline.
