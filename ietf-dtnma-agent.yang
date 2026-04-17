@@ -1555,6 +1555,32 @@ module ietf-dtnma-agent {
       amm:type "/aritype/TBL";
     }
   }
+  amm:oper tbl-get {
+    amm:enum 32;
+    description
+      "Retrieve an item from the given table.";
+    amm:parameter row {
+      description
+        "Index of the row (major axis) of the item.";
+      amm:type "/aritype/uint";
+    }
+    amm:parameter column {
+      description
+        "Index of the column (minor axis) of the item.";
+      amm:type "/aritype/uint";
+    }
+    amm:operand in {
+      description
+        "List to retrieve a value from.";
+      amm:type "/aritype/TBL";
+    }
+    amm:result out {
+      description
+        "The retrieved value or undefined if the index is not
+         valid.";
+      amm:type "//ietf/amm-base/typedef/any";
+    }
+  }
 
   // List (AC) filtering
   amm:oper list-get {
@@ -1564,7 +1590,7 @@ module ietf-dtnma-agent {
     amm:parameter index {
       description
         "Index of the value to retrieve from the list.";
-      amm:type "//ietf/amm-base/typedef/INTEGER";
+      amm:type "/aritype/uint";
     }
     amm:operand in {
       description
