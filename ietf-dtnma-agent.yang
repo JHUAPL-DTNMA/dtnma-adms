@@ -1547,8 +1547,67 @@ module ietf-dtnma-agent {
       description
         "The value to pass-through as </label/0> during
          the substitution phase of evaluation with each of the
-         subordinate operators.";
+         subordinate operators.
+         The label does not need to be present in this
+         target, the operand can simply be ignored.
+         Any label values of 1 or larger present
+         will cause the evaluation to fail and result in
+         the undefined value.";
       amm:type "//ietf/amm-base/typedef/any";
+    }
+    amm:result sub-result {
+      description
+        "The result of the sub-expression evaluation.";
+      amm:type "//ietf/amm-base/typedef/any";
+    }
+  }
+  amm:oper nary-eval {
+    amm:enum 31;
+    description
+      "An N-ary operator which functions by evaluating a target
+       sub-expression using the following phases:
+         1. Substitute the bind-values actual parameter for
+            LABEL items with integer primitive (e.g. </label/0>)
+            within the target value
+            (literal expression or object reference).
+            The number of bind-able operands is given by the
+            operand-count parameter.
+         2. If the target is a reference, it is used to produce
+            a value which SHALL be an expression.
+            Otherwise, the target SHALL itself be an expression.
+         3. Evaluate the expression and consider the evaluation
+            result as this operator result.
+       This is similar to the <./oper/eval> object with the
+       addition of the unary operand binding.";
+    amm:parameter operand-count {
+      description
+        "The number of operands to take from the evaluation stack
+         and use as bind-values for the target parameter.";
+      amm:type "/aritype/uint";
+    }
+    amm:parameter target {
+      description
+        "Either an inline sub-expression or a reference to an
+         object which produces an expression.
+         Not all labels (0 through operand-count - 1) need
+         to be present in this target, some operands can
+         simply be ignored.
+         Any label values of operand-count or larger present
+         will cause the evaluation to fail and result in
+         the undefined value.";
+      amm:type "//ietf/amm-base/typedef/eval-tgt";
+    }
+    amm:operand bind-values {
+      description
+        "The values to pass-through as LABEL literals
+         during the substitution phase of evaluation with each
+         of the subordinate operators.
+         Label 0 corresponds with the bottom-most value from
+         the stack and label 'operand-count - 1' is from the
+         top of the stack.";
+      amm:seq {
+        amm:type "//ietf/amm-base/typedef/any";
+      }
     }
     amm:result sub-result {
       description
