@@ -62,7 +62,22 @@ module ietf-dtnma-agent {
   feature rules {
     description
       "Conforming to this feature enables time-based and
-       state-based autonomy rules.";
+       state-based autonomy rules.
+       A basic implementation can omit these and only allow
+       direct manager execution without rules.
+       Even without rules, an application can choose to
+       generate and send reports at-will using internal
+       Agent--application API.";
+  }
+
+  feature exec-control {
+    description
+      "Conforming to this feature enables controls which
+       allow advanced sequencing of execution flows
+       in an Agent.
+       A basic implementation can omit these controls and
+       allow only straightforward linear execution sequences
+       with no waiting and no conditional branching.";
   }
 
   grouping obj-list-params {
@@ -455,6 +470,7 @@ module ietf-dtnma-agent {
 
   // MAC helper controls
   amm:ctrl if-then-else {
+    if-feature "exec-control";
     amm:enum 0;
     description
       "Evaluate an expression and follow one of two branches of
@@ -490,6 +506,7 @@ module ietf-dtnma-agent {
     }
   }
   amm:ctrl catch {
+    if-feature "exec-control";
     amm:enum 1;
     description
       "Attempt to execute a target, and if there is some failure
@@ -515,6 +532,7 @@ module ietf-dtnma-agent {
     }
   }
   amm:ctrl wait-for {
+    if-feature "exec-control";
     amm:enum 2;
     description
       "This control causes the execution to pause for a given
@@ -528,6 +546,7 @@ module ietf-dtnma-agent {
     }
   }
   amm:ctrl wait-until {
+    if-feature "exec-control";
     amm:enum 3;
     description
       "This control causes the execution to pause until a specific
@@ -542,6 +561,7 @@ module ietf-dtnma-agent {
     }
   }
   amm:ctrl wait-cond {
+    if-feature "exec-control";
     amm:enum 4;
     description
       "This control causes the execution to pause until a condition
