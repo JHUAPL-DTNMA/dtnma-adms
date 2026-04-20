@@ -563,7 +563,10 @@ module ietf-dtnma-agent {
     }
     amm:result success {
       description
-        "True if the target finished before the deadline.";
+        "True if the target sub-execution succeeded before the
+         deadline, false if the execution did not finish before,
+         and undefined if the execution failed before the
+         deadline.";
       amm:type "/aritype/BOOL";
     }
   }
