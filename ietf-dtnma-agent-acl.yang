@@ -130,10 +130,10 @@ module ietf-dtnma-agent-acl {
       "Permission to allow creating a new ODM within an Agent.";
     amm:base "./ident/permission";
   }
-  amm:ident delete-odm {
+  amm:ident obsolete-odm {
     amm:enum 14;
     description
-      "Permission to allow deleting an ODM within an Agent.";
+      "Permission to allow obsoleting an ODM within an Agent.";
     amm:base "./ident/permission";
   }
   amm:ident create-object {
@@ -145,10 +145,10 @@ module ietf-dtnma-agent-acl {
        types and names.";
     amm:base "./ident/permission";
   }
-  amm:ident delete-object {
+  amm:ident obsolete-object {
     amm:enum 16;
     description
-      "Permission to allow deleting an object within an ODM.
+      "Permission to allow obsoleting an object within an ODM.
        The permission itself does not restrict the type of object,
        but the access list can limit the item to specific object
        types and names.";
