@@ -1535,6 +1535,110 @@ module ietf-dtnma-agent {
       amm:type "/aritype/bool";
     }
   }
+  amm:oper is-org-private {
+    amm:enum 36;
+    description
+      "Predicate to determine if an associated object namespace
+       is private (i.e. has an org-id which is a negative
+       integer or text with a leading bang).";
+    amm:operand value {
+      description
+        "The reference value to check.";
+      amm:union {
+        amm:type "/aritype/object";
+        amm:type "/aritype/namespace";
+      }
+    }
+    amm:result match {
+      description
+        "True if and only if the org-id is private.";
+      amm:type "/aritype/bool";
+    }
+  }
+  amm:oper match-org-int-range {
+    amm:enum 37;
+    description
+      "Predicate to determine if an associated object namespace
+       has an org-id which is within a specific integer range.";
+    amm:parameter min-value {
+      description
+        "The minimum org-id value to match.";
+      amm:type "//ietf/amm-base/typedef/id-int";
+    }
+    amm:parameter max-value {
+      description
+        "The maximum org-id value to match.";
+      amm:type "//ietf/amm-base/typedef/id-int";
+    }
+    amm:operand value {
+      description
+        "The reference value to check.
+         If the reference does not use integer form of org-id,
+         it SHALL be dereferenced and translated to integer form.";
+      amm:union {
+        amm:type "/aritype/object";
+        amm:type "/aritype/namespace";
+      }
+    }
+    amm:result match {
+      description
+        "True if and only if the org-id is within the
+         desired inclusive range.";
+      amm:type "/aritype/bool";
+    }
+  }
+  amm:oper is-model-odm {
+    amm:enum 38;
+    description
+      "Predicate to determine if an associated object namespace
+       is is an ODM (i.e. has an model-id which is a negative
+       integer or text with a leading bang).";
+    amm:operand value {
+      description
+        "The reference value to check.";
+      amm:union {
+        amm:type "/aritype/object";
+        amm:type "/aritype/namespace";
+      }
+    }
+    amm:result match {
+      description
+        "True if and only if the model is an ODM.";
+      amm:type "/aritype/bool";
+    }
+  }
+  amm:oper match-model-int-range {
+    amm:enum 39;
+    description
+      "Predicate to determine if an associated object namespace
+       has a model-id which is within a specific integer range.";
+    amm:parameter min-value {
+      description
+        "The minimum model-id value to match.";
+      amm:type "//ietf/amm-base/typedef/id-int";
+    }
+    amm:parameter max-value {
+      description
+        "The maximum model-id value to match.";
+      amm:type "//ietf/amm-base/typedef/id-int";
+    }
+    amm:operand value {
+      description
+        "The reference value to check.
+         If the reference does not use integer form of model-id,
+         it SHALL be dereferenced and translated to integer form.";
+      amm:union {
+        amm:type "/aritype/object";
+        amm:type "/aritype/namespace";
+      }
+    }
+    amm:result match {
+      description
+        "True if and only if the model-id is within the
+         desired inclusive range.";
+      amm:type "/aritype/bool";
+    }
+  }
 
   // Unary predicate function composition
   amm:oper predicate-all {
