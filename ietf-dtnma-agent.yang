@@ -1738,14 +1738,16 @@ module ietf-dtnma-agent {
        This is a work-around for <//ietf/amm-base/typedef/expr-item>
        permitting only literal or OPER references.";
     amm:parameter ref {
-      description "The input reference value.";
+      description
+        "The input reference value.";
       amm:union {
         amm:type "/aritype/object";
         amm:type "/aritype/namespace";
       }
     }
     amm:result ref {
-      description "The output reference value.";
+      description
+        "The output reference value.";
       amm:union {
         amm:type "/aritype/object";
         amm:type "/aritype/namespace";
