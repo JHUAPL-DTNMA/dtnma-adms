@@ -1,4 +1,4 @@
-name: Validate ADM modules with ACE
+name: Spellcheck documentation
 on:
   push:
     branches:
@@ -8,11 +8,8 @@ on:
   schedule:
     - cron: '20 8 * * 4'
 
-env:
-  ACE_REPO: "git+https://github.com/JHUAPL-DTNMA/dtnma-ace.git@main"
-
 jobs:
-  validate:
+  spellcheck:
     permissions:
       contents: read
     runs-on: ubuntu-24.04
@@ -26,7 +23,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y \
-              python3-pip
-          pip3 install ${ACE_REPO}
+              python3-pip xmlstarlet aspell
+          pip3 install pyang
       - name: Validate
-        run: ./validate.sh ietf-*.yang iana-*.yang
+        run: ./spellcheck.sh ietf-*.yang iana-*.yang
