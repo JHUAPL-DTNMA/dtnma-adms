@@ -25,9 +25,6 @@ if [ "$#" -eq "0" ]; then
 fi
 
 SELFDIR=$(readlink -f $(dirname "${BASH_SOURCE[0]}"))
-# line length to allow RFC doc indentation
-LINTOPTS="--ietf --lint-ensure-hyphenated-names --max-line-length=69 -E LONG_LINE --ignore-error=UNUSED_IMPORT --ignore-error=LINT_BAD_NAMESPACE_VALUE --adm-check-refs"
-VALIDATE="ace_adm --path=${SELFDIR} ${LINTOPTS}"
 
 # Validate a single ADM module file
 # Arguments:
@@ -43,7 +40,13 @@ function validate {
     fi
 
     echo "Validating ${FILEPATH}"
-    ${VALIDATE} "${FILEPATH}"
+    # line length to allow RFC doc indentation
+    ace_adm --path=${SELFDIR} \
+        --ietf --lint-ensure-hyphenated-names \
+        --max-line-length=69 -E LONG_LINE \
+        --ignore-error=UNUSED_IMPORT --ignore-error=LINT_BAD_NAMESPACE_VALUE \
+        --adm-check-refs \
+        "${FILEPATH}"
 }
 
 ERRCOUNT=0
