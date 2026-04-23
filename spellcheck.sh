@@ -25,15 +25,12 @@ if [ "$#" -eq "0" ]; then
 fi
 
 SELFDIR=$(readlink -f $(dirname "${BASH_SOURCE[0]}"))
-# line length to allow RFC doc indentation
-LINTOPTS="--ietf --lint-ensure-hyphenated-names --max-line-length=69 --adm-check-refs"
-VALIDATE="ace_adm --path=${SELFDIR} ${LINTOPTS}"
 
-# Validate a single ADM module file
+# Check a single ADM module file
 # Arguments:
 #  1: The file path to normalize
 #
-function validate {
+function spellcheck {
     FILEPATH=$1
     shift
 
@@ -41,15 +38,27 @@ function validate {
         echo "File is missing: ${FILEPATH}" >/dev/stderr
         return 1
     fi
+    OUTPATH=${FILEPATH%.yang}.misspelling.txt
 
-    echo "Validating ${FILEPATH}"
-    ${VALIDATE} "${FILEPATH}"
+    echo "Checking ${FILEPATH}"
+    pyang -W none -f yin "${FILEPATH}" | \
+        xmlstarlet tr ${SELFDIR}/spellcheck.xsl | \
+        aspell --lang=EN_US --extra-dicts=./dictionary.cwl list | sort -u \
+        >"${OUTPATH}"
+    if [[ -s "${OUTPATH}" ]]
+    then
+        echo "Output in ${OUTPATH}"
+        cat "${OUTPATH}"
+        return 1
+    fi
 }
+
+aspell --lang=en create master "${SELFDIR}/dictionary.cwl" <"${SELFDIR}/dictionary.txt"
 
 ERRCOUNT=0
 for FILEPATH in "$@"
 do
-    if ! validate "${FILEPATH}"
+    if ! spellcheck "${FILEPATH}"
     then
         ERRCOUNT=$(($ERRCOUNT + 1))
     fi

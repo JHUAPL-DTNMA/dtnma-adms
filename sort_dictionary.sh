@@ -16,42 +16,13 @@
 ## See the License for the specific language governing permissions and
 ## limitations under the License.
 ##
+## This work was performed for the Jet Propulsion Laboratory, California
+## Institute of Technology, sponsored by the United States Government under
+## the prime contract 80NM0018D0004 between the Caltech and NASA under
+## subcontract 1700763.
+##
 set -e
-
-USAGE="Usage: $0 [filename] {... filename}"
-if [ "$#" -eq "0" ]; then
-    echo "$USAGE"
-    exit 1
-fi
-
 SELFDIR=$(readlink -f $(dirname "${BASH_SOURCE[0]}"))
-# line length to allow RFC doc indentation
-LINTOPTS="--ietf --lint-ensure-hyphenated-names --max-line-length=69 --adm-check-refs"
-VALIDATE="ace_adm --path=${SELFDIR} ${LINTOPTS}"
 
-# Validate a single ADM module file
-# Arguments:
-#  1: The file path to normalize
-#
-function validate {
-    FILEPATH=$1
-    shift
-
-    if [ ! -f "${FILEPATH}" ]; then
-        echo "File is missing: ${FILEPATH}" >/dev/stderr
-        return 1
-    fi
-
-    echo "Validating ${FILEPATH}"
-    ${VALIDATE} "${FILEPATH}"
-}
-
-ERRCOUNT=0
-for FILEPATH in "$@"
-do
-    if ! validate "${FILEPATH}"
-    then
-        ERRCOUNT=$(($ERRCOUNT + 1))
-    fi
-done
-exit ${ERRCOUNT}
+cat ${SELFDIR}/dictionary.txt | sort | uniq >${SELFDIR}/dictionary-sort.txt
+mv ${SELFDIR}/dictionary-sort.txt ${SELFDIR}/dictionary.txt
