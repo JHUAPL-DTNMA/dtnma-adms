@@ -16,13 +16,13 @@
 ## See the License for the specific language governing permissions and
 ## limitations under the License.
 ##
+## This work was performed for the Jet Propulsion Laboratory, California
+## Institute of Technology, sponsored by the United States Government under
+## the prime contract 80NM0018D0004 between the Caltech and NASA under
+## subcontract 1700763.
+##
 set -e
-./yang-normalize.sh ietf-*.yang iana-*.yang
+SELFDIR=$(readlink -f $(dirname "${BASH_SOURCE[0]}"))
 
-changed=$(git status --porcelain=1)
-if [ -n "${changed}" ]; then
-  echo "Error: Files changed after formatting:"
-  git diff
-  exit 1
-fi
-
+cat ${SELFDIR}/dictionary.txt | sort | uniq >${SELFDIR}/dictionary-sort.txt
+mv ${SELFDIR}/dictionary-sort.txt ${SELFDIR}/dictionary.txt

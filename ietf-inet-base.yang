@@ -195,9 +195,10 @@ module ietf-inet-base {
        RFC 5890: Internationalized Domain Names in Applications
                  (IDNA): Definitions and Document Framework";
     amm:type "/aritype/textstr" {
-      pattern '((([a-zA-Z0-9_]([a-zA-Z0-9\-_]){0,61})?[a-zA-Z0-9]\.)*'
-            + '([a-zA-Z0-9_]([a-zA-Z0-9\-_]){0,61})?[a-zA-Z0-9]\.?)'
-            + '|\.';
+      pattern '('
+            + '(([a-zA-Z0-9_]([a-zA-Z0-9\-_]){0,61})?[a-zA-Z0-9]\.)*'
+            + '([a-zA-Z0-9_]([a-zA-Z0-9\-_]){0,61})?[a-zA-Z0-9]\.?'
+            + ')|\.';
       length "1..253";
     }
   }
@@ -285,8 +286,8 @@ module ietf-inet-base {
     amm:parameter prefix {
       description
         "The number of prefix bits for the subnet mask.
-         When the base address is Pv4 the prefix SHALL be limited
-         to no larger than 32.";
+         When the base address is IPv4 the prefix SHALL be
+         limited to no larger than 32.";
       amm:type "/aritype/uint" {
         range "0..128";
       }

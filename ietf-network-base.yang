@@ -141,7 +141,7 @@ module ietf-network-base {
        the byte string value but does constrain it by these
        requirements.
        Values of this type SHALL contain valid BER-encoded OID
-       contents consistent with the definiton of CBOR tag 111
+       contents consistent with the definition of CBOR tag 111
        but without the actual tag, as defined in Section 2.1 of
        RFC 9090.
        Values of this type always contain an absolute OID.";

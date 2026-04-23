@@ -62,7 +62,7 @@ module ietf-bp-base {
     amm:enum 1;
     description
       "Interpret byte string values as a CBOR-encoded
-       BPv7 Endpiont ID value.";
+       BPv7 Endpoint ID value.";
     reference
       "RFC 9171: Bundle Protocol Version 7
        RFC 9758: Updates to the ipn URI scheme";
@@ -99,7 +99,7 @@ module ietf-bp-base {
     amm:enum 3;
     description
       "Interpret byte string values as a CBOR-encoded
-       BPv7 Endpiont ID Pattern.";
+       BPv7 Endpoint ID Pattern.";
     reference
       "RFC 9171: Bundle Protocol Version 7
        RFC 9758: Updates to the ipn URI scheme";
@@ -111,7 +111,8 @@ module ietf-bp-base {
       "The BP EID Pattern in a CBOR binary form.
        This form includes the enclosing array head.";
     reference
-      "draft-ietf-dtn-eid-pattern: Bundle Protocol Endpoint ID Patterns";
+      "draft-ietf-dtn-eid-pattern: Bundle Protocol Endpoint ID
+       Patterns";
     amm:type "/aritype/cbor" {
       amm:display-hint "./ident/display-bstr-eid-pattern";
     }

@@ -434,8 +434,8 @@ module ietf-dtnma-agent {
         description
           "An identifier internal to an Agent used to correlate
            table rows over time.
-           An implemention MAY assign values from a smaller domain
-           than this column can represent.";
+           An implementation MAY assign values from a smaller
+           domain than this column can represent.";
         amm:type "/aritype/UVAST";
       }
       amm:column target {
@@ -1515,13 +1515,14 @@ module ietf-dtnma-agent {
        a text value to a regular expression pattern.
        The regular expression is limited to I-Regexp compatibility.";
     reference
-      "RFC 9485: I-Regexp: An Interoperable Regular Expression Format";
+      "RFC 9485: I-Regexp: An Interoperable Regular Expression
+       Format";
     amm:parameter regexp {
       description
         "The I-Regexp text pattern to match.
-         In accordance with that definition, this pattern is implicitly
-         anchored to the start and end of the text being matched
-         (i.e. it is always a full match).";
+         In accordance with that definition, this pattern is
+         implicitly anchored to the start and end of the text being
+         matched (i.e. it is always a full match).";
       amm:type "/aritype/textstr";
     }
     amm:operand value {
@@ -1687,13 +1688,15 @@ module ietf-dtnma-agent {
       description
         "The desired object type, either by built-in type reference,
          primitive integer enumeration, or text name.
-         If the desired type is unkown the result SHALL be undefined.";
+         If the desired type is unknown to the Agent the result
+         SHALL be undefined.";
       amm:type "/aritype/aritype";
     }
     amm:operand value {
       description
         "The object reference value to check.
-         If the de-reference itself fails the result SHALL be false.";
+         If the de-reference itself fails the result SHALL be
+         false.";
       amm:type "/aritype/object";
     }
     amm:result match {

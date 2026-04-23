@@ -25,15 +25,12 @@ if [ "$#" -eq "0" ]; then
 fi
 
 SELFDIR=$(readlink -f $(dirname "${BASH_SOURCE[0]}"))
-# Handle errors in validate script
-OUTOPTS="-t adm-add-enum -f yang --yang-canonical --ignore-errors"
-NORMALIZE="ace_adm --path=${SELFDIR} ${OUTOPTS}"
 
-# Normalize a single ADM module file
+# Check a single ADM module file
 # Arguments:
 #  1: The file path to normalize
 #
-function normalize {
+function spellcheck {
     FILEPATH=$1
     shift
 
@@ -41,33 +38,29 @@ function normalize {
         echo "File is missing: ${FILEPATH}" >/dev/stderr
         return 1
     fi
+    OUTPATH=${FILEPATH%.yang}.misspelling.txt
 
-    # Canonicalize and normalize into ".out" file
-    EXT="${FILEPATH##*.}"
-    if [ "${EXT}" == "yang" ]; then
-        ${NORMALIZE} "${FILEPATH}" >"${FILEPATH}.out"
+    echo "Checking ${FILEPATH}"
+    pyang -W none -f yin "${FILEPATH}" | \
+        xmlstarlet tr ${SELFDIR}/spellcheck.xsl | \
+        aspell --lang=EN_US --extra-dicts=./dictionary.cwl list | sort -u \
+        >"${OUTPATH}"
+    if [[ -s "${OUTPATH}" ]]
+    then
+        echo "Output in ${OUTPATH}"
+        cat "${OUTPATH}"
+        return 1
     else
-        echo "Cannot handle file with extension: ${EXT}" >/dev/stderr
-        return 2
-    fi
-    if [ ! -s "${FILEPATH}.out" ]; then
-        echo "Failed to format file ${FILEPATH}" >/dev/stderr
-        rm "${FILEPATH}.out"
-        return 3;
-    fi
-
-    if ! diff -q "${FILEPATH}.out" "${FILEPATH}" >/dev/null; then
-        mv "${FILEPATH}.out" "${FILEPATH}"
-        echo "Normalized ${FILEPATH}"
-    else
-        rm "${FILEPATH}.out"
+        rm "${OUTPATH}"
     fi
 }
+
+aspell --lang=en create master "${SELFDIR}/dictionary.cwl" <"${SELFDIR}/dictionary.txt"
 
 ERRCOUNT=0
 for FILEPATH in "$@"
 do
-    if ! normalize "${FILEPATH}"
+    if ! spellcheck "${FILEPATH}"
     then
         ERRCOUNT=$(($ERRCOUNT + 1))
     fi

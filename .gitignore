@@ -3,4 +3,6 @@
 /.externalToolBuilders/
 
 # Temporary files
+/dictionary.cwl
+*.misspelling.txt
 *.out

@@ -214,12 +214,13 @@ module ietf-dtnma-agent-acl {
         description
           "A set of filters for target objects or namespaces being
            granted access.
-           The filter </ac/(true)> can be used to match-all targets.";
+           The filter </ac/(true)> can be used to match-all target
+           objects.";
         amm:type "./typedef/access-target-filter";
       }
       amm:column permissions {
         description
-          "Refernces to specific permissions being granted.
+          "References to specific permissions being granted.
            Individual permission references MAY be parameterized
            as necessary.
            The absence of permissions does not grant any access.";
@@ -286,8 +287,8 @@ module ietf-dtnma-agent-acl {
     amm:enum 4;
     description
       "A member filter applied using two phases for each row:
-         1. Substitute the manager identity for
-            </label/0> items within the value.
+         1. Substitute a manager identity for </label/0> items
+            within the value.
             This does not apply recursively to VALUE-OBJ within
             the expression.
          2. Evaluate the expression and consider the identity matched
@@ -303,7 +304,7 @@ module ietf-dtnma-agent-acl {
     amm:enum 3;
     description
       "Get the group IDs for the current execution context, which may
-       incude the implicit Agent group ID zero.";
+       include the implicit Agent group ID zero.";
     amm:ulist {
       amm:type "./TYPEDEF/entry-id";
     }
