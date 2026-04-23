@@ -1679,6 +1679,7 @@ module ietf-dtnma-agent {
     }
   }
   amm:oper match-object-type {
+    amm:enum 42;
     description
       "Predicate to determine if a de-referenced object reference
        value has a specific object type.";
