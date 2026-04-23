@@ -45,6 +45,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y \
-              xmlstarlet aspell
+              python3-pip xmlstarlet aspell
+          pip3 install pyang
       - name: Validate
         run: ./spellcheck.sh ietf-*.yang iana-*.yang
