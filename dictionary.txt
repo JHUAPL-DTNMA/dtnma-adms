@@ -25,6 +25,7 @@ CONST
 CTRL
 Datagram
 DCCP
+de
 DER
 dereferenced
 dlist
@@ -56,6 +57,7 @@ ITU
 MIB
 namespace
 Namespace
+namespaces
 NETCONF
 NETMOD
 ODM

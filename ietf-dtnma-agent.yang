@@ -1688,7 +1688,8 @@ module ietf-dtnma-agent {
       description
         "The desired object type, either by built-in type reference,
          primitive integer enumeration, or text name.
-         If the desired type is unkown the result SHALL be undefined.";
+         If the desired type is unknown to the Agent the result
+         SHALL be undefined.";
       amm:type "/aritype/aritype";
     }
     amm:operand value {
