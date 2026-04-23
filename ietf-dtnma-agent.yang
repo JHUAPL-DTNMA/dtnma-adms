@@ -813,7 +813,7 @@ module ietf-dtnma-agent {
          objects. If this does not reference a known object the
          produced list SHALL be empty.
          The base object is not considered to be derived from
-         itself, so it SHALL not be present in the produced list.";
+         itself, so it SHALL NOT be present in the produced list.";
       amm:default "null";
       amm:union {
         amm:type "/aritype/ident";
@@ -1534,6 +1534,255 @@ module ietf-dtnma-agent {
       description
         "The result is true if the value matches the given pattern.";
       amm:type "/aritype/bool";
+    }
+  }
+  amm:oper is-org-private {
+    amm:enum 36;
+    description
+      "Predicate to determine if an object or
+       namespace reference value has a namespace which
+       is private (i.e. has an org-id which is a negative
+       integer or text with a leading bang).";
+    amm:operand value {
+      description
+        "The reference value to check.
+         This value SHOULD NOT be de-referenced.";
+      amm:union {
+        amm:type "/aritype/object";
+        amm:type "/aritype/namespace";
+      }
+    }
+    amm:result match {
+      description
+        "True if and only if the org-id is private.";
+      amm:type "/aritype/bool";
+    }
+  }
+  amm:oper match-org-int-range {
+    amm:enum 37;
+    description
+      "Predicate to determine if a de-referenced object or
+       namespace reference value has a namespace which
+       has an org-id which is within a specific integer range.";
+    amm:parameter min-value {
+      description
+        "The minimum org-id value to match.";
+      amm:type "//ietf/amm-base/typedef/id-int";
+    }
+    amm:parameter max-value {
+      description
+        "The maximum org-id value to match.";
+      amm:type "//ietf/amm-base/typedef/id-int";
+    }
+    amm:operand value {
+      description
+        "The reference value to check.
+         If the reference does not use integer form of org-id,
+         it SHALL be dereferenced and translated to integer form.";
+      amm:union {
+        amm:type "/aritype/object";
+        amm:type "/aritype/namespace";
+      }
+    }
+    amm:result match {
+      description
+        "True if and only if the org-id is within the
+         desired inclusive range.";
+      amm:type "/aritype/bool";
+    }
+  }
+  amm:oper is-model-odm {
+    amm:enum 38;
+    description
+      "Predicate to determine if an object or
+       namespace reference value has a namespace which
+       is is an ODM (i.e. has an model-id which is a negative
+       integer or text with a leading bang).";
+    amm:operand value {
+      description
+        "The reference value to check.
+         This value SHOULD NOT be de-referenced.";
+      amm:union {
+        amm:type "/aritype/object";
+        amm:type "/aritype/namespace";
+      }
+    }
+    amm:result match {
+      description
+        "True if and only if the model is an ODM.";
+      amm:type "/aritype/bool";
+    }
+  }
+  amm:oper match-model-int-range {
+    amm:enum 39;
+    description
+      "Predicate to determine if a de-referenced object or
+       namespace reference value has a namespace which
+       has a model-id which is within a specific integer range.";
+    amm:parameter min-value {
+      description
+        "The minimum model-id value to match.";
+      amm:type "//ietf/amm-base/typedef/id-int";
+    }
+    amm:parameter max-value {
+      description
+        "The maximum model-id value to match.";
+      amm:type "//ietf/amm-base/typedef/id-int";
+    }
+    amm:operand value {
+      description
+        "The reference value to check.
+         If the reference does not use integer form of model-id,
+         it SHALL be dereferenced and translated to integer form.";
+      amm:union {
+        amm:type "/aritype/object";
+        amm:type "/aritype/namespace";
+      }
+    }
+    amm:result match {
+      description
+        "True if and only if the model-id is within the
+         desired inclusive range.";
+      amm:type "/aritype/bool";
+    }
+  }
+  amm:oper is-same-ns {
+    amm:enum 40;
+    description
+      "Predicate to determine if a de-referenced object or
+       namespace reference value matches a desired namespace
+       from a parameter.
+       The comparison is on the actual namespace, regardless
+       of whether integer or text IDs are used in either.";
+    amm:parameter desired {
+      description
+        "A reference to the desired namespace to compare with.
+         If this de-reference fails the result SHALL be undefined.";
+      amm:type "/aritype/namespace";
+    }
+    amm:operand value {
+      description
+        "The reference value to compare with the desired
+         namespace.
+         If the value is an object reference, it SHOULD only have
+         its namespace portion (org-id and model-id) dereferenced
+         and compared with the desired namespace.";
+      amm:union {
+        amm:type "/aritype/object";
+        amm:type "/aritype/namespace";
+      }
+    }
+    amm:result match {
+      description
+        "True if and only if the value references the same
+         namespace as the desired.";
+      amm:type "/aritype/bool";
+    }
+  }
+  amm:oper match-object-type {
+    amm:enum 42;
+    description
+      "Predicate to determine if a de-referenced object reference
+       value has a specific object type.";
+    amm:parameter desired {
+      description
+        "The desired object type, either by built-in type reference,
+         primitive integer enumeration, or text name.
+         If the desired type is unkown the result SHALL be undefined.";
+      amm:type "/aritype/aritype";
+    }
+    amm:operand value {
+      description
+        "The object reference value to check.
+         If the de-reference itself fails the result SHALL be false.";
+      amm:type "/aritype/object";
+    }
+    amm:result match {
+      description
+        "True if and only if the type-id matches the desired
+         object type.";
+      amm:type "/aritype/bool";
+    }
+  }
+  amm:oper match-object-int-range {
+    amm:enum 44;
+    description
+      "Predicate to determine if a de-referenced object reference
+       value has an obj-id which is within a specific integer
+       range.";
+    amm:parameter min-value {
+      description
+        "The minimum obj-id value to match.";
+      amm:type "//ietf/amm-base/typedef/id-int";
+    }
+    amm:parameter max-value {
+      description
+        "The maximum obj-id value to match.";
+      amm:type "//ietf/amm-base/typedef/id-int";
+    }
+    amm:operand value {
+      description
+        "The reference value to check.
+         If the reference does not use integer form of obj-id,
+         it SHALL be dereferenced and translated to integer form.";
+      amm:type "/aritype/object";
+    }
+    amm:result match {
+      description
+        "True if and only if the obj-id is within the
+         desired inclusive range.";
+      amm:type "/aritype/bool";
+    }
+  }
+  amm:oper is-same-object {
+    amm:enum 41;
+    description
+      "Predicate to determine if a de-referenced object
+       reference value matches a desired object
+       from a parameter.
+       The comparison is on the actual object instance, regardless
+       of whether integer or text IDs are used in either.";
+    amm:parameter desired {
+      description
+        "A reference to the desired object to compare with.
+         If this de-reference fails the result SHALL be undefined.";
+      amm:type "/aritype/object";
+    }
+    amm:operand value {
+      description
+        "The reference value to compare with the desired object.
+         If this de-reference fails the result SHALL be false.";
+      amm:type "/aritype/object";
+    }
+    amm:result match {
+      description
+        "True if and only if the value references the same object
+         as the desired.";
+      amm:type "/aritype/bool";
+    }
+  }
+  amm:oper ref {
+    amm:enum 43;
+    description
+      "A zero-ary operator to copy a reference value parameter
+       into its result.
+       This is a work-around for <//ietf/amm-base/typedef/expr-item>
+       permitting only literal or OPER references.";
+    amm:parameter ref {
+      description
+        "The input reference value.";
+      amm:union {
+        amm:type "/aritype/object";
+        amm:type "/aritype/namespace";
+      }
+    }
+    amm:result ref {
+      description
+        "The output reference value.";
+      amm:union {
+        amm:type "/aritype/object";
+        amm:type "/aritype/namespace";
+      }
     }
   }
 
