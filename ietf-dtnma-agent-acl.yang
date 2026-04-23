@@ -214,7 +214,8 @@ module ietf-dtnma-agent-acl {
         description
           "A set of filters for target objects or namespaces being
            granted access.
-           The filter </ac/(true)> can be used to match-all targets.";
+           The filter </ac/(true)> can be used to match-all target
+           objects.";
         amm:type "./typedef/access-target-filter";
       }
       amm:column permissions {

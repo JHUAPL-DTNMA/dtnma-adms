@@ -1695,7 +1695,8 @@ module ietf-dtnma-agent {
     amm:operand value {
       description
         "The object reference value to check.
-         If the de-reference itself fails the result SHALL be false.";
+         If the de-reference itself fails the result SHALL be
+         false.";
       amm:type "/aritype/object";
     }
     amm:result match {
