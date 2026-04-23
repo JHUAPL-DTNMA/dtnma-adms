@@ -262,7 +262,8 @@ module ietf-dtnma-agent-acl {
     amm:enum 4;
     description
       "A member filter applied using two phases for each row:
-         1. Substitute manager identities for LABEL items within EXPR.
+         1. Substitute a manager identity for </label/0> items
+            within the value.
             This does not apply recursively to VALUE-OBJ within
             the expression.
          2. Evaluate the expression and consider the identity matched

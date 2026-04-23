@@ -111,7 +111,8 @@ module ietf-bp-base {
       "The BP EID Pattern in a CBOR binary form.
        This form includes the enclosing array head.";
     reference
-      "draft-ietf-dtn-eid-pattern: Bundle Protocol Endpoint ID Patterns";
+      "draft-ietf-dtn-eid-pattern: Bundle Protocol Endpoint ID
+       Patterns";
     amm:type "/aritype/cbor" {
       amm:display-hint "./ident/display-bstr-eid-pattern";
     }

@@ -195,9 +195,10 @@ module ietf-inet-base {
        RFC 5890: Internationalized Domain Names in Applications
                  (IDNA): Definitions and Document Framework";
     amm:type "/aritype/textstr" {
-      pattern '((([a-zA-Z0-9_]([a-zA-Z0-9\-_]){0,61})?[a-zA-Z0-9]\.)*'
-            + '([a-zA-Z0-9_]([a-zA-Z0-9\-_]){0,61})?[a-zA-Z0-9]\.?)'
-            + '|\.';
+      pattern '('
+            + '(([a-zA-Z0-9_]([a-zA-Z0-9\-_]){0,61})?[a-zA-Z0-9]\.)*'
+            + '([a-zA-Z0-9_]([a-zA-Z0-9\-_]){0,61})?[a-zA-Z0-9]\.?'
+            + ')|\.';
       length "1..253";
     }
   }
