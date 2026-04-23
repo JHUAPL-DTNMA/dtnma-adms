@@ -1686,13 +1686,9 @@ module ietf-dtnma-agent {
     amm:parameter desired {
       description
         "The desired object type, either by built-in type reference,
-         direct integer enumeration, or name.
+         primitive integer enumeration, or text name.
          If the desired type is unkown the result SHALL be undefined.";
-      amm:union {
-        amm:type "/aritype/aritype";
-        amm:type "//ietf/amm-base/typedef/id-int";
-        amm:type "//ietf/amm-base/typedef/id-text";
-      }
+      amm:type "/aritype/aritype";
     }
     amm:operand value {
       description
@@ -1732,6 +1728,28 @@ module ietf-dtnma-agent {
         "True if and only if the value references the same object
          as the desired.";
       amm:type "/aritype/bool";
+    }
+  }
+  amm:oper ref {
+    amm:enum 43;
+    description
+      "A zero-ary operator to copy a reference value parameter
+       into its result.
+       This is a work-around for <//ietf/amm-base/typedef/expr-item>
+       permitting only literal or OPER references.";
+    amm:parameter ref {
+      description "The input reference value.";
+      amm:union {
+        amm:type "/aritype/object";
+        amm:type "/aritype/namespace";
+      }
+    }
+    amm:result ref {
+      description "The output reference value.";
+      amm:union {
+        amm:type "/aritype/object";
+        amm:type "/aritype/namespace";
+      }
     }
   }
 
