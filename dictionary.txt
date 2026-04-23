@@ -7,6 +7,7 @@ ari
 ARI
 ARITYPE
 ary
+ASN
 BCP
 BER
 bitwise
@@ -15,12 +16,15 @@ BOOL
 BPv
 bytestr
 BYTESTR
+CBOR
 CDDL
 CER
 CIDR
 CONST
 CTRL
+Datagram
 DCCP
+DER
 dereferenced
 dlist
 DoD
@@ -61,6 +65,7 @@ RPTSET
 RPTT
 SBR
 SCTP
+Sipos
 SMIv
 SRV
 subnet
@@ -94,3 +99,4 @@ UUIDs
 UVAST
 VLSM
 WG
+XXXX
