@@ -1703,6 +1703,36 @@ module ietf-dtnma-agent {
       amm:type "/aritype/bool";
     }
   }
+  amm:oper match-object-int-range {
+    amm:enum 44;
+    description
+      "Predicate to determine if a de-referenced object reference
+       value has an obj-id which is within a specific integer
+       range.";
+    amm:parameter min-value {
+      description
+        "The minimum obj-id value to match.";
+      amm:type "//ietf/amm-base/typedef/id-int";
+    }
+    amm:parameter max-value {
+      description
+        "The maximum obj-id value to match.";
+      amm:type "//ietf/amm-base/typedef/id-int";
+    }
+    amm:operand value {
+      description
+        "The reference value to check.
+         If the reference does not use integer form of obj-id,
+         it SHALL be dereferenced and translated to integer form.";
+      amm:type "/aritype/object";
+    }
+    amm:result match {
+      description
+        "True if and only if the obj-id is within the
+         desired inclusive range.";
+      amm:type "/aritype/bool";
+    }
+  }
   amm:oper is-same-object {
     amm:enum 41;
     description
