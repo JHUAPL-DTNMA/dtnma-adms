@@ -49,6 +49,7 @@ inet
 InetPortNumber
 init
 ip
+ipn
 ipv
 IPv
 ITU
