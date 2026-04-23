@@ -1639,6 +1639,60 @@ module ietf-dtnma-agent {
       amm:type "/aritype/bool";
     }
   }
+  amm:oper is-same-ns {
+    amm:enum 40;
+    description
+      "Predicate to determine if a de-referenced object or
+       namespace reference value matches a desired namespace
+       from a parameter.
+       The comparison is on the actual namespace, regardless
+       of whether integer or text IDs are used in either.";
+    amm:parameter desired {
+      description
+        "A reference to the desired namespace to compare with.";
+      amm:type "/aritype/namespace";
+    }
+    amm:operand value {
+      description
+        "The reference value to compare with the desired
+         namespace.";
+      amm:union {
+        amm:type "/aritype/object";
+        amm:type "/aritype/namespace";
+      }
+    }
+    amm:result match {
+      description
+        "True if and only if the value references the same
+         namespace as the desired.";
+      amm:type "/aritype/bool";
+    }
+  }
+  amm:oper is-same-object {
+    amm:enum 41;
+    description
+      "Predicate to determine if a de-referenced object
+       reference value matches a desired object
+       from a parameter.
+       The comparison is on the actual object instance, regardless
+       of whether integer or text IDs are used in either.";
+    amm:parameter desired {
+      description
+        "A reference to the desired object to compare with.";
+      amm:type "/aritype/object";
+    }
+    amm:operand value {
+      description
+        "The reference value to compare with the desired object.";
+      amm:type "/aritype/object";
+    }
+    amm:result match {
+      description
+        "True if and only if the value references the same object
+         as the desired.";
+      amm:type "/aritype/bool";
+    }
+  }
 
   // Unary predicate function composition
   amm:oper predicate-all {
