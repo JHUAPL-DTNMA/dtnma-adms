@@ -434,8 +434,8 @@ module ietf-dtnma-agent {
         description
           "An identifier internal to an Agent used to correlate
            table rows over time.
-           An implemention MAY assign values from a smaller domain
-           than this column can represent.";
+           An implementation MAY assign values from a smaller
+           domain than this column can represent.";
         amm:type "/aritype/UVAST";
       }
       amm:column target {
@@ -1515,13 +1515,14 @@ module ietf-dtnma-agent {
        a text value to a regular expression pattern.
        The regular expression is limited to I-Regexp compatibility.";
     reference
-      "RFC 9485: I-Regexp: An Interoperable Regular Expression Format";
+      "RFC 9485: I-Regexp: An Interoperable Regular Expression
+       Format";
     amm:parameter regexp {
       description
         "The I-Regexp text pattern to match.
-         In accordance with that definition, this pattern is implicitly
-         anchored to the start and end of the text being matched
-         (i.e. it is always a full match).";
+         In accordance with that definition, this pattern is
+         implicitly anchored to the start and end of the text being
+         matched (i.e. it is always a full match).";
       amm:type "/aritype/textstr";
     }
     amm:operand value {

@@ -26,7 +26,7 @@ fi
 
 SELFDIR=$(readlink -f $(dirname "${BASH_SOURCE[0]}"))
 # line length to allow RFC doc indentation
-LINTOPTS="--ietf --lint-ensure-hyphenated-names --max-line-length=69 --adm-check-refs"
+LINTOPTS="--ietf --lint-ensure-hyphenated-names --max-line-length=69 -E LONG_LINE --adm-check-refs"
 VALIDATE="ace_adm --path=${SELFDIR} ${LINTOPTS}"
 
 # Validate a single ADM module file

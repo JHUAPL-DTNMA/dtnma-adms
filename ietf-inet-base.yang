@@ -285,8 +285,8 @@ module ietf-inet-base {
     amm:parameter prefix {
       description
         "The number of prefix bits for the subnet mask.
-         When the base address is Pv4 the prefix SHALL be limited
-         to no larger than 32.";
+         When the base address is IPv4 the prefix SHALL be
+         limited to no larger than 32.";
       amm:type "/aritype/uint" {
         range "0..128";
       }

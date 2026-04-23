@@ -50,6 +50,8 @@ function spellcheck {
         echo "Output in ${OUTPATH}"
         cat "${OUTPATH}"
         return 1
+    else
+        rm "${OUTPATH}"
     fi
 }
 

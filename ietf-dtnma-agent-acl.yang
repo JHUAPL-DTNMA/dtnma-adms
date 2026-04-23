@@ -194,7 +194,7 @@ module ietf-dtnma-agent-acl {
       }
       amm:column permissions {
         description
-          "Refernces to specific permissions being granted.
+          "References to specific permissions being granted.
            Individual permission references MAY be parameterized
            as necessary.
            The absence of permissions does not grant any access.";
@@ -278,7 +278,7 @@ module ietf-dtnma-agent-acl {
     amm:enum 3;
     description
       "Get the group IDs for the current execution context, which may
-       incude the implicit Agent group ID zero.";
+       include the implicit Agent group ID zero.";
     amm:ulist {
       amm:type "./TYPEDEF/entry-id";
     }

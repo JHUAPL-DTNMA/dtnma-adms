@@ -64,7 +64,7 @@ module ietf-amm-semtype {
   amm:ident type-use {
     amm:enum 2;
     description
-      "A named type use with possibe annotations and/or
+      "A named type use with possible annotations and/or
        constraints.";
     amm:base "./IDENT/semtype";
     amm:parameter name {

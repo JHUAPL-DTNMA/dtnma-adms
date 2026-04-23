@@ -63,6 +63,8 @@ OIDs
 OPER
 pid
 pre
+quantized
+representable
 RPTSET
 RPTT
 SBR
@@ -75,6 +77,7 @@ substatement
 substatements
 subtree
 subtyping
+TBD
 TBL
 tblt
 TBR
