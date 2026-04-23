@@ -173,6 +173,24 @@ module ietf-dtnma-agent-acl {
   }
 
   // Access control table and modifier controls
+  amm:typedef access-target-filter {
+    amm:enum 5;
+    description
+      "A target object/namespace filter applied using two phases for
+       each row:
+         1. Substitute the target object or namespace reference for
+            </label/0> items within the value.
+            This does not apply recursively to VALUE-OBJ within
+            the expression.
+         2. Evaluate the expression and consider the target matched
+            if the result is a truthy value.
+       Only LABEL value 0 is valid.
+       Label substitution is performed as described in the value
+       production section of the DTNMA AMM document.";
+    reference
+      "draft-ietf-dtn-amm";
+    amm:type "//ietf/amm-base/typedef/EXPR";
+  }
   amm:edd access-list {
     amm:enum 2;
     description
@@ -194,11 +212,10 @@ module ietf-dtnma-agent-acl {
       }
       amm:column objects {
         description
-          "A set of patterns for objects being granted access,
-           which may match all objects.";
-        amm:ulist {
-          amm:type "/aritype/objpat";
-        }
+          "A set of filters for target objects or namespaces being
+           granted access.
+           The filter </ac/(true)> can be used to match-all targets.";
+        amm:type "./typedef/access-target-filter";
       }
       amm:column permissions {
         description
@@ -240,11 +257,10 @@ module ietf-dtnma-agent-acl {
     }
     amm:parameter objects {
       description
-        "A set of patterns for objects being granted access,
-         which may match all objects.";
-      amm:ulist {
-        amm:type "/aritype/objpat";
-      }
+        "A set of filters for target objects or namespaces being
+         granted access.
+         The filter </ac/(true)> can be used to match-all targets.";
+      amm:type "./typedef/access-target-filter";
     }
     amm:parameter permissions {
       description
@@ -270,7 +286,8 @@ module ietf-dtnma-agent-acl {
     amm:enum 4;
     description
       "A member filter applied using two phases for each row:
-         1. Substitute manager identities for LABEL items within EXPR.
+         1. Substitute the manager identity for
+            </label/0> items within the value.
             This does not apply recursively to VALUE-OBJ within
             the expression.
          2. Evaluate the expression and consider the identity matched
