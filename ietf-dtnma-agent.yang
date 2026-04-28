@@ -1509,14 +1509,15 @@ module ietf-dtnma-agent {
     }
   }
   amm:oper match-type {
+    amm:enum 45;
     description
       "Predicate to match against any built-in type or named typedef
        based on the procedures of Section 6.10 of the AMM.
-       If the typename is not known to the agent the result SHALL
+       If the desired type is not known to the agent the result SHALL
        be undefined.";
     reference
       "draft-ietf-dtn-amm";
-    amm:parameter typename {
+    amm:parameter desired {
       description
         "The desired type to match against.";
       amm:union {
@@ -1536,15 +1537,16 @@ module ietf-dtnma-agent {
     }
   }
   amm:oper convert-type {
+    amm:enum 46;
     description
       "Type conversion operator to any built-in type or named typedef
        based on the procedures of Section 6.11 of the AMM.
-       If the typename is not known to the agent the result SHALL
+       If the desired type is not known to the agent the result SHALL
        be undefined.
        If the conversion fails the result SHALL be undefined.";
     reference
       "draft-ietf-dtn-amm";
-    amm:parameter typename {
+    amm:parameter desired {
       description
         "The desired type to convert to.";
       amm:union {
