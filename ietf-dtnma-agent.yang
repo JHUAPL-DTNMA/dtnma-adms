@@ -1508,6 +1508,61 @@ module ietf-dtnma-agent {
       amm:type "/aritype/bool";
     }
   }
+  amm:oper match-type {
+    description
+      "Predicate to match against any built-in type or named typedef
+       based on the procedures of Section 6.10 of the AMM.
+       If the typename is not known to the agent the result SHALL
+       be undefined.";
+    reference
+      "draft-ietf-dtn-amm";
+    amm:parameter typename {
+      description
+        "The desired type to match against.";
+      amm:union {
+        amm:type "/aritype/aritype";
+        amm:type "/aritype/typedef";
+      }
+    }
+    amm:operand value {
+      description
+        "The value to check.";
+      amm:type "//ietf/amm-base/typedef/any";
+    }
+    amm:result match {
+      description
+        "True if and only if the value matches the desired type.";
+      amm:type "/aritype/bool";
+    }
+  }
+  amm:oper convert-type {
+    description
+      "Type conversion operator to any built-in type or named typedef
+       based on the procedures of Section 6.11 of the AMM.
+       If the typename is not known to the agent the result SHALL
+       be undefined.
+       If the conversion fails the result SHALL be undefined.";
+    reference
+      "draft-ietf-dtn-amm";
+    amm:parameter typename {
+      description
+        "The desired type to convert to.";
+      amm:union {
+        amm:type "/aritype/aritype";
+        amm:type "/aritype/typedef";
+      }
+    }
+    amm:operand value {
+      description
+        "The value to convert.";
+      amm:type "//ietf/amm-base/typedef/any";
+    }
+    amm:result converted {
+      description
+        "The result of conversion, which can be undefined.";
+      amm:type "//ietf/amm-base/typedef/any";
+    }
+  }
   amm:oper match-regexp {
     amm:enum 23;
     description
