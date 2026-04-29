@@ -121,7 +121,20 @@ module ietf-dtnma-agent-acl {
   amm:ident modify-var {
     amm:enum 12;
     description
-      "Permission to allow modifying state on VAR objects.";
+      "Permission to allow modifying the value of VAR objects.
+       This includes any control which would alter the value,
+       but does not affect applications on the Agent directly
+       altering the state of an object.";
+    amm:base "./ident/permission";
+  }
+  amm:ident modify-rule-enabled {
+    amm:enum 17;
+    description
+      "Permission to allow modifying the enabled state of
+       SBR and TBR objects.
+       This includes any control which would alter the state,
+       but does not affect Agent-internal logic related to
+       init-enabled and max-count fields of a rule.";
     amm:base "./ident/permission";
   }
   amm:ident ensure-odm {
