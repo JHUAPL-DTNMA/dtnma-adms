@@ -1951,7 +1951,7 @@ module ietf-dtnma-agent {
             within the target value
             (literal expression or object reference).
             The number of bind-able operands is given by the
-            operand-count parameter.
+            _operand-count_ parameter.
          2. If the target is a reference, it is used to produce
             a value which SHALL be an expression.
             Otherwise, the target SHALL itself be an expression.
@@ -1961,29 +1961,34 @@ module ietf-dtnma-agent {
        addition of the unary operand binding.";
     amm:parameter operand-count {
       description
-        "The number of operands to take from the evaluation stack
-         and use as bind-values for the target parameter.";
-      amm:type "/aritype/uint";
+        "The number of operands to pop from the evaluation stack
+         and use as bind-values for the target parameter.
+         This is limited to signed int length because LABEL
+         values are also limited to signed int.";
+      amm:type "/aritype/int" {
+        range "0..max";
+      }
     }
     amm:parameter target {
       description
         "Either an inline sub-expression or a reference to an
          object which produces an expression.
-         Not all labels (0 through operand-count - 1) need
-         to be present in this target, some operands can
-         simply be ignored.
-         Any label values of operand-count or larger present
+         Not all valid labels, 0 through (_operand-count_ - 1),
+         need to be present in this target, some operands can
+         simply be popped and ignored.
+         Any label values of _operand-count_ or larger present
          will cause the evaluation to fail and result in
          the undefined value.";
       amm:type "//ietf/amm-base/typedef/eval-tgt";
     }
     amm:operand bind-values {
       description
-        "The values to pass-through as LABEL literals
-         during the substitution phase of evaluation with each
-         of the subordinate operators.
-         Label 0 corresponds with the bottom-most value from
-         the stack and label 'operand-count - 1' is from the
+        "The evaluation stack values to substitute for LABEL values
+         during the substitution phase of evaluation.
+         A total of _operand-count_ values will be popped for this
+         sequence.
+         Label 0 refers to the bottom-most popped value from
+         the stack and label (_operand-count_ - 1) refers to the
          top of the stack.";
       amm:seq {
         amm:type "//ietf/amm-base/typedef/any";
