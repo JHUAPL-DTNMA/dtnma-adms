@@ -52,7 +52,7 @@ module ietf-dtnma-agent {
   reference
     "draft-ietf-dtn-adm-yang";
 
-  revision 2025-07-03 {
+  revision 2026-05-01 {
     description
       "Updated for latest ADM document.";
     reference

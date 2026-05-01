@@ -48,7 +48,7 @@ module ietf-network-base {
   reference
     "draft-ietf-dtn-adm-yang";
 
-  revision 2025-07-03 {
+  revision 2026-04-02 {
     description
       "Updated for latest ADM document.";
     reference
