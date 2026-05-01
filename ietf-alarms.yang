@@ -62,7 +62,7 @@ module ietf-alarms {
      RFC 8632: A YANG Data Model for Alarm Management
      RFC 3877: Alarm Management Information Base (MIB)";
 
-  revision 2025-04-11 {
+  revision 2026-05-01 {
     description
       "Updated for latest document.";
     reference
