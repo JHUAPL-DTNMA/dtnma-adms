@@ -201,6 +201,7 @@ module ietf-amm-base {
     amm:union {
       amm:type "/ARITYPE/literal";
       amm:type "/ARITYPE/object";
+      amm:type "/ARITYPE/namespace";
     }
   }
   amm:typedef value-obj {
