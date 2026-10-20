@@ -1,0 +1,130 @@
+module ietf-ari-types {
+  yang-version 1.1;
+  namespace "ari://ietf/ari-types/";
+  prefix ari-types;
+
+  import ietf-amm {
+    prefix amm;
+  }
+
+  organization
+    "Internet Engineering Task Force (IETF)" {
+    amm:enum 1;
+  }
+  contact
+    "WG Web: <http://tools.ietf.org/wg/dtn/>
+     WG List: <mailto:dtn@ietf.org>
+
+     Editor:
+             <mailto:>";
+  description
+    "This module defines native YANG types for the ARI literal
+     types that have no single corresponding YANG base type
+     (TP, TD, LABEL, ARITYPE, and OBJPAT), for use in ADM
+     modules.
+
+     The key words 'MUST', 'MUST NOT', 'REQUIRED', 'SHALL', 'SHALL
+     NOT', 'SHOULD', 'SHOULD NOT', 'RECOMMENDED', 'NOT RECOMMENDED',
+     'MAY', and 'OPTIONAL' in this document are to be interpreted as
+     described in BCP 14 (RFC 2119) (RFC 8174) when, and only when,
+     they appear in all capitals, as shown here.
+
+     Copyright (c) 2025 IETF Trust and the persons identified as
+     authors of the code.  All rights reserved.
+
+     Redistribution and use in source and binary forms, with or
+     without modification, is permitted pursuant to, and subject to
+     the license terms contained in, the Revised BSD License set
+     forth in Section 4.c of the IETF Trust's Legal Provisions
+     Relating to IETF Documents
+     (https://trustee.ietf.org/license-info).
+
+     This version of this YANG module is part of RFC XXXX
+     (https://www.rfc-editor.org/info/rfcXXXX); see the RFC itself
+     for full legal notices.";
+  reference
+    "draft-ietf-dtn-adm-yang";
+
+  revision 2026-10-19 {
+    description
+      "Initial revision.";
+    reference
+      "draft-ietf-dtn-adm-yang";
+  }
+  amm:enum 27;
+
+  // DTN Time: milliseconds since the DTN Epoch
+  typedef tp {
+    amm:enum 12;
+    type uint64;
+    description
+      "DTN Time.
+       An unsigned integer representing number of milliseconds
+       since the DTN Epoch 2000-01-01T00:00:00Z.
+       Not affected by leap seconds.";
+    reference
+      "RFC 9171: Bundle Protocol Version 7, Section 4.2.6
+       DTN Time";
+  }
+
+  // Time delta: fractional nanoseconds
+  typedef td {
+    amm:enum 13;
+    type decimal64 {
+      fraction-digits 9;
+    }
+    units "nanoseconds";
+    description
+      "A time delta (an offset between two time points),
+       expressed in nanoseconds.
+       This is a delta, not an absolute point in time.";
+    reference
+      "draft-ietf-dtn-ari";
+  }
+
+  // A 32-bit signed integer or a restricted text name
+  typedef label {
+    amm:enum 14;
+    type union {
+      type int32;
+      type string {
+        pattern '!?[A-Za-z_][0-9A-Za-z_\-\.]*';
+      }
+    }
+    description
+      "A label: a 32-bit signed integer or a restricted text
+       name (id-text).";
+    reference
+      "draft-ietf-dtn-ari";
+  }
+
+  // A registered literal type code point or name
+  typedef arptype {
+    amm:enum 16;
+    type union {
+      type int32;
+      type string {
+        pattern '!?[A-Za-z_][0-9A-Za-z_\-\.]*';
+      }
+    }
+    description
+      "An ARI literal type identifier: a registered code point
+       or a registered type name (id-text).";
+    reference
+      "draft-ietf-dtn-ari";
+  }
+
+  // Four independent path-segment patterns
+  typedef objpat {
+    type string {
+      pattern '^\((\*|(-?[0-9]+\.\.(-?[0-9]+)?|\.\.(-?[0-9]+)?|-?[0-9]+)(,(-?[0-9]+\.\.(-?[0-9]+)?|\.\.(-?[0-9]+)?|-?[0-9]+))*|!?[A-Za-z_][0-9A-Za-z_\-\.]*)\)\((\*|(-?[0-9]+\.\.(-?[0-9]+)?|\.\.(-?[0-9]+)?|-?[0-9]+)(,(-?[0-9]+\.\.(-?[0-9]+)?|\.\.(-?[0-9]+)?|-?[0-9]+))*|!?[A-Za-z_][0-9A-Za-z_\-\.]*)\)\((\*|(-?[0-9]+\.\.(-?[0-9]+)?|\.\.(-?[0-9]+)?|-?[0-9]+)(,(-?[0-9]+\.\.(-?[0-9]+)?|\.\.(-?[0-9]+)?|-?[0-9]+))*|!?[A-Za-z_][0-9A-Za-z_\-\.]*)\)\((\*|(-?[0-9]+\.\.(-?[0-9]+)?|\.\.(-?[0-9]+)?|-?[0-9]+)(,(-?[0-9]+\.\.(-?[0-9]+)?|\.\.(-?[0-9]+)?|-?[0-9]+))*|!?[A-Za-z_][0-9A-Za-z_\-\.]*)\)$';
+    }
+    description
+      "An object reference pattern: four independent path segment
+       patterns (organization, model, object type, and object ID),
+       each a wildcard, a single value, or a comma-separated set of
+       integer intervals.";
+    reference
+      "draft-ietf-dtn-ari: Object Reference Patterns";
+  }
+}
