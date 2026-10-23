@@ -15,8 +15,8 @@ module ietf-ari-types {
     "WG Web: <http://tools.ietf.org/wg/dtn/>
      WG List: <mailto:dtn@ietf.org>
 
-     Editor:
-             <mailto:>";
+      Editor: Brian Sipos
+              <mailto:brian.sipos+ietf@gmail.com>";
   description
     "This module defines native YANG types for the ARI literal
      types that have no single corresponding YANG base type
@@ -53,30 +53,35 @@ module ietf-ari-types {
   }
   amm:enum 27;
 
-  // DTN Time: milliseconds since the DTN Epoch
+  // DTN Time: seconds since the DTN Epoch, nanosecond precision
   typedef tp {
     amm:enum 12;
-    type uint64;
+    type decimal64 {
+      fraction-digits 9;
+    }
+    units "seconds";
     description
       "DTN Time.
-       An unsigned integer representing number of milliseconds
-       since the DTN Epoch 2000-01-01T00:00:00Z.
+       A time point expressed in seconds as an offset from
+       the DTN Epoch 2000-01-01T00:00:00Z, with fractional
+       seconds used to represent times down to the
+       nanosecond.
        Not affected by leap seconds.";
     reference
-      "RFC 9171: Bundle Protocol Version 7, Section 4.2.6
-       DTN Time";
+      "draft-ietf-dtn-ari";
   }
 
-  // Time delta: fractional nanoseconds
+  // Time delta: seconds with nanosecond precision
   typedef td {
     amm:enum 13;
     type decimal64 {
       fraction-digits 9;
     }
-    units "nanoseconds";
+    units "seconds";
     description
       "A time delta (an offset between two time points),
-       expressed in nanoseconds.
+       expressed in seconds, with fractional seconds
+       used to represent times down to the nanosecond.
        This is a delta, not an absolute point in time.";
     reference
       "draft-ietf-dtn-ari";
@@ -99,7 +104,7 @@ module ietf-ari-types {
   }
 
   // A registered literal type code point or name
-  typedef arptype {
+  typedef aritype {
     amm:enum 16;
     type union {
       type int32;
@@ -117,7 +122,17 @@ module ietf-ari-types {
   // Four independent path-segment patterns
   typedef objpat {
     type string {
-      pattern '^\((\*|(-?[0-9]+\.\.(-?[0-9]+)?|\.\.(-?[0-9]+)?|-?[0-9]+)(,(-?[0-9]+\.\.(-?[0-9]+)?|\.\.(-?[0-9]+)?|-?[0-9]+))*|!?[A-Za-z_][0-9A-Za-z_\-\.]*)\)\((\*|(-?[0-9]+\.\.(-?[0-9]+)?|\.\.(-?[0-9]+)?|-?[0-9]+)(,(-?[0-9]+\.\.(-?[0-9]+)?|\.\.(-?[0-9]+)?|-?[0-9]+))*|!?[A-Za-z_][0-9A-Za-z_\-\.]*)\)\((\*|(-?[0-9]+\.\.(-?[0-9]+)?|\.\.(-?[0-9]+)?|-?[0-9]+)(,(-?[0-9]+\.\.(-?[0-9]+)?|\.\.(-?[0-9]+)?|-?[0-9]+))*|!?[A-Za-z_][0-9A-Za-z_\-\.]*)\)\((\*|(-?[0-9]+\.\.(-?[0-9]+)?|\.\.(-?[0-9]+)?|-?[0-9]+)(,(-?[0-9]+\.\.(-?[0-9]+)?|\.\.(-?[0-9]+)?|-?[0-9]+))*|!?[A-Za-z_][0-9A-Za-z_\-\.]*)\)$';
+      pattern '^\((\*|(-?[0-9]+\.\.(-?[0-9]+)?|\.\.(-?[0-9]+)?|-?[0-9'
+            + ']+)(,(-?[0-9]+\.\.(-?[0-9]+)?|\.\.(-?[0-9]+)?|-?[0-9]+'
+            + '))*|!?[A-Za-z_][0-9A-Za-z_\-\.]*)\)\((\*|(-?[0-9]+\.\.'
+            + '(-?[0-9]+)?|\.\.(-?[0-9]+)?|-?[0-9]+)(,(-?[0-9]+\.\.(-'
+            + '?[0-9]+)?|\.\.(-?[0-9]+)?|-?[0-9]+))*|!?[A-Za-z_][0-9A'
+            + '-Za-z_\-\.]*)\)\((\*|(-?[0-9]+\.\.(-?[0-9]+)?|\.\.(-?['
+            + '0-9]+)?|-?[0-9]+)(,(-?[0-9]+\.\.(-?[0-9]+)?|\.\.(-?[0-'
+            + '9]+)?|-?[0-9]+))*|!?[A-Za-z_][0-9A-Za-z_\-\.]*)\)\((\*'
+            + '|(-?[0-9]+\.\.(-?[0-9]+)?|\.\.(-?[0-9]+)?|-?[0-9]+)(,('
+            + '-?[0-9]+\.\.(-?[0-9]+)?|\.\.(-?[0-9]+)?|-?[0-9]+))*|!?'
+            + '[A-Za-z_][0-9A-Za-z_\-\.]*)\)$';
     }
     description
       "An object reference pattern: four independent path segment
