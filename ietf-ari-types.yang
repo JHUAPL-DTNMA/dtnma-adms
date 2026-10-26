@@ -20,8 +20,8 @@ module ietf-ari-types {
   description
     "This module defines native YANG types for the ARI literal
      types that have no single corresponding YANG base type
-     (TP, TD, LABEL, ARITYPE, and OBJPAT), for use in ADM
-     modules.
+     (REAL32, REAL64, TP, TD, LABEL, ARITYPE, and OBJPAT),
+     for use in ADM modules.
 
      The key words 'MUST', 'MUST NOT', 'REQUIRED', 'SHALL', 'SHALL
      NOT', 'SHOULD', 'SHOULD NOT', 'RECOMMENDED', 'NOT RECOMMENDED',
@@ -52,6 +52,40 @@ module ietf-ari-types {
       "draft-ietf-dtn-adm-yang";
   }
   amm:enum 27;
+
+  // 32-bit floating point: decimal64 approximation
+  typedef real32 {
+    amm:enum 8;
+    type decimal64 {
+      fraction-digits 9;
+    }
+    description
+      "32-bit floating point value (IEEE 754 binary32),
+       represented as decimal64 with 9 fractional digits.
+       The representable domain is limited to
+       -9223372036.854775808 to 9223372036.854775807, and
+       the IEEE 754 special values (NaN, Infinity) are
+       not representable.";
+    reference
+      "draft-ietf-dtn-ari";
+  }
+
+  // 64-bit floating point: decimal64 approximation
+  typedef real64 {
+    amm:enum 9;
+    type decimal64 {
+      fraction-digits 9;
+    }
+    description
+      "64-bit floating point value (IEEE 754 binary64),
+       represented as decimal64 with 9 fractional digits.
+       The representable domain is limited to
+       -9223372036.854775808 to 9223372036.854775807, and
+       the IEEE 754 special values (NaN, Infinity) are
+       not representable.";
+    reference
+      "draft-ietf-dtn-ari";
+  }
 
   // DTN Time: seconds since the DTN Epoch, nanosecond precision
   typedef tp {
