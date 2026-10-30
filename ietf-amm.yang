@@ -344,6 +344,62 @@ module ietf-amm {
    * from string and holds the ARI text form of the value.
    */
 
+  typedef null {
+    type empty;
+    description
+      "AMM NULL literal type.";
+    reference
+      "draft-ietf-dtn-amm";
+  }
+
+  typedef bool {
+    type boolean;
+    description
+      "AMM BOOL literal type.";
+    reference
+      "draft-ietf-dtn-amm";
+  }
+
+  typedef byte {
+    type uint8;
+    description
+      "AMM BYTE literal type.";
+    reference
+      "draft-ietf-dtn-amm";
+  }
+
+  typedef int {
+    type int32;
+    description
+      "AMM INT literal type.";
+    reference
+      "draft-ietf-dtn-amm";
+  }
+
+  typedef uint {
+    type uint32;
+    description
+      "AMM UINT literal type.";
+    reference
+      "draft-ietf-dtn-amm";
+  }
+
+  typedef vast {
+    type int64;
+    description
+      "AMM VAST literal type.";
+    reference
+      "draft-ietf-dtn-amm";
+  }
+
+  typedef uvast {
+    type uint64;
+    description
+      "AMM UVAST literal type.";
+    reference
+      "draft-ietf-dtn-amm";
+  }
+
   typedef real32 {
     amm:enum 8;
     type string;
@@ -364,6 +420,32 @@ module ietf-amm {
        represented as the ARI text form of the value.";
     reference
       "draft-ietf-dtn-ari";
+  }
+
+  typedef textstr {
+    type string;
+    description
+      "AMM TEXTSTR literal type.";
+    reference
+      "draft-ietf-dtn-amm";
+  }
+
+  typedef bytestr {
+    type binary;
+    description
+      "AMM BYTESTR literal type.";
+    reference
+      "draft-ietf-dtn-amm";
+  }
+
+  typedef cbor {
+    type binary;
+    description
+      "AMM CBOR literal type.
+       Arbitrary CBOR content (RFC 8949); no RFC 9254
+       constraints are in effect.";
+    reference
+      "draft-ietf-dtn-amm";
   }
 
   typedef tp {
