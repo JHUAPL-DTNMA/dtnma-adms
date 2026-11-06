@@ -91,6 +91,7 @@ TP
 truthy
 typedef
 TYPEDEF
+typedefs
 UDP
 uint
 UINT
