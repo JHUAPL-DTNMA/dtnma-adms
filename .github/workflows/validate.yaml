@@ -9,7 +9,11 @@ on:
     - cron: '20 8 * * 4'
 
 env:
-  ACE_REPO: "git+https://github.com/JHUAPL-DTNMA/dtnma-ace.git@main"
+  # TEMPORARY (batch workflow): pin ACE to the in-flight integration branch
+  # so PRs validate against the in-flight ACE changes (dtnma-ace PR #149)
+  # instead of main. Revert to @main before merging this branch to main,
+  # and keep dtnma-ace:integrate-native-types alive until that revert lands.
+  ACE_REPO: "git+https://github.com/JHUAPL-DTNMA/dtnma-ace.git@integrate-native-types"
 
 jobs:
   validate:
