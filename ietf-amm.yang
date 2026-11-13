@@ -350,6 +350,7 @@ module ietf-amm {
       "AMM NULL literal type.";
     reference
       "draft-ietf-dtn-amm";
+    amm:enum 0;
   }
 
   typedef bool {
@@ -358,6 +359,7 @@ module ietf-amm {
       "AMM BOOL literal type.";
     reference
       "draft-ietf-dtn-amm";
+    amm:enum 1;
   }
 
   typedef byte {
@@ -366,6 +368,7 @@ module ietf-amm {
       "AMM BYTE literal type.";
     reference
       "draft-ietf-dtn-amm";
+    amm:enum 2;
   }
 
   typedef int {
@@ -374,6 +377,7 @@ module ietf-amm {
       "AMM INT literal type.";
     reference
       "draft-ietf-dtn-amm";
+    amm:enum 4;
   }
 
   typedef uint {
@@ -382,6 +386,7 @@ module ietf-amm {
       "AMM UINT literal type.";
     reference
       "draft-ietf-dtn-amm";
+    amm:enum 5;
   }
 
   typedef vast {
@@ -390,6 +395,7 @@ module ietf-amm {
       "AMM VAST literal type.";
     reference
       "draft-ietf-dtn-amm";
+    amm:enum 6;
   }
 
   typedef uvast {
@@ -398,6 +404,7 @@ module ietf-amm {
       "AMM UVAST literal type.";
     reference
       "draft-ietf-dtn-amm";
+    amm:enum 7;
   }
 
   typedef real32 {
@@ -428,6 +435,7 @@ module ietf-amm {
       "AMM TEXTSTR literal type.";
     reference
       "draft-ietf-dtn-amm";
+    amm:enum 10;
   }
 
   typedef bytestr {
@@ -436,6 +444,7 @@ module ietf-amm {
       "AMM BYTESTR literal type.";
     reference
       "draft-ietf-dtn-amm";
+    amm:enum 11;
   }
 
   typedef cbor {
@@ -446,6 +455,7 @@ module ietf-amm {
        constraints are in effect.";
     reference
       "draft-ietf-dtn-amm";
+    amm:enum 15;
   }
 
   typedef tp {
