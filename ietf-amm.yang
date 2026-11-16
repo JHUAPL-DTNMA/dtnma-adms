@@ -17,7 +17,8 @@ module ietf-amm {
     "This module defines the DTN Management Architecture (DTNMA)
      Application Management Model (AMM) extensions within YANG.
      It also defines the base IDENT and TYPEDEF objects for the AMM,
-     and native YANG typedefs for the AMM built-in literal types.
+     and native YANG typedefs for the AMM built-in literal types
+     and object reference types.
 
      The key words 'MUST', 'MUST NOT', 'REQUIRED', 'SHALL', 'SHALL
      NOT', 'SHOULD', 'SHOULD NOT', 'RECOMMENDED', 'NOT RECOMMENDED',
@@ -530,6 +531,150 @@ module ietf-amm {
        integer intervals.";
     reference
       "draft-ietf-dtn-ari: Object Reference Patterns";
+  }
+
+  /*
+   * This section contains native YANG typedefs for the AMM
+   * object reference types and value container literal types.
+   *
+   * These types are derived from string and hold the ARI text
+   * form of the value.
+   */
+
+  typedef literal {
+    type string;
+    description
+      "Value class type.
+       The ARI text form of any literal value.";
+    reference
+      "draft-ietf-dtn-amm";
+  }
+  typedef object {
+    type string;
+    description
+      "Value class type.
+       The text form of an ARI referencing an object.";
+    reference
+      "draft-ietf-dtn-amm";
+  }
+  typedef namespace {
+    type string;
+    description
+      "Value class type.
+       The text form of an ARI referencing a namespace.";
+    reference
+      "draft-ietf-dtn-amm";
+  }
+  typedef ident {
+    type string;
+    description
+      "Object reference type.
+       The text form of the ARI of the referenced
+       IDENT object.";
+    reference
+      "draft-ietf-dtn-ari";
+  }
+  typedef const {
+    type string;
+    description
+      "Object reference type.
+       The text form of the ARI of the referenced
+       CONST object.";
+    reference
+      "draft-ietf-dtn-ari";
+  }
+  typedef ctrl {
+    type string;
+    description
+      "Object reference type.
+       The text form of the ARI of the referenced
+       CTRL object.";
+    reference
+      "draft-ietf-dtn-ari";
+  }
+  typedef edd {
+    type string;
+    description
+      "Object reference type.
+       The text form of the ARI of the referenced
+       EDD object.";
+    reference
+      "draft-ietf-dtn-ari";
+  }
+  typedef oper {
+    type string;
+    description
+      "Object reference type.
+       The text form of the ARI of the referenced
+       OPER object.";
+    reference
+      "draft-ietf-dtn-ari";
+  }
+  typedef sbr {
+    type string;
+    description
+      "Object reference type.
+       The text form of the ARI of the referenced
+       SBR object.";
+    reference
+      "draft-ietf-dtn-ari";
+  }
+  typedef tbr {
+    type string;
+    description
+      "Object reference type.
+       The text form of the ARI of the referenced
+       TBR object.";
+    reference
+      "draft-ietf-dtn-ari";
+  }
+  typedef var {
+    type string;
+    description
+      "Object reference type.
+       The text form of the ARI of the referenced
+       VAR object.";
+    reference
+      "draft-ietf-dtn-ari";
+  }
+  typedef typedef {
+    type string;
+    description
+      "Object reference type.
+       The text form of the ARI of the referenced
+       TYPEDEF object.";
+    reference
+      "draft-ietf-dtn-ari";
+  }
+  typedef ac {
+    type string;
+    description
+      "AMM AC literal type.
+       An AMM container (AC) value, represented as
+       the ARI text form of the value.";
+    reference
+      "draft-ietf-dtn-ari";
+    amm:enum 17;
+  }
+  typedef am {
+    type string;
+    description
+      "AMM AM literal type.
+       An AMM macro (AM) value, represented as the
+       ARI text form of the value.";
+    reference
+      "draft-ietf-dtn-ari";
+    amm:enum 18;
+  }
+  typedef tbl {
+    type string;
+    description
+      "AMM TBL literal type.
+       An AMM table (TBL) value, represented as the
+       ARI text form of the value.";
+    reference
+      "draft-ietf-dtn-ari";
+    amm:enum 19;
   }
 
   amm:enum 0;

@@ -6,6 +6,9 @@ module ietf-amm-semtype {
   import ietf-amm {
     prefix amm;
   }
+  import ietf-amm-base {
+    prefix amm-base;
+  }
 
   organization
     "Internet Engineering Task Force (IETF)" {
@@ -71,7 +74,7 @@ module ietf-amm-semtype {
       description
         "A built-in ARITYPE or reference to TYPEDEF object being
          used.";
-      amm:type "//ietf/amm-base/TYPEDEF/type-ref";
+      type amm-base:type-ref;
     }
     // FIXME include constraints and annotations also?
   }
@@ -89,18 +92,18 @@ module ietf-amm-semtype {
       description
         "The smallest valid item count for the AC.";
       amm:default "null";
-      amm:union {
-        amm:type "/ARITYPE/uvast";
-        amm:type "/ARITYPE/null";
+      type union {
+        type amm:uvast;
+        type amm:null;
       }
     }
     amm:parameter max-elements {
       description
         "The largest valid item count for the AC.";
       amm:default "null";
-      amm:union {
-        amm:type "/ARITYPE/uvast";
-        amm:type "/ARITYPE/null";
+      type union {
+        type amm:uvast;
+        type amm:null;
       }
     }
   }
@@ -152,7 +155,7 @@ module ietf-amm-semtype {
             "The name of this column.
              Each name SHALL be unique within a table template.
              Each name SHALL be restricted to valid label text.";
-          amm:type "//ietf/amm-base/typedef/id-text";
+          type amm-base:id-text;
         }
         amm:column datatype {
           description
@@ -165,18 +168,18 @@ module ietf-amm-semtype {
       description
         "The smallest valid row count for the TBL.";
       amm:default "null";
-      amm:union {
-        amm:type "/ARITYPE/uvast";
-        amm:type "/ARITYPE/null";
+      type union {
+        type amm:uvast;
+        type amm:null;
       }
     }
     amm:parameter max-elements {
       description
         "The largest valid row count for the TBL.";
       amm:default "null";
-      amm:union {
-        amm:type "/ARITYPE/uvast";
-        amm:type "/ARITYPE/null";
+      type union {
+        type amm:uvast;
+        type amm:null;
       }
     }
     amm:parameter key {
@@ -184,9 +187,9 @@ module ietf-amm-semtype {
         "The primary key column names tuples in this table,
          space-separated labels.";
       amm:default "null";
-      amm:union {
-        amm:type "/ARITYPE/textstr";
-        amm:type "/ARITYPE/null";
+      type union {
+        type amm:textstr;
+        type amm:null;
       }
     }
     amm:parameter unique {
@@ -196,7 +199,7 @@ module ietf-amm-semtype {
          The set itself is encoded as an AC in this parameter.";
       amm:default "/AC/()";
       amm:ulist {
-        amm:type "/ARITYPE/textstr";
+        type amm:textstr;
       }
     }
   }
@@ -231,18 +234,18 @@ module ietf-amm-semtype {
       description
         "The smallest valid item count for the sequence.";
       amm:default "null";
-      amm:union {
-        amm:type "/ARITYPE/uvast";
-        amm:type "/ARITYPE/null";
+      type union {
+        type amm:uvast;
+        type amm:null;
       }
     }
     amm:parameter max-elements {
       description
         "The largest valid item count for the sequence.";
       amm:default "null";
-      amm:union {
-        amm:type "/ARITYPE/uvast";
-        amm:type "/ARITYPE/null";
+      type union {
+        type amm:uvast;
+        type amm:null;
       }
     }
   }
