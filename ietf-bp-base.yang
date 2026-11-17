@@ -68,8 +68,8 @@ module ietf-bp-base {
        RFC 9758: Updates to the ipn URI scheme";
     amm:base "//ietf/amm-base/IDENT/display-hint-bstr";
   }
-  amm:typedef eid-text {
-    amm:enum 0;
+  typedef eid-text {
+    type network-base:uri;
     description
       "The BP EID in a URI text form.
        Only valid BPv7 schemes SHALL be present in values of
@@ -77,10 +77,12 @@ module ietf-bp-base {
     reference
       "RFC 9171: Bundle Protocol Version 7
        RFC 9758: Updates to the ipn URI scheme";
-    amm:type "//ietf/network-base/typedef/uri";
+    amm:enum 0;
   }
-  amm:typedef eid-cbor {
-    amm:enum 1;
+  typedef eid-cbor {
+    type amm:cbor {
+      amm:display-hint "./ident/display-bstr-eid";
+    }
     description
       "The BP EID in a CBOR binary form.
        This form includes the enclosing array head.";
@@ -89,9 +91,7 @@ module ietf-bp-base {
        RFC 9758: Updates to the ipn URI scheme
        draft-ietf-dtn-eid-pattern: Bundle Protocol Endpoint ID
          Patterns";
-    amm:type "/aritype/cbor" {
-      amm:display-hint "./ident/display-bstr-eid";
-    }
+    amm:enum 1;
   }
 
   // Encoded Endpoint ID Patterns
@@ -105,17 +105,17 @@ module ietf-bp-base {
        RFC 9758: Updates to the ipn URI scheme";
     amm:base "//ietf/amm-base/IDENT/display-hint-bstr";
   }
-  amm:typedef eid-pattern-cbor {
-    amm:enum 2;
+  typedef eid-pattern-cbor {
+    type amm:cbor {
+      amm:display-hint "./ident/display-bstr-eid-pattern";
+    }
     description
       "The BP EID Pattern in a CBOR binary form.
        This form includes the enclosing array head.";
     reference
       "draft-ietf-dtn-eid-pattern: Bundle Protocol Endpoint ID
        Patterns";
-    amm:type "/aritype/cbor" {
-      amm:display-hint "./ident/display-bstr-eid-pattern";
-    }
+    amm:enum 2;
   }
 
   // Network endpoints for BP
@@ -131,7 +131,7 @@ module ietf-bp-base {
     amm:parameter eid {
       description
         "The EID of the endpoint.";
-      amm:type "./TYPEDEF/eid-cbor";
+      type eid-cbor;
     }
   }
   amm:oper match-eid-pattern {
@@ -147,16 +147,16 @@ module ietf-bp-base {
     amm:parameter pattern {
       description
         "The EID of the endpoint.";
-      amm:type "./TYPEDEF/eid-pattern-cbor";
+      type eid-pattern-cbor;
     }
     amm:operand value {
       description
         "The value to check for a match.";
-      amm:union {
+      type union {
         // text URI
-        amm:type "//ietf/network-base/typedef/uri";
+        type network-base:uri;
         // structured EID
-        amm:type "/aritype/ident" {
+        type amm:ident {
           amm:base "./ident/bp-endpoint";
         }
       }
@@ -164,7 +164,7 @@ module ietf-bp-base {
     amm:result is-match {
       description
         "The result is true if the value matches the given pattern.";
-      amm:type "/aritype/bool";
+      type amm:bool;
     }
   }
 }

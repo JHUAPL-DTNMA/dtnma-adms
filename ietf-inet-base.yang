@@ -70,44 +70,47 @@ module ietf-inet-base {
   }
 
   // Data types
-  amm:typedef ipv4-address {
-    amm:enum 0;
+  typedef ipv4-address {
+    type amm:bytestr {
+      amm:display-hint "./ident/display-bstr-ipaddress";
+      length "4";
+    }
     description
       "The ipv4-address type represents an IPv4 address in binary
        form. This form always uses exactly 4 bytes to encode address
        values.";
     reference
       "RFC 791: Internet Protocol";
-    amm:type "/aritype/bytestr" {
-      amm:display-hint "./ident/display-bstr-ipaddress";
-      length "4";
-    }
+    amm:enum 0;
   }
-  amm:typedef ipv6-address {
-    amm:enum 1;
+  typedef ipv6-address {
+    type amm:bytestr {
+      amm:display-hint "./ident/display-bstr-ipaddress";
+      length "16";
+    }
     description
       "The ipv6-address type represents an IPv6 address in binary
        form. This form always uses exactly 16 bytes to encode address
        values.";
     reference
       "RFC 4291: IP Version 6 Addressing Architecture";
-    amm:type "/aritype/bytestr" {
-      amm:display-hint "./ident/display-bstr-ipaddress";
-      length "16";
-    }
+    amm:enum 1;
   }
-  amm:typedef ip-address {
-    amm:enum 2;
+  typedef ip-address {
+    type union {
+      type ipv4-address;
+      type ipv6-address;
+    }
     description
       "This type represents either an IPv4 or IPv6 address, which is
        distinguished by each having a specific valid length.";
-    amm:union {
-      amm:type "./typedef/ipv4-address";
-      amm:type "./typedef/ipv6-address";
-    }
+    amm:enum 2;
   }
-  amm:typedef zone {
-    amm:enum 4;
+  typedef zone {
+    type union {
+      type amm:uint;
+      type amm:textstr;
+    }
     description
       "The zone index is used to disambiguate identical address
        values.  For link-local addresses, the zone index will
@@ -120,10 +123,7 @@ module ietf-inet-base {
     reference
       "RFC 4007: IPv6 Scoped Address Architecture
        RFC 4001: Textual Conventions for Internet Network Addresses";
-    amm:union {
-      amm:type "/aritype/uint";
-      amm:type "/aritype/textstr";
-    }
+    amm:enum 4;
   }
   amm:typedef port-number {
     amm:enum 3;
@@ -149,8 +149,14 @@ module ietf-inet-base {
       length "0..65535";
     }
   }
-  amm:typedef domain-name {
-    amm:enum 5;
+  typedef domain-name {
+    type amm:textstr {
+      pattern '('
+            + '(([a-zA-Z0-9_]([a-zA-Z0-9\-_]){0,61})?[a-zA-Z0-9]\.)*'
+            + '([a-zA-Z0-9_]([a-zA-Z0-9\-_]){0,61})?[a-zA-Z0-9]\.?'
+            + ')|\.';
+      length "1..253";
+    }
     description
       "The domain-name type represents a DNS domain name.  The
        name SHOULD be fully qualified whenever possible.
@@ -194,13 +200,7 @@ module ietf-inet-base {
                  (DNS SRV)
        RFC 5890: Internationalized Domain Names in Applications
                  (IDNA): Definitions and Document Framework";
-    amm:type "/aritype/textstr" {
-      pattern '('
-            + '(([a-zA-Z0-9_]([a-zA-Z0-9\-_]){0,61})?[a-zA-Z0-9]\.)*'
-            + '([a-zA-Z0-9_]([a-zA-Z0-9\-_]){0,61})?[a-zA-Z0-9]\.?'
-            + ')|\.';
-      length "1..253";
-    }
+    amm:enum 5;
   }
 
   // Endpoint types for IP
@@ -214,15 +214,15 @@ module ietf-inet-base {
     amm:parameter address {
       description
         "The endpoint network address.";
-      amm:type "./typedef/ip-address";
+      type ip-address;
     }
     amm:parameter zone {
       description
         "The optional zone used to interpret the address.";
       amm:default "null";
-      amm:union {
-        amm:type "./typedef/zone";
-        amm:type "/aritype/null";
+      type union {
+        type zone;
+        type amm:null;
       }
     }
   }
@@ -239,20 +239,20 @@ module ietf-inet-base {
     amm:parameter address {
       description
         "The endpoint network address.";
-      amm:type "./typedef/ip-address";
+      type ip-address;
     }
     amm:parameter port {
       description
         "The transport layer port number.";
-      amm:type "./typedef/port-number";
+      amm:type "./TYPEDEF/port-number";
     }
     amm:parameter zone {
       description
         "The optional zone used to interpret the address.";
       amm:default "null";
-      amm:union {
-        amm:type "./typedef/zone";
-        amm:type "/aritype/null";
+      type union {
+        type zone;
+        type amm:null;
       }
     }
   }
@@ -281,28 +281,28 @@ module ietf-inet-base {
     amm:parameter base {
       description
         "The base address for the subnet mask.";
-      amm:type "./typedef/ip-address";
+      type ip-address;
     }
     amm:parameter prefix {
       description
         "The number of prefix bits for the subnet mask.
          When the base address is IPv4 the prefix SHALL be
          limited to no larger than 32.";
-      amm:type "/aritype/uint" {
+      type amm:uint {
         range "0..128";
       }
     }
     amm:operand value {
       description
         "The value to check for a match.";
-      amm:union {
+      type union {
         // raw address bytes
-        amm:type "./typedef/ip-address";
+        type ip-address;
         // address-as-parameter
-        amm:type "/aritype/ident" {
+        type amm:ident {
           amm:base "./ident/ip-endpoint";
         }
-        amm:type "/aritype/ident" {
+        type amm:ident {
           amm:base "./ident/ip-transport";
         }
       }
@@ -310,7 +310,7 @@ module ietf-inet-base {
     amm:result is-match {
       description
         "The result is true if the value matches the given pattern.";
-      amm:type "/aritype/bool";
+      type amm:bool;
     }
   }
 }
