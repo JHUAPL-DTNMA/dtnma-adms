@@ -52,51 +52,51 @@ module ietf-amm-base {
   amm:enum 25;
 
   // abstract display hint hierarchy
-  amm:ident display-hint {
-    amm:enum 0;
+  identity display-hint {
     description
       "The base IDENT for objects usable as arguments for the
        'amm:display-hint' extension.
        This object itself provides no display hint purpose.";
+    amm:enum 0;
     amm:abstract true;
   }
-  amm:ident display-hint-integer {
-    amm:enum 1;
+  identity display-hint-integer {
+    base display-hint;
     description
       "Intermediate base IDENT of display hints for integer values.
        Hints derived from this object SHALL only apply to built-in
        types BYTE, INT, UINT, VAST, and UVAST.";
+    amm:enum 1;
     amm:abstract true;
-    amm:base "./IDENT/display-hint";
   }
-  amm:ident display-hint-float {
-    amm:enum 2;
+  identity display-hint-float {
+    base display-hint;
     description
       "Intermediate base IDENT of display hints for floating point
        values.
        Hints derived from this object SHALL only apply to built-in
        types REAL32 and REAL64.";
+    amm:enum 2;
     amm:abstract true;
-    amm:base "./IDENT/display-hint";
   }
-  amm:ident display-hint-bstr {
-    amm:enum 3;
+  identity display-hint-bstr {
+    base display-hint;
     description
       "Intermediate base IDENT of display hints for byte string
        values.
        Hints derived from this object SHALL only apply to built-in
        type BYTESTR.";
+    amm:enum 3;
     amm:abstract true;
-    amm:base "./IDENT/display-hint";
   }
-  amm:ident display-hint-time {
-    amm:enum 4;
+  identity display-hint-time {
+    base display-hint;
     description
       "Intermediate base IDENT of display hints for time values.
        Hints derived from this object SHALL only apply to built-in
        types TP and TD.";
+    amm:enum 4;
     amm:abstract true;
-    amm:base "./IDENT/display-hint";
   }
 
   // Named type unions

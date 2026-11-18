@@ -84,8 +84,7 @@ module ietf-alarms {
   amm:enum 4;
 
   // Base identities and types for alarm states
-  amm:ident resource {
-    amm:enum 0;
+  identity resource {
     description
       "The abstract base IDENT for all resources able to have alarm
        states.
@@ -95,10 +94,10 @@ module ietf-alarms {
        Derived objects MAY contain parameters in order to further
        specify and narrow-down the logical or physical instance
        experiencing an alarm state.";
+    amm:enum 0;
     amm:abstract true;
   }
-  amm:ident category {
-    amm:enum 1;
+  identity category {
     description
       "The abstract base IDENT for all alarm categories.
        Derived objects define more specific categories for faults.
@@ -108,6 +107,7 @@ module ietf-alarms {
        Derived objects SHALL specify details of the meaning of each
        sub-category of alarm state to enough level of detail for
        users to distinguish between all non-abstract categories.";
+    amm:enum 1;
     amm:abstract true;
   }
   typedef severity {
@@ -230,7 +230,7 @@ module ietf-alarms {
         description
           "The resource having an alarm condition (or history).";
         type amm:ident {
-          amm:base "./ident/resource";
+          base resource;
         }
       }
       amm:column category {
@@ -241,7 +241,7 @@ module ietf-alarms {
         type union {
           type amm:null;
           type amm:ident {
-            amm:base "./ident/category";
+            base category;
           }
         }
       }
@@ -411,7 +411,7 @@ module ietf-alarms {
         description
           "The non-abstract resource object.";
         type amm:ident {
-          amm:base "./ident/resource";
+          base resource;
         }
       }
     }
@@ -426,7 +426,7 @@ module ietf-alarms {
         description
           "The non-abstract category object.";
         type amm:ident {
-          amm:base "./ident/category";
+          base category;
         }
       }
     }

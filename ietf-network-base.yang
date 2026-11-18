@@ -99,14 +99,14 @@ module ietf-network-base {
                  Identifiers (URIs)";
     amm:enum 0;
   }
-  amm:ident display-bstr-uuid {
-    amm:enum 17;
+  identity display-bstr-uuid {
+    base amm-base:display-hint-bstr;
     description
       "Interpret byte string values as UUID and display as
        human-friendly text according to RFC 9562 conventions.";
     reference
       "RFC 9562: Universally Unique IDentifiers (UUIDs)";
-    amm:base "//ietf/amm-base/IDENT/display-hint-bstr";
+    amm:enum 17;
   }
   typedef uuid {
     type amm:bytestr {
@@ -121,8 +121,8 @@ module ietf-network-base {
       "RFC 9562: Universally Unique IDentifiers (UUIDs)";
     amm:enum 5;
   }
-  amm:ident display-bstr-oid {
-    amm:enum 18;
+  identity display-bstr-oid {
+    base amm-base:display-hint-bstr;
     description
       "Interpret byte string values as ASN.1 BER-encoded OIDs
        and display as human-friendly dotted-decimal form of
@@ -130,7 +130,7 @@ module ietf-network-base {
     reference
       "ITU-T X.660-2011: General procedures and top arcs of the
          international object identifier tree";
-    amm:base "//ietf/amm-base/IDENT/display-hint-bstr";
+    amm:enum 18;
   }
   typedef oid {
     type amm:bytestr {
@@ -159,8 +159,7 @@ module ietf-network-base {
   }
 
   // Abstract base IDENTs and types
-  amm:ident abstract-endpoint {
-    amm:enum 0;
+  identity abstract-endpoint {
     description
       "This object defines an abstract base for all general purpose
        network/transport endpoint identifiers as seen from outside
@@ -168,11 +167,12 @@ module ietf-network-base {
        Uses where the endpoint is being bound to from inside the
        node might require additional parameters outside of what is
        present in this object hierarchy.";
+    amm:enum 0;
     amm:abstract true;
   }
   typedef endpoint {
     type amm:ident {
-      amm:base "./IDENT/abstract-endpoint";
+      base abstract-endpoint;
     }
     description
       "A value which references a non-abstract derived object

@@ -58,15 +58,15 @@ module ietf-inet-base {
   amm:enum 4;
 
   // Display hints
-  amm:ident display-bstr-ipaddress {
-    amm:enum 2;
+  identity display-bstr-ipaddress {
+    base amm-base:display-hint-bstr;
     description
       "Interpret byte string values as either IPv4 address (4-octet
        length) or IPv6 address (16-octet length) and display as
        human-friendly text according to RFC 4001 conventions.";
     reference
       "RFC 4001: Textual Conventions for Internet Network Addresses";
-    amm:base "//ietf/amm-base/IDENT/display-hint-bstr";
+    amm:enum 2;
   }
 
   // Data types
@@ -204,13 +204,13 @@ module ietf-inet-base {
   }
 
   // Endpoint types for IP
-  amm:ident ip-endpoint {
-    amm:enum 0;
+  identity ip-endpoint {
+    base network-base:abstract-endpoint;
     description
       "This object defines parameters for an IP endpoint
        independent of any possible transport above the network
        layer.";
-    amm:base "//ietf/network-base/ident/abstract-endpoint";
+    amm:enum 0;
     amm:parameter address {
       description
         "The endpoint network address.";
@@ -226,8 +226,8 @@ module ietf-inet-base {
       }
     }
   }
-  amm:ident ip-transport {
-    amm:enum 1;
+  identity ip-transport {
+    base network-base:abstract-endpoint;
     description
       "This object defines parameters for any IP-based transport
        protocol which uses a 16-bit port number, as seen from outside
@@ -235,7 +235,7 @@ module ietf-inet-base {
        This is different from parameters necessary to bind a
        transport from within that IP node, which might include
        additional information.";
-    amm:base "//ietf/network-base/ident/abstract-endpoint";
+    amm:enum 1;
     amm:parameter address {
       description
         "The endpoint network address.";
@@ -300,10 +300,10 @@ module ietf-inet-base {
         type ip-address;
         // address-as-parameter
         type amm:ident {
-          amm:base "./ident/ip-endpoint";
+          base ip-endpoint;
         }
         type amm:ident {
-          amm:base "./ident/ip-transport";
+          base ip-transport;
         }
       }
     }

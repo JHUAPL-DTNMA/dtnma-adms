@@ -58,15 +58,15 @@ module ietf-bp-base {
   amm:enum 5;
 
   // Direct encoded Endpoint IDs
-  amm:ident display-bstr-eid {
-    amm:enum 1;
+  identity display-bstr-eid {
+    base amm-base:display-hint-bstr;
     description
       "Interpret byte string values as a CBOR-encoded
        BPv7 Endpoint ID value.";
     reference
       "RFC 9171: Bundle Protocol Version 7
        RFC 9758: Updates to the ipn URI scheme";
-    amm:base "//ietf/amm-base/IDENT/display-hint-bstr";
+    amm:enum 1;
   }
   typedef eid-text {
     type network-base:uri;
@@ -95,15 +95,15 @@ module ietf-bp-base {
   }
 
   // Encoded Endpoint ID Patterns
-  amm:ident display-bstr-eid-pattern {
-    amm:enum 3;
+  identity display-bstr-eid-pattern {
+    base amm-base:display-hint-bstr;
     description
       "Interpret byte string values as a CBOR-encoded
        BPv7 Endpoint ID Pattern.";
     reference
       "RFC 9171: Bundle Protocol Version 7
        RFC 9758: Updates to the ipn URI scheme";
-    amm:base "//ietf/amm-base/IDENT/display-hint-bstr";
+    amm:enum 3;
   }
   typedef eid-pattern-cbor {
     type amm:cbor {
@@ -119,15 +119,15 @@ module ietf-bp-base {
   }
 
   // Network endpoints for BP
-  amm:ident bp-endpoint {
-    amm:enum 0;
+  identity bp-endpoint {
+    base network-base:abstract-endpoint;
     description
       "This object defines parameters for BPv7 transport endpoints.
        The 'eid' uses the binary form for compactness,
        which includes a display-hint to help end users.";
     reference
       "RFC 9171: Bundle Protocol Version 7";
-    amm:base "//ietf/network-base/ident/abstract-endpoint";
+    amm:enum 0;
     amm:parameter eid {
       description
         "The EID of the endpoint.";
@@ -157,7 +157,7 @@ module ietf-bp-base {
         type network-base:uri;
         // structured EID
         type amm:ident {
-          amm:base "./ident/bp-endpoint";
+          base bp-endpoint;
         }
       }
     }

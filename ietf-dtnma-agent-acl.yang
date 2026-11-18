@@ -78,8 +78,7 @@ module ietf-dtnma-agent-acl {
   }
 
   // Atomic permission objects
-  amm:ident permission {
-    amm:enum 0;
+  identity permission {
     description
       "The base IDENT for objects usable as permissions in the
        access control table.
@@ -89,6 +88,7 @@ module ietf-dtnma-agent-acl {
        specific access granted by each permission.
        This object itself is abstract and provides not specific
        permission.";
+    amm:enum 0;
     amm:abstract true;
   }
   typedef permission-list {
@@ -96,68 +96,68 @@ module ietf-dtnma-agent-acl {
       "A list of permission object (IDENT) references.";
     amm:ulist {
       type amm:ident {
-        amm:base "./ident/permission";
+        base permission;
       }
     }
     amm:enum 0;
   }
 
   // built-in permissions
-  amm:ident execute {
-    amm:enum 10;
+  identity execute {
+    base permission;
     description
       "Permission to allow executing specific CTRL objects.
        This includes objects used directly as EXECSET targets,
        indirectly within macros, or as actions of TBR or SBR
        objects.";
-    amm:base "./ident/permission";
+    amm:enum 10;
   }
-  amm:ident produce {
-    amm:enum 11;
+  identity produce {
+    base permission;
     description
       "Permission to allow producing values from CONST, VAR, or
        EDD objects.
        This includes production for use by reporting or evaluating
        procedures of the Agent.";
-    amm:base "./ident/permission";
+    amm:enum 11;
   }
-  amm:ident modify-var {
-    amm:enum 12;
+  identity modify-var {
+    base permission;
     description
       "Permission to allow modifying the value of VAR objects.
        This includes any control which would alter the value,
        but does not affect applications on the Agent directly
        altering the state of an object.";
-    amm:base "./ident/permission";
+    amm:enum 12;
   }
-  amm:ident modify-rule-enabled {
-    amm:enum 17;
+  identity modify-rule-enabled {
+    base permission;
     description
       "Permission to allow modifying the enabled state of
        SBR and TBR objects.
        This includes any control which would alter the state,
        but does not affect Agent-internal logic related to
        init-enabled and max-count fields of a rule.";
-    amm:base "./ident/permission";
+    amm:enum 17;
   }
-  amm:ident ensure-odm {
-    amm:enum 13;
+  identity ensure-odm {
+    base permission;
     description
       "Permission to allow ensuring an ODM exists within an Agent.
        Granting this permission will allow creating a new ODM or
        modifying an existing ODM depending on its starting state.";
-    amm:base "./ident/permission";
+    amm:enum 13;
   }
-  amm:ident obsolete-odm {
-    amm:enum 14;
+  identity obsolete-odm {
+    base permission;
     description
       "Permission to allow obsoleting an ODM within an Agent.
        Once an ODM is obsoleted it can no longer be used but
        its identifiers are reserved to prevent inconsistent reuse.";
-    amm:base "./ident/permission";
+    amm:enum 14;
   }
-  amm:ident ensure-object {
-    amm:enum 15;
+  identity ensure-object {
+    base permission;
     description
       "Permission to allow ensuring an object exists within an ODM.
        Granting this permission will allow creating a new object or
@@ -165,10 +165,10 @@ module ietf-dtnma-agent-acl {
        The permission itself does not restrict the type of object,
        but the access list can limit the item to specific object
        types and names.";
-    amm:base "./ident/permission";
+    amm:enum 15;
   }
-  amm:ident obsolete-object {
-    amm:enum 16;
+  identity obsolete-object {
+    base permission;
     description
       "Permission to allow obsoleting an object within an ODM.
        Once an object is obsoleted it can no longer be used but
@@ -176,7 +176,7 @@ module ietf-dtnma-agent-acl {
        The permission itself does not restrict the type of object,
        but the access list can limit the item to specific object
        types and names.";
-    amm:base "./ident/permission";
+    amm:enum 16;
   }
 
   // Default access permission

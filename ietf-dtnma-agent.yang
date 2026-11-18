@@ -893,7 +893,7 @@ module ietf-dtnma-agent {
         type amm:const;
       }
       amm:column type {
-        amm:type "//ietf/amm-semtype/typedef/semtype";
+        type amm-semtype:semtype;
       }
     }
   }
@@ -910,7 +910,7 @@ module ietf-dtnma-agent {
     amm:parameter type {
       description
         "The type for the CONST object.";
-      amm:type "//ietf/amm-semtype/typedef/semtype";
+      type amm-semtype:semtype;
     }
     amm:parameter value {
       description
@@ -937,7 +937,7 @@ module ietf-dtnma-agent {
       amm:column type {
         description
           "The type for values of the parameter.";
-        amm:type "//ietf/amm-semtype/typedef/semtype";
+        type amm-semtype:semtype;
       }
       amm:column default {
         description
@@ -973,7 +973,7 @@ module ietf-dtnma-agent {
         type amm:var;
       }
       amm:column type {
-        amm:type "//ietf/amm-semtype/typedef/semtype";
+        type amm-semtype:semtype;
       }
     }
   }
@@ -993,7 +993,7 @@ module ietf-dtnma-agent {
     amm:parameter type {
       description
         "The type for the VAR object.";
-      amm:type "//ietf/amm-semtype/typedef/semtype";
+      type amm-semtype:semtype;
     }
     amm:parameter init-value {
       description
