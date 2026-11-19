@@ -59,90 +59,90 @@ module iana-display-hints {
   amm:enum 0;
 
   // Integer number hints
-  amm:ident display-int-dec {
-    amm:enum 2;
+  identity display-int-dec {
+    base amm-base:display-hint-integer;
     description
       "Display integers as decimal (base 10).";
-    amm:base "//ietf/amm-base/ident/display-hint-integer";
+    amm:enum 2;
   }
-  amm:ident display-int-bin {
-    amm:enum 3;
+  identity display-int-bin {
+    base amm-base:display-hint-integer;
     description
       "Display integers as binary (base 2).";
-    amm:base "//ietf/amm-base/ident/display-hint-integer";
+    amm:enum 3;
   }
-  amm:ident display-int-hex {
-    amm:enum 4;
+  identity display-int-hex {
+    base amm-base:display-hint-integer;
     description
       "Display integers as hexadecimal (base 16).";
-    amm:base "//ietf/amm-base/ident/display-hint-integer";
+    amm:enum 4;
   }
 
   // Floating-point number hints
-  amm:ident display-float-dec {
-    amm:enum 6;
+  identity display-float-dec {
+    base amm-base:display-hint-float;
     description
       "Display floating point values as decimal fraction.";
-    amm:base "//ietf/amm-base/ident/display-hint-float";
+    amm:enum 6;
   }
-  amm:ident display-float-exp {
-    amm:enum 7;
+  identity display-float-exp {
+    base amm-base:display-hint-float;
     description
       "Display floating point values as decimal exponential form.";
-    amm:base "//ietf/amm-base/ident/display-hint-float";
+    amm:enum 7;
   }
-  amm:ident display-float-hex {
-    amm:enum 8;
+  identity display-float-hex {
+    base amm-base:display-hint-float;
     description
       "Display floating point values as hexadecimal exponential
        form.";
-    amm:base "//ietf/amm-base/ident/display-hint-float";
+    amm:enum 8;
   }
 
   // Byte-string hints
-  amm:ident display-bstr-text {
-    amm:enum 10;
+  identity display-bstr-text {
+    base amm-base:display-hint-bstr;
     description
       "Display byte string values as UTF-8 text where possible.
        The base16 encoding is used otherwise.";
     reference
       "draft-ietf-dtn-ari";
-    amm:base "//ietf/amm-base/ident/display-hint-bstr";
+    amm:enum 10;
   }
-  amm:ident display-bstr-base16 {
-    amm:enum 11;
+  identity display-bstr-base16 {
+    base amm-base:display-hint-bstr;
     description
       "Display byte string values as base16-encoded.";
     reference
       "draft-ietf-dtn-ari";
-    amm:base "//ietf/amm-base/ident/display-hint-bstr";
+    amm:enum 11;
   }
-  amm:ident display-bstr-base64 {
-    amm:enum 12;
+  identity display-bstr-base64 {
+    base amm-base:display-hint-bstr;
     description
       "Display byte string values as base64url-encoded.";
     reference
       "draft-ietf-dtn-ari";
-    amm:base "//ietf/amm-base/ident/display-hint-bstr";
+    amm:enum 12;
   }
 
   // TIME type (TP or TD built-ins) hints
-  amm:ident display-time-text {
-    amm:enum 14;
+  identity display-time-text {
+    base amm-base:display-hint-time;
     description
       "Display TP and TD values as text in accordance with
        RFC 3339 not using separator characters.";
     reference
       "draft-ietf-dtn-ari";
-    amm:base "//ietf/amm-base/ident/display-hint-time";
+    amm:enum 14;
   }
-  amm:ident display-time-dec {
-    amm:enum 15;
+  identity display-time-dec {
+    base amm-base:display-hint-time;
     description
       "Display TP and TD values as decimal fraction with units of
        seconds, which may or may not include a fractional part.";
     reference
       "draft-ietf-dtn-ari";
-    amm:base "//ietf/amm-base/ident/display-hint-time";
+    amm:enum 15;
   }
 }

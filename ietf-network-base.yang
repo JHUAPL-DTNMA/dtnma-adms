@@ -57,8 +57,11 @@ module ietf-network-base {
   amm:enum 26;
 
   // General purpose network data types and forms
-  amm:typedef uri {
-    amm:enum 0;
+  typedef uri {
+    type amm:textstr {
+      // This pattern is on the normalized scheme
+      pattern '[a-z][a-z0-9+-.]*:.*';
+    }
     description
       "A specialization of the textstr type to only contain a single
        Uniform Resource Identifier (URI) as defined by STD 66.
@@ -94,22 +97,21 @@ module ietf-network-base {
                  and Recommendations
        RFC 5017: MIB Textual Conventions for Uniform Resource
                  Identifiers (URIs)";
-    amm:type "/aritype/textstr" {
-      // This pattern is on the normalized scheme
-      pattern '[a-z][a-z0-9+-.]*:.*';
-    }
+    amm:enum 0;
   }
-  amm:ident display-bstr-uuid {
-    amm:enum 17;
+  identity display-bstr-uuid {
+    base amm-base:display-hint-bstr;
     description
       "Interpret byte string values as UUID and display as
        human-friendly text according to RFC 9562 conventions.";
     reference
       "RFC 9562: Universally Unique IDentifiers (UUIDs)";
-    amm:base "//ietf/amm-base/IDENT/display-hint-bstr";
+    amm:enum 17;
   }
-  amm:typedef uuid {
-    amm:enum 5;
+  typedef uuid {
+    type amm:bytestr {
+      length "16";
+    }
     description
       "A specialization of the bytestr type to contain a binary
        encoded UUID value.
@@ -117,12 +119,10 @@ module ietf-network-base {
        as defined in Section 4 of RFC 9562.";
     reference
       "RFC 9562: Universally Unique IDentifiers (UUIDs)";
-    amm:type "/aritype/bytestr" {
-      length "16";
-    }
+    amm:enum 5;
   }
-  amm:ident display-bstr-oid {
-    amm:enum 18;
+  identity display-bstr-oid {
+    base amm-base:display-hint-bstr;
     description
       "Interpret byte string values as ASN.1 BER-encoded OIDs
        and display as human-friendly dotted-decimal form of
@@ -130,10 +130,12 @@ module ietf-network-base {
     reference
       "ITU-T X.660-2011: General procedures and top arcs of the
          international object identifier tree";
-    amm:base "//ietf/amm-base/IDENT/display-hint-bstr";
+    amm:enum 18;
   }
-  amm:typedef oid {
-    amm:enum 4;
+  typedef oid {
+    type amm:bytestr {
+      length "2..max";
+    }
     description
       "A specialization of the bytestr type to contain an ASN.1
        BER-encoded object identifier (OID) value.
@@ -153,14 +155,11 @@ module ietf-network-base {
        ITU-T X.690-2021: ASN.1 encoding rules: Specification of
          Basic Encoding Rules (BER), Canonical Encoding
          Rules (CER) and Distinguished Encoding Rules (DER)";
-    amm:type "/aritype/bytestr" {
-      length "2..max";
-    }
+    amm:enum 4;
   }
 
   // Abstract base IDENTs and types
-  amm:ident abstract-endpoint {
-    amm:enum 0;
+  identity abstract-endpoint {
     description
       "This object defines an abstract base for all general purpose
        network/transport endpoint identifiers as seen from outside
@@ -168,25 +167,26 @@ module ietf-network-base {
        Uses where the endpoint is being bound to from inside the
        node might require additional parameters outside of what is
        present in this object hierarchy.";
+    amm:enum 0;
     amm:abstract true;
   }
-  amm:typedef endpoint {
-    amm:enum 1;
+  typedef endpoint {
+    type amm:ident {
+      base abstract-endpoint;
+    }
     description
       "A value which references a non-abstract derived object
        for specific types of network or transport endpoints.";
-    amm:type "/aritype/ident" {
-      amm:base "./IDENT/abstract-endpoint";
-    }
+    amm:enum 1;
   }
-  amm:typedef endpoint-or-uri {
-    amm:enum 3;
+  typedef endpoint-or-uri {
+    type union {
+      type endpoint;
+      type uri;
+    }
     description
       "A value which is either a specific parameterized endpoint
        IDENT reference or a text URI value identifying an endpoint.";
-    amm:union {
-      amm:type "./typedef/endpoint";
-      amm:type "./typedef/uri";
-    }
+    amm:enum 3;
   }
 }

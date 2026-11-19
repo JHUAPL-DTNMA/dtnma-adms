@@ -6,6 +6,9 @@ module ietf-dtnma-agent-acl {
   import ietf-amm {
     prefix amm;
   }
+  import ietf-amm-base {
+    prefix amm-base;
+  }
   import ietf-dtnma-agent {
     prefix da;
   }
@@ -58,25 +61,24 @@ module ietf-dtnma-agent-acl {
   amm:enum 2;
 
   // Common types in this model
-  amm:typedef entry-id {
-    amm:enum 2;
+  typedef entry-id {
+    type amm:uint;
     description
       "The identifier for an entry in any access control table.";
-    amm:type "/ARITYPE/UINT";
+    amm:enum 2;
   }
-  amm:typedef optional-entry-id {
-    amm:enum 3;
+  typedef optional-entry-id {
+    type union {
+      type entry-id;
+      type amm:null;
+    }
     description
       "An optional entry identifier (or a null value).";
-    amm:union {
-      amm:type "./TYPEDEF/entry-id";
-      amm:type "/ARITYPE/null";
-    }
+    amm:enum 3;
   }
 
   // Atomic permission objects
-  amm:ident permission {
-    amm:enum 0;
+  identity permission {
     description
       "The base IDENT for objects usable as permissions in the
        access control table.
@@ -86,75 +88,76 @@ module ietf-dtnma-agent-acl {
        specific access granted by each permission.
        This object itself is abstract and provides not specific
        permission.";
+    amm:enum 0;
     amm:abstract true;
   }
-  amm:typedef permission-list {
-    amm:enum 0;
+  typedef permission-list {
     description
       "A list of permission object (IDENT) references.";
     amm:ulist {
-      amm:type "/aritype/ident" {
-        amm:base "./ident/permission";
+      type amm:ident {
+        base permission;
       }
     }
+    amm:enum 0;
   }
 
   // built-in permissions
-  amm:ident execute {
-    amm:enum 10;
+  identity execute {
+    base permission;
     description
       "Permission to allow executing specific CTRL objects.
        This includes objects used directly as EXECSET targets,
        indirectly within macros, or as actions of TBR or SBR
        objects.";
-    amm:base "./ident/permission";
+    amm:enum 10;
   }
-  amm:ident produce {
-    amm:enum 11;
+  identity produce {
+    base permission;
     description
       "Permission to allow producing values from CONST, VAR, or
        EDD objects.
        This includes production for use by reporting or evaluating
        procedures of the Agent.";
-    amm:base "./ident/permission";
+    amm:enum 11;
   }
-  amm:ident modify-var {
-    amm:enum 12;
+  identity modify-var {
+    base permission;
     description
       "Permission to allow modifying the value of VAR objects.
        This includes any control which would alter the value,
        but does not affect applications on the Agent directly
        altering the state of an object.";
-    amm:base "./ident/permission";
+    amm:enum 12;
   }
-  amm:ident modify-rule-enabled {
-    amm:enum 17;
+  identity modify-rule-enabled {
+    base permission;
     description
       "Permission to allow modifying the enabled state of
        SBR and TBR objects.
        This includes any control which would alter the state,
        but does not affect Agent-internal logic related to
        init-enabled and max-count fields of a rule.";
-    amm:base "./ident/permission";
+    amm:enum 17;
   }
-  amm:ident ensure-odm {
-    amm:enum 13;
+  identity ensure-odm {
+    base permission;
     description
       "Permission to allow ensuring an ODM exists within an Agent.
        Granting this permission will allow creating a new ODM or
        modifying an existing ODM depending on its starting state.";
-    amm:base "./ident/permission";
+    amm:enum 13;
   }
-  amm:ident obsolete-odm {
-    amm:enum 14;
+  identity obsolete-odm {
+    base permission;
     description
       "Permission to allow obsoleting an ODM within an Agent.
        Once an ODM is obsoleted it can no longer be used but
        its identifiers are reserved to prevent inconsistent reuse.";
-    amm:base "./ident/permission";
+    amm:enum 14;
   }
-  amm:ident ensure-object {
-    amm:enum 15;
+  identity ensure-object {
+    base permission;
     description
       "Permission to allow ensuring an object exists within an ODM.
        Granting this permission will allow creating a new object or
@@ -162,10 +165,10 @@ module ietf-dtnma-agent-acl {
        The permission itself does not restrict the type of object,
        but the access list can limit the item to specific object
        types and names.";
-    amm:base "./ident/permission";
+    amm:enum 15;
   }
-  amm:ident obsolete-object {
-    amm:enum 16;
+  identity obsolete-object {
+    base permission;
     description
       "Permission to allow obsoleting an object within an ODM.
        Once an object is obsoleted it can no longer be used but
@@ -173,7 +176,7 @@ module ietf-dtnma-agent-acl {
        The permission itself does not restrict the type of object,
        but the access list can limit the item to specific object
        types and names.";
-    amm:base "./ident/permission";
+    amm:enum 16;
   }
 
   // Default access permission
@@ -182,12 +185,12 @@ module ietf-dtnma-agent-acl {
     description
       "The default permission for any object if no specific access
        are present in the <./EDD/access-list> table.";
-    amm:type "./TYPEDEF/permission-list";
+    type permission-list;
   }
 
   // Access control table and modifier controls
-  amm:typedef access-target-filter {
-    amm:enum 5;
+  typedef access-target-filter {
+    type amm-base:expr;
     description
       "A target object/namespace filter applied using two phases for
        each row:
@@ -202,7 +205,7 @@ module ietf-dtnma-agent-acl {
        production section of the DTNMA AMM document.";
     reference
       "draft-ietf-dtn-amm";
-    amm:type "//ietf/amm-base/typedef/EXPR";
+    amm:enum 5;
   }
   amm:edd access-list {
     amm:enum 2;
@@ -213,14 +216,14 @@ module ietf-dtnma-agent-acl {
       amm:column access-id {
         description
           "A unique identifier for this access list item.";
-        amm:type "./TYPEDEF/entry-id";
+        type entry-id;
       }
       amm:column group-ids {
         description
           "A cross-reference to the groups getting access, or the
            empty list to match all groups.";
         amm:ulist {
-          amm:type "./TYPEDEF/entry-id";
+          type entry-id;
         }
       }
       amm:column objects {
@@ -229,7 +232,7 @@ module ietf-dtnma-agent-acl {
            granted access.
            The filter </ac/(true)> can be used to match-all target
            objects.";
-        amm:type "./typedef/access-target-filter";
+        type access-target-filter;
       }
       amm:column permissions {
         description
@@ -237,17 +240,17 @@ module ietf-dtnma-agent-acl {
            Individual permission references MAY be parameterized
            as necessary.
            The absence of permissions does not grant any access.";
-        amm:type "./TYPEDEF/permission-list";
+        type permission-list;
       }
       amm:column added-at {
         description
           "Agent timestamp when this group was added.";
-        amm:type "//ietf/amm-base/typedef/timestamp";
+        type amm-base:timestamp;
       }
       amm:column updated-at {
         description
           "Agent timestamp when this group was added or updated.";
-        amm:type "//ietf/amm-base/typedef/timestamp";
+        type amm-base:timestamp;
       }
     }
   }
@@ -259,14 +262,14 @@ module ietf-dtnma-agent-acl {
     amm:parameter access-id {
       description
         "A unique identifier for this access list item.";
-      amm:type "./TYPEDEF/entry-id";
+      type entry-id;
     }
     amm:parameter group-ids {
       description
         "Identify the groups being assigned the permission,
          or the empty list for all-groups.";
       amm:ulist {
-        amm:type "./TYPEDEF/entry-id";
+        type entry-id;
       }
     }
     amm:parameter objects {
@@ -274,12 +277,12 @@ module ietf-dtnma-agent-acl {
         "A set of filters for target objects or namespaces being
          granted access.
          The filter </ac/(true)> can be used to match-all targets.";
-      amm:type "./typedef/access-target-filter";
+      type access-target-filter;
     }
     amm:parameter permissions {
       description
         "Permissions to grant to the associated group and objects";
-      amm:type "./TYPEDEF/permission-list";
+      type permission-list;
     }
   }
   amm:ctrl discard-access {
@@ -289,15 +292,15 @@ module ietf-dtnma-agent-acl {
     amm:parameter access-id {
       description
         "Uniquely identify the access";
-      amm:type "./TYPEDEF/entry-id";
+      type entry-id;
     }
   }
 
   //
   // Group management
   //
-  amm:typedef group-member-filter {
-    amm:enum 4;
+  typedef group-member-filter {
+    type amm-base:expr;
     description
       "A member filter applied using two phases for each row:
          1. Substitute a manager identity for </label/0> items
@@ -311,7 +314,7 @@ module ietf-dtnma-agent-acl {
        production section of the DTNMA AMM document.";
     reference
       "draft-ietf-dtn-amm";
-    amm:type "//ietf/amm-base/typedef/EXPR";
+    amm:enum 4;
   }
   amm:edd current-groups {
     amm:enum 3;
@@ -319,7 +322,7 @@ module ietf-dtnma-agent-acl {
       "Get the group IDs for the current execution context, which may
        include the implicit Agent group ID zero.";
     amm:ulist {
-      amm:type "./TYPEDEF/entry-id";
+      type entry-id;
     }
   }
   amm:edd group-list {
@@ -333,28 +336,28 @@ module ietf-dtnma-agent-acl {
           "The unique identifier for a group.
            The agent itself has implicit group ID zero which cannot
            be modified.";
-        amm:type "./TYPEDEF/entry-id";
+        type entry-id;
       }
       amm:column name {
         description
           "The human-friendly name of the group.";
-        amm:type "//ietf/amm-base/typedef/id-text";
+        type amm-base:id-text;
       }
       amm:column members {
         description
           "The list of members of the group, identified by matching
            transport endpoint.";
-        amm:type "./typedef/group-member-filter";
+        type group-member-filter;
       }
       amm:column added-at {
         description
           "Agent timestamp when this group was added.";
-        amm:type "//ietf/amm-base/typedef/timestamp";
+        type amm-base:timestamp;
       }
       amm:column updated-at {
         description
           "Agent timestamp when this group was added or updated.";
-        amm:type "//ietf/amm-base/typedef/timestamp";
+        type amm-base:timestamp;
       }
     }
   }
@@ -366,12 +369,12 @@ module ietf-dtnma-agent-acl {
     amm:parameter group-id {
       description
         "Uniquely identify the group";
-      amm:type "./TYPEDEF/entry-id";
+      type entry-id;
     }
     amm:parameter name {
       description
         "Name of the group";
-      amm:type "//ietf/amm-base/typedef/id-text";
+      type amm-base:id-text;
     }
   }
   amm:ctrl ensure-group-members {
@@ -382,12 +385,12 @@ module ietf-dtnma-agent-acl {
     amm:parameter group-id {
       description
         "Uniquely identify the group";
-      amm:type "./TYPEDEF/entry-id";
+      type entry-id;
     }
     amm:parameter members {
       description
         "The list of endpoint patterns denoting group membership";
-      amm:type "./typedef/group-member-filter";
+      type group-member-filter;
     }
   }
   amm:ctrl discard-group {
@@ -397,7 +400,7 @@ module ietf-dtnma-agent-acl {
     amm:parameter group-id {
       description
         "Uniquely identify the group";
-      amm:type "./TYPEDEF/entry-id";
+      type entry-id;
     }
   }
 }

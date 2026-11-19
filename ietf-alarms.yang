@@ -84,8 +84,7 @@ module ietf-alarms {
   amm:enum 4;
 
   // Base identities and types for alarm states
-  amm:ident resource {
-    amm:enum 0;
+  identity resource {
     description
       "The abstract base IDENT for all resources able to have alarm
        states.
@@ -95,10 +94,10 @@ module ietf-alarms {
        Derived objects MAY contain parameters in order to further
        specify and narrow-down the logical or physical instance
        experiencing an alarm state.";
+    amm:enum 0;
     amm:abstract true;
   }
-  amm:ident category {
-    amm:enum 1;
+  identity category {
     description
       "The abstract base IDENT for all alarm categories.
        Derived objects define more specific categories for faults.
@@ -108,22 +107,11 @@ module ietf-alarms {
        Derived objects SHALL specify details of the meaning of each
        sub-category of alarm state to enough level of detail for
        users to distinguish between all non-abstract categories.";
+    amm:enum 1;
     amm:abstract true;
   }
-  amm:typedef severity {
-    amm:enum 0;
-    description
-      "Levels of perceived severity for alarms are limited to
-       specific values.
-       There is not a strict logical ordering of these values
-       because in some cases an indeterminate severity can be
-       worse than a critical failure of a resource.
-       This set of values is aligned with ITU-T X.733-1992,
-       Section 8.1.2.3";
-    reference
-      "ITU-T X.733-1992: Systems Management: Alarm Reporting
-         Function";
-    amm:type "/aritype/uint" {
+  typedef severity {
+    type amm:uint {
       amm:int-labels {
         enum cleared {
           value 0;
@@ -179,14 +167,21 @@ module ietf-alarms {
         }
       }
     }
-  }
-  amm:typedef manager-state {
-    amm:enum 1;
     description
-      "The manager-controlled state of an <./edd/alarm-list> entry.
-       This is separate from and independent of the severity state
-       of an entry, which is entirely controlled by the resource.";
-    amm:type "/aritype/uint" {
+      "Levels of perceived severity for alarms are limited to
+       specific values.
+       There is not a strict logical ordering of these values
+       because in some cases an indeterminate severity can be
+       worse than a critical failure of a resource.
+       This set of values is aligned with ITU-T X.733-1992,
+       Section 8.1.2.3";
+    reference
+      "ITU-T X.733-1992: Systems Management: Alarm Reporting
+         Function";
+    amm:enum 0;
+  }
+  typedef manager-state {
+    type amm:uint {
       amm:int-labels {
         enum none {
           value 0;
@@ -215,6 +210,11 @@ module ietf-alarms {
         }
       }
     }
+    description
+      "The manager-controlled state of an <./edd/alarm-list> entry.
+       This is separate from and independent of the severity state
+       of an entry, which is entirely controlled by the resource.";
+    amm:enum 1;
   }
 
   // Main introspection objects for this module
@@ -229,8 +229,8 @@ module ietf-alarms {
       amm:column resource {
         description
           "The resource having an alarm condition (or history).";
-        amm:type "/aritype/ident" {
-          amm:base "./ident/resource";
+        type amm:ident {
+          base resource;
         }
       }
       amm:column category {
@@ -238,27 +238,27 @@ module ietf-alarms {
           "The optional category of alarm being indicated on
            the resource. Only some categories will apply to specific
            resource objects.";
-        amm:union {
-          amm:type "/aritype/null";
-          amm:type "/aritype/ident" {
-            amm:base "./ident/category";
+        type union {
+          type amm:null;
+          type amm:ident {
+            base category;
           }
         }
       }
       amm:column severity {
         description
           "The latest severity of alarm state.";
-        amm:type "./typedef/severity";
+        type severity;
       }
       amm:column time-created {
         description
           "The time at which this entry was added to the list.";
-        amm:type "//ietf/amm-base/typedef/timestamp";
+        type amm-base:timestamp;
       }
       amm:column time-updated {
         description
           "The time at which this entry was last updated.";
-        amm:type "//ietf/amm-base/typedef/timestamp";
+        type amm-base:timestamp;
       }
       amm:column history {
         if-feature "history";
@@ -275,12 +275,12 @@ module ietf-alarms {
           amm:column time {
             description
               "The time at which the status was updated.";
-            amm:type "//ietf/amm-base/typedef/timestamp";
+            type amm-base:timestamp;
           }
           amm:column severity {
             description
               "The severity at this update.";
-            amm:type "./typedef/severity";
+            type severity;
           }
         }
       }
@@ -288,31 +288,31 @@ module ietf-alarms {
         description
           "The state set on this entry by a manager.
            When first created the entry's state will be 'none'.";
-        amm:type "./typedef/manager-state";
+        type manager-state;
       }
       amm:column manager-identity {
         description
           "The identity of the manager which last modified the
            'manager-state' column value.
            When first created this value will be null.";
-        amm:union {
-          amm:type "//ietf/network-base/typedef/endpoint";
-          amm:type "/aritype/null";
+        type union {
+          type network-base:endpoint;
+          type amm:null;
         }
       }
       amm:column manager-time {
         description
           "The time at which the 'manager-state' was last modified.
            When first created this value will be null.";
-        amm:union {
-          amm:type "//ietf/amm-base/typedef/timestamp";
-          amm:type "/aritype/null";
+        type union {
+          type amm-base:timestamp;
+          type amm:null;
         }
       }
     }
   }
-  amm:typedef alarm-filter {
-    amm:enum 4;
+  typedef alarm-filter {
+    type amm-base:expr;
     description
       "A filter to match alarm entries by a subset of the columns
        available in the <./edd/alarm-list> table.
@@ -334,7 +334,7 @@ module ietf-alarms {
             if the result is a truthy value.
        Both column index and column name LABEL values SHALL be
        substituted before evaluating this expression.";
-    amm:type "//ietf/amm-base/typedef/EXPR";
+    amm:enum 4;
   }
   amm:ctrl purge-alarms {
     amm:enum 2;
@@ -345,13 +345,13 @@ module ietf-alarms {
     amm:parameter filter {
       description
         "A filter to match specific alarm-list entries.";
-      amm:type "./typedef/alarm-filter";
+      type alarm-filter;
     }
     amm:result affected {
       description
         "The count of alarm-list entries affected by the
          execution.";
-      amm:type "/aritype/uvast";
+      type amm:uvast;
     }
   }
   amm:ctrl compress-alarms {
@@ -364,13 +364,13 @@ module ietf-alarms {
     amm:parameter filter {
       description
         "A filter to match specific alarm-list entries.";
-      amm:type "./typedef/alarm-filter";
+      type alarm-filter;
     }
     amm:result affected {
       description
         "The count of alarm-list entries affected by the
          execution.";
-      amm:type "/aritype/uvast";
+      type amm:uvast;
     }
   }
   amm:ctrl set-alarms-manager-state {
@@ -383,20 +383,20 @@ module ietf-alarms {
     amm:parameter filter {
       description
         "A filter to match specific alarm-list entries.";
-      amm:type "./typedef/alarm-filter";
+      type alarm-filter;
     }
     amm:parameter manager-state {
       description
         "The new state to set.
          If this new state is shelved (3), it will add associated
          items to the <./edd/shelf-list> table.";
-      amm:type "./typedef/manager-state";
+      type manager-state;
     }
     amm:result affected {
       description
         "The count of alarm-list entries affected by the
          execution.";
-      amm:type "/aritype/uvast";
+      type amm:uvast;
     }
   }
 
@@ -410,8 +410,8 @@ module ietf-alarms {
       amm:column resource {
         description
           "The non-abstract resource object.";
-        amm:type "/aritype/ident" {
-          amm:base "./ident/resource";
+        type amm:ident {
+          base resource;
         }
       }
     }
@@ -425,17 +425,16 @@ module ietf-alarms {
       amm:column category {
         description
           "The non-abstract category object.";
-        amm:type "/aritype/ident" {
-          amm:base "./ident/category";
+        type amm:ident {
+          base category;
         }
       }
     }
   }
 
   // shelving introspection and control
-  amm:typedef shelf-tblt {
+  typedef shelf-tblt {
     if-feature "shelving";
-    amm:enum 3;
     description
       "The type for values of <./edd/shelf-list> and for controls to
        manipulate that list.";
@@ -447,7 +446,7 @@ module ietf-alarms {
            This MAY include only integer identifiers for
            compactness.";
         amm:ulist {
-          amm:type "/aritype/objpat";
+          type amm:objpat;
         }
       }
       amm:column categories {
@@ -456,10 +455,11 @@ module ietf-alarms {
            This MAY include only integer identifiers for
            compactness.";
         amm:ulist {
-          amm:type "/aritype/objpat";
+          type amm:objpat;
         }
       }
     }
+    amm:enum 3;
   }
   amm:edd shelf-list {
     if-feature "shelving";
@@ -468,7 +468,7 @@ module ietf-alarms {
       "A table to indicate which alarms are being shelved
        This can be edited by <./ctrl/ensure-shelf>
        and <./ctrl/discard-shelf> controls.";
-    amm:type "./typedef/shelf-tblt";
+    type shelf-tblt;
   }
   amm:ctrl ensure-shelf {
     if-feature "shelving";
@@ -481,7 +481,7 @@ module ietf-alarms {
     amm:parameter rows {
       description
         "The rows which need to be present.";
-      amm:type "./typedef/shelf-tblt";
+      type shelf-tblt;
     }
   }
   amm:ctrl discard-shelf {
@@ -495,7 +495,7 @@ module ietf-alarms {
     amm:parameter rows {
       description
         "The rows which need to be absent.";
-      amm:type "./typedef/shelf-tblt";
+      type shelf-tblt;
     }
   }
 }
